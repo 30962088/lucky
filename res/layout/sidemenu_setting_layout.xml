@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f1f1f2"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+
+            <LinearLayout
+                android:id="@+id/changeNetwork"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" 
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="2G/3G网络流量"
+                    android:textColor="#606366"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/networkType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="#c5c9cb"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da"/>
+            
+            <LinearLayout
+                android:id="@+id/clearCache"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" 
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="清除缓存"
+                    android:textColor="#606366"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="1289.26MB"
+                    android:textColor="#c5c9cb"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da"/>
+            
+            <LinearLayout
+                android:id="@+id/pushManager"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" 
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="推送通知"
+                    android:textColor="#606366"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="设置"
+                    android:textColor="#c5c9cb"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da"/>
+            
+            <LinearLayout
+                android:id="@+id/checkNewVersion"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" 
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="检查新版本"
+                    android:textColor="#606366"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="3.2"
+                    android:textColor="#c5c9cb"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da"/>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="使用帮助"
+                    android:textColor="#606366"
+                    android:textSize="15sp" />
+
+                <View 
+                    android:layout_width="10dp"
+                    android:layout_height="17dp"
+                    android:background="@drawable/icon_arrow"
+                    android:layout_gravity="center_vertical"/>
+                
+            </LinearLayout>
+            
+            <View 
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da"/>
+            
+        </LinearLayout>
+        
+        <TextView 
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="38dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#898e91"
+            android:textSize="12sp"
+            android:text="©北京博趣科技发展有限公司 joypaw.com"/>
+    </RelativeLayout>
+
+</LinearLayout>

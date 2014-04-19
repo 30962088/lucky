@@ -1,0 +1,8 @@
+gen
+bin
+target
+.settings
+.classpath
+.project
+deps/AndroidSDK/doc
+deps/AndroidSDKComponent/doc

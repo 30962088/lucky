@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">lucky</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="network_most">最佳效果（下载大图）</string>
+    <string name="network_least">较省流量（智能下图）</string>
+    <string name="network_none">极省流量（不下载图）</string>
+
+</resources>

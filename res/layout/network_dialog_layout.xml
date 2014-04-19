@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alert"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80b7bbc2"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" 
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_radius"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                android:id="@+id/msg"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:textColor="#606366"
+                android:textSize="15sp"
+                android:text="2G/3G网络流量" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da" />
+
+            <TextView
+                android:id="@+id/most"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="@string/network_most"
+                android:textColor="#e47134"
+                android:textSize="15sp" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da" />
+
+            <TextView
+                android:id="@+id/least"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="@string/network_least"
+                android:textColor="#e47134"
+                android:textSize="15sp" />
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#d9d9da" />
+
+            <TextView
+                android:id="@+id/none"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="@string/network_none"
+                android:textColor="#e47134"
+                android:textSize="15sp" />
+            
+            
+            
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_radius"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#e47134"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</RelativeLayout>
