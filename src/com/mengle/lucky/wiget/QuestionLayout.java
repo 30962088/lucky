@@ -1,5 +1,7 @@
 package com.mengle.lucky.wiget;
 
+import com.mengle.lucky.adapter.QuestionAdapter.Status;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -15,6 +17,16 @@ public class QuestionLayout extends RelativeLayout {
 	
 	public static final int TYPE_MOST = 1;
 
+	public static class Status{
+		private boolean gameover;
+		private boolean passed;
+		public Status(boolean gameover, boolean passed) {
+			this.gameover = gameover;
+			this.passed = passed;
+		}
+		
+	}
+	
 	@SuppressLint("NewApi")
 	public QuestionLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -35,12 +47,18 @@ public class QuestionLayout extends RelativeLayout {
 
 	private int type = TYPE_NORMAL;
 	
+	private Status status;
+	
 	public void setColor(int color) {
 		paint.setColor(color);
 	}
 	
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	private void init() {
@@ -55,6 +73,11 @@ public class QuestionLayout extends RelativeLayout {
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
+		if(status != null && status.gameover){
+			if(!status.passed){
+				paint.setColor(Color.parseColor("#b9b9b9"));
+			}
+		}
 		if(type == TYPE_NORMAL){
 			drawNormal(canvas);
 		}else if(type == TYPE_MOST){

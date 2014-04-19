@@ -14,15 +14,60 @@ import android.widget.TextView;
 
 public class QuestionAdapter extends BaseAdapter {
 
-	public static class Question {
+	public static class Status{
+		private boolean gameover;
+		private List<Integer> passIndex;
+		public Status(boolean gameover, List<Integer> passIndex) {
+			super();
+			this.gameover = gameover;
+			this.passIndex = passIndex;
+		}
+		public boolean isGameover() {
+			return gameover;
+		}
+		public void setGameover(boolean gameover) {
+			this.gameover = gameover;
+		}
+		public List<Integer> getPassIndex() {
+			return passIndex;
+		}
+		public void setPassIndex(List<Integer> passIndex) {
+			this.passIndex = passIndex;
+		}
+		
+		
+		
+	}
+	
+	public static class Question{
+		private Status status;
+		private List<QuestionItem> list;
+		
+		public Question(Status status, List<QuestionItem> list) {
+			super();
+			this.status = status;
+			this.list = list;
+		}
+		
+		public List<QuestionItem> getList() {
+			return list;
+		}
+		public void setList(List<QuestionItem> list) {
+			this.list = list;
+		}
+		
+	}
+	
+	
+	
+	public static class QuestionItem {
 		private String no;
 		private String name;
 		private double percent;
 		private int color;
 		private int type;
 		
-		public Question(String no, String name, double percent, int color,int type) {
-			super();
+		public QuestionItem(String no, String name, double percent, int color,int type) {
 			this.no = no;
 			this.name = name;
 			this.percent = percent;
@@ -65,22 +110,22 @@ public class QuestionAdapter extends BaseAdapter {
 
 	private Context context;
 	
-	private List<Question> questions;
+	private Question question;
 
-	public QuestionAdapter(Context context, List<Question> questions) {
+	public QuestionAdapter(Context context, Question question) {
 		super();
 		this.context = context;
-		this.questions = questions;
+		this.question = question;
 	}
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return questions.size();
+		return question.list.size();
 	}
 
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
-		return questions.get(position);
+		return question.list.get(position);
 	}
 
 	public long getItemId(int position) {
@@ -89,7 +134,7 @@ public class QuestionAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Question question = questions.get(position);
+		QuestionItem questionItem = question.list.get(position);
 		ViewHolder holder = null;
 		if(convertView == null){
 			convertView = LayoutInflater.from(context).inflate(R.layout.question_item, null);
@@ -98,13 +143,29 @@ public class QuestionAdapter extends BaseAdapter {
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.noView.setText(question.no);
-		holder.noView.setTextColor(question.color);
-		holder.nameView.setText(question.name);
-		holder.nameView.setTextColor(question.color);
-		holder.percentView.setText(""+(question.percent*100));
-		holder.questionView.setColor(question.color);
-		holder.questionView.setType(question.type);
+		holder.noView.setText(questionItem.no);
+		holder.noView.setTextColor(questionItem.color);
+		holder.nameView.setText(questionItem.name);
+		holder.nameView.setTextColor(questionItem.color);
+		holder.percentView.setText(""+(questionItem.percent*100));
+		holder.questionView.setColor(questionItem.color);
+		holder.questionView.setType(questionItem.type);
+		
+		
+		if(question.status.gameover){
+			holder.gameoverView.setVisibility(View.VISIBLE);
+			if(question.status.passIndex.indexOf(position) != -1){
+				holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, true));
+				holder.passView.setVisibility(View.VISIBLE);
+				holder.notpassView.setVisibility(View.GONE);
+			}else{
+				holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, false));
+				holder.passView.setVisibility(View.GONE);
+				holder.notpassView.setVisibility(View.VISIBLE);
+			}
+		}else{
+			holder.gameoverView.setVisibility(View.GONE);
+		}
 		holder.questionView.invalidate();
 		return convertView;
 	}
@@ -114,11 +175,17 @@ public class QuestionAdapter extends BaseAdapter {
 		private TextView nameView;
 		private QuestionLayout questionView;
 		private TextView percentView;
+		private View gameoverView;
+		private View passView;
+		private View notpassView;
 		public ViewHolder(View view) {
 			noView = (TextView) view.findViewById(R.id.no);
 			nameView = (TextView) view.findViewById(R.id.name);
 			questionView = (QuestionLayout) view.findViewById(R.id.questionlayout);
 			percentView = (TextView) view.findViewById(R.id.percent);
+			gameoverView = view.findViewById(R.id.gameover);
+			passView = view.findViewById(R.id.pass);
+			notpassView = view.findViewById(R.id.notpass);
 		}
 	}
 

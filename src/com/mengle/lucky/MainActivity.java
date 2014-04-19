@@ -3,6 +3,7 @@ package com.mengle.lucky;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.mengle.lucky.fragments.CaiFragment;
+import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
 
 import android.os.Bundle;
@@ -23,11 +24,13 @@ public class MainActivity extends SlidingFragmentActivity {
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
 		switchContent(new CaiFragment());
+		switchRight(new NoLoginFragment());
 	}
 
 	private void initSlidingMenu() {
 		menuFragment = new SidingMenuFragment();
 		SlidingMenu sm = getSlidingMenu();
+		sm.setMode(SlidingMenu.LEFT_RIGHT);
 		sm.setShadowWidthRes(R.dimen.shadow_width);
 		sm.setShadowDrawable(R.drawable.shadow);
 		sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
@@ -45,8 +48,19 @@ public class MainActivity extends SlidingFragmentActivity {
 
 			}
 		});
-
+		
+		sm.setSecondaryMenu(R.layout.menu_frame_two);
+		sm.setSecondaryShadowDrawable(R.drawable.shadowright);
+		
+		
 	}
+	
+	private void switchRight(Fragment fragment){
+		getSupportFragmentManager().beginTransaction()
+		.replace(R.id.menu_frame_two, fragment).commit();
+	}
+
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,256 +1,290 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" 
+        android:layout_marginTop="46dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1" >
 
             <RelativeLayout
-                android:id="@+id/stage"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" >
+                android:layout_height="match_parent" >
 
-                <ImageView
+                <RelativeLayout
+                    android:id="@+id/stage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test_img_1" />
+                    android:layout_height="200dp" >
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="12dp" >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/test_img_1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="12dp" >
 
-                        <TextView
-                            android:layout_width="40.5dp"
-                            android:layout_height="44dp"
-                            android:background="@drawable/btn_intro" />
-
-                        <TextView
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:gravity="center"
-                            android:text="竞猜说明"
-                            android:textColor="#fff"
-                            android:textSize="9sp" />
-                    </LinearLayout>
+                            android:orientation="vertical" >
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:orientation="vertical" >
-
-                        <RelativeLayout
-                            android:layout_width="40.5dp"
-                            android:layout_height="44dp" >
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/btn_count" />
+                            <TextView
+                                android:layout_width="40.5dp"
+                                android:layout_height="44dp"
+                                android:background="@drawable/btn_intro" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="28dp"
+                                android:layout_marginTop="2dp"
                                 android:gravity="center"
-                                android:text="312,345"
+                                android:text="竞猜说明"
                                 android:textColor="#fff"
                                 android:textSize="9sp" />
-                        </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:orientation="vertical" >
+
+                            <RelativeLayout
+                                android:layout_width="40.5dp"
+                                android:layout_height="44dp" >
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/btn_count" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="28dp"
+                                    android:gravity="center"
+                                    android:text="312,345"
+                                    android:textColor="#fff"
+                                    android:textSize="9sp" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="参与人数"
+                                android:textColor="#fff"
+                                android:textSize="9sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/titlebar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/stage"
+                    android:layout_marginTop="-15dp" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="49dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="23dp"
+                        android:background="#e1e2e6" >
 
                         <TextView
                             android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="84dp"
+                            android:gravity="center_vertical"
+                            android:text="巴西对韩国谁会赢?"
+                            android:textColor="#434a54"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="71dp"
+                        android:layout_height="66dp"
+                        android:layout_marginLeft="6dp"
+                        android:background="@drawable/bg_bubble" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:gravity="center"
-                            android:text="参与人数"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginTop="8dp"
+                            android:text="今日"
                             android:textColor="#fff"
-                            android:textSize="9sp" />
-                    </LinearLayout>
-                </LinearLayout>
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="13dp"
+                            android:layout_marginTop="28dp"
+                            android:text="猜!"
+                            android:textColor="#fff"
+                            android:textSize="24sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titlebar"
+                    android:gravity="center"
+                    android:numColumns="3" >
+                </GridView>
+            </RelativeLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000" >
+
+            <RelativeLayout
+                android:id="@+id/icon_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="#e47134" >
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/titlebar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/stage"
-                android:layout_marginTop="-15dp" >
+                android:id="@+id/icon_center"
+                android:layout_width="161dp"
+                android:layout_height="80.5dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_timer" >
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="49dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="23dp"
-                    android:background="#e1e2e6" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal" >
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="84dp"
-                        android:gravity="center_vertical"
-                        android:text="巴西对韩国谁会赢?"
-                        android:textColor="#434a54"
-                        android:textSize="18sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="71dp"
-                    android:layout_height="66dp"
-                    android:layout_marginLeft="6dp"
-                    android:background="@drawable/bg_bubble" >
+                    <View
+                        android:id="@+id/icon_clock"
+                        android:layout_width="18.5dp"
+                        android:layout_height="18.5dp"
+                        android:background="@drawable/icon_clock" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="8dp"
-                        android:text="今日"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="13dp"
-                        android:layout_marginTop="28dp"
-                        android:text="猜!"
-                        android:textColor="#fff"
-                        android:textSize="24sp" />
+                        android:layout_alignBottom="@id/icon_clock"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/icon_clock"
+                        android:text="竞猜倒计时："
+                        android:textColor="#000"
+                        android:textSize="11sp" />
                 </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="00:00"
+                    android:textColor="#000"
+                    android:textSize="24sp" />
             </RelativeLayout>
 
-            <GridView
-                
-                android:id="@+id/gridview"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                
-                android:numColumns="3"
-                android:layout_below="@id/titlebar" >
-            </GridView>
-        </RelativeLayout>
-    </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80.5dp"
-        android:layout_alignParentBottom="true" >
-
-        <RelativeLayout
-            android:id="@+id/icon_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:background="#e47134" >
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/icon_center"
-            android:layout_width="161dp"
-            android:layout_height="80.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:background="@drawable/bg_timer" >
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center_horizontal" >
+                android:layout_alignBottom="@+id/icon_bottom"
+                android:layout_alignLeft="@+id/icon_bottom"
+                android:layout_alignTop="@+id/icon_bottom"
+                android:layout_toLeftOf="@+id/icon_center"
+                android:clickable="true"
+                android:gravity="center" >
 
                 <View
-                    android:id="@+id/icon_clock"
                     android:layout_width="18.5dp"
-                    android:layout_height="18.5dp"
-                    android:background="@drawable/icon_clock" />
+                    android:layout_height="17.5dp"
+                    android:background="@drawable/icon_ok_selector"
+                    android:duplicateParentState="true" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/icon_clock"
-                    android:layout_marginLeft="5dp"
-                    android:layout_toRightOf="@id/icon_clock"
-                    android:text="竞猜倒计时："
-                    android:textColor="#000"
-                    android:textSize="11sp" />
-            </RelativeLayout>
+                    android:duplicateParentState="true"
+                    android:text="确定"
+                    android:textColor="@color/bottom_selector"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/selectCoin"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:text="00:00"
-                android:textColor="#000"
-                android:textSize="24sp" />
+                android:layout_alignBottom="@+id/icon_bottom"
+                android:layout_alignRight="@+id/icon_bottom"
+                android:layout_alignTop="@+id/icon_bottom"
+                android:layout_toRightOf="@+id/icon_center"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <View
+                    android:layout_width="23.5dp"
+                    android:layout_height="22.5dp"
+                    android:background="@drawable/icon_count_selector"
+                    android:duplicateParentState="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:duplicateParentState="true"
+                    android:text="5"
+                    android:textColor="@color/bottom_selector"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:background="@drawable/bg_header" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/icon_bottom"
-            android:layout_alignLeft="@+id/icon_bottom"
-            android:layout_alignTop="@+id/icon_bottom"
-            android:layout_toLeftOf="@+id/icon_center"
-            android:gravity="center" >
-
-            <View
-                android:layout_width="18.5dp"
-                android:layout_height="17.5dp"
-                android:background="@drawable/icon_ok" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="确定"
+                android:layout_centerInParent="true"
+                android:text="好运7"
                 android:textColor="#fff"
                 android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/icon_bottom"
-            android:layout_alignRight="@+id/icon_bottom"
-            android:layout_alignTop="@+id/icon_bottom"
-            android:layout_toRightOf="@+id/icon_center"
-            android:gravity="center" >
-
-            <View
-                android:layout_width="23.5dp"
-                android:layout_height="22.5dp"
-                android:background="@drawable/icon_count" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="5"
-                android:textColor="#fff"
-                android:textSize="20sp" />
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
