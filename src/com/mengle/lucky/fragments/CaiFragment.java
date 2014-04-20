@@ -50,6 +50,7 @@ public class CaiFragment extends Fragment {
 						add(new QuestionItem("C", "文章", 0.42, Color.parseColor("#e47134"),QuestionLayout.TYPE_NORMAL));
 					}
 				})));
+		
 	}
 
 }

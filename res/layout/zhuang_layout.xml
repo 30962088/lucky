@@ -10,25 +10,94 @@
         android:layout_marginTop="46dp"
         android:orientation="vertical" >
 
-        <ListView 
-            android:background="#ffffff"
-            android:listSelector="#00000000"
-            android:divider="@null"
+        <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></ListView>
-        
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:divider="@null"
+            android:listSelector="#00000000" >
+        </ListView>
+
         <TextView
             android:id="@+id/icon_bottom"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/bg_bottom_line"
             android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="#fff" 
-            android:text="我来坐庄">
+            android:text="我来坐庄"
+            android:textColor="#fff"
+            android:textSize="18sp" >
         </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d9000000"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/test_img_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" 
+                    android:paddingLeft="12dp"
+                    android:paddingRight="13dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:gravity="center_vertical"
+                        android:text="分类"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#fff" />
+                </LinearLayout>
+
+                <GridView
+                    android:id="@+id/catgrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="true"
+                    android:gravity="center"
+                    android:numColumns="4"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:paddingBottom="40dp" >
+                </GridView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="97dp"
+            android:layout_height="16.5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/icon_drop_close" />
     </LinearLayout>
 
     <RelativeLayout

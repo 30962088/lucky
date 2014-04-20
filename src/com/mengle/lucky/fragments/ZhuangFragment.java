@@ -3,8 +3,11 @@ package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.adapter.CatListAdater;
+import com.mengle.lucky.adapter.CatListAdater.CatList;
 import com.mengle.lucky.adapter.StageAdapter;
 import com.mengle.lucky.adapter.ZhuangListAdapter;
+import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
 import com.mengle.lucky.adapter.StageAdapter.Stage;
 import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
 
@@ -17,6 +20,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
 import android.widget.AbsoluteLayout;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -54,6 +58,17 @@ public class ZhuangFragment extends Fragment{
 		}}));
 		getFragmentManager().beginTransaction().add(R.id.stage_fragment,stageFragment ).commit();
 		
+		GridView catGrid = (GridView) view.findViewById(R.id.catgrid);
+		catGrid.setAdapter(new CatListAdater(getActivity(), new CatList(new ArrayList<Cat>(){{
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+			add(new Cat("1","全部"));
+		}}, 0)));
 	}
 	
 	@Override
