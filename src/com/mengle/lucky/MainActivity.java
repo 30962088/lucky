@@ -3,8 +3,10 @@ package com.mengle.lucky;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.mengle.lucky.fragments.CaiFragment;
+import com.mengle.lucky.fragments.CommentFragment;
 import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
+import com.mengle.lucky.fragments.ZhuangFragment;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,8 +25,8 @@ public class MainActivity extends SlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
-		switchContent(new CaiFragment());
-		switchRight(new NoLoginFragment());
+		switchContent(new ZhuangFragment());
+		switchRight(new CommentFragment());
 	}
 
 	private void initSlidingMenu() {

@@ -3,5 +3,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="shadow_width">15dp</dimen>
     <dimen name="slidingmenu_offset">60dp</dimen>
-
+	<dimen name="tab_indicator_margin">2dp</dimen>
+	<dimen name="tab_size">7dp</dimen>
 </resources>

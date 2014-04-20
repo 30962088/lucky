@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/bg_line" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="17dp"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:gravity="center_vertical"
+        android:text="恒大亚冠决赛谁赢?"
+        android:textColor="#29353f"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="8dp"
+        android:gravity="center" >
+
+        <View
+            android:layout_width="17dp"
+            android:layout_height="18.5dp"
+            android:background="@drawable/icon_person_blue" />
+
+        <TextView
+            android:id="@+id/person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(30)"
+            android:textColor="#4fc0e8"
+            android:textSize="13.5sp" />
+    </LinearLayout>
+
+</LinearLayout>
