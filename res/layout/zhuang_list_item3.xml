@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp" 
+    android:paddingTop="2dp"
+    android:paddingBottom="2dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_zhuang_right1" 
+        android:gravity="center_vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" 
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:gravity="center">
+                
+                <View 
+                    android:layout_width="17dp"
+                    android:layout_height="18.5dp"
+                    android:background="@drawable/icon_person_white"/>
+                
+                <TextView 
+                    android:id="@+id/person"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="( 30 )"
+                    android:textSize="12sp"
+                    android:textColor="#fff"/>
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" 
+                android:gravity="center">
+                
+                <View 
+                    android:layout_width="17dp"
+                    android:layout_height="18.5dp"
+                    android:background="@drawable/icon_clock_white"/>
+                
+                <TextView 
+                    android:id="@+id/endtime"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PM 12：00 结束"
+                    android:textSize="12sp"
+                    android:textColor="#fff"/>
+                
+            </LinearLayout>
+        </LinearLayout>
+        
+        <com.mengle.lucky.wiget.PhotoView
+            android:id="@+id/photo" 
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/test_img_1"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_zhuang_left1"
+        android:layout_marginLeft="2dp"
+        android:gravity="center_vertical">
+        
+        <TextView 
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="明天下雨吗?"
+            android:textColor="#fff"
+            android:layout_marginLeft="25sp"
+            android:layout_marginRight="5dp"
+            android:ellipsize="marquee"
+            android:textSize="16sp"/>
+        
+        <View 
+            android:layout_width="10dp"
+            android:layout_height="18.5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/icon_arrow_white"/>
+        
+    </LinearLayout>
+
+</LinearLayout>

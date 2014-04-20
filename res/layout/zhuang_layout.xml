@@ -11,17 +11,24 @@
         android:orientation="vertical" >
 
         <ListView 
+            android:background="#ffffff"
+            android:listSelector="#00000000"
+            android:divider="@null"
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"></ListView>
         
-        <RelativeLayout
+        <TextView
             android:id="@+id/icon_bottom"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#e47134" >
-        </RelativeLayout>
+            android:background="@drawable/bg_bottom_line"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="#fff" 
+            android:text="我来坐庄">
+        </TextView>
     </LinearLayout>
 
     <RelativeLayout

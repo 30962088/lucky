@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.StageAdapter;
+import com.mengle.lucky.adapter.ZhuangListAdapter;
 import com.mengle.lucky.adapter.StageAdapter.Stage;
+import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,19 +36,21 @@ public class ZhuangFragment extends Fragment{
 		ListView listView = (ListView) getView().findViewById(R.id.listview);
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header, null);
 		listView.addHeaderView(headView);
-		listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,new ArrayList<String>(){{
-			add("1");
-			add("1");
-			add("1");
-			add("1");
-			add("1");
+		listView.setAdapter(new ZhuangListAdapter(getActivity(), new ArrayList<ZhuangListAdapter.ZhuangModel>(){{
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
+			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1));
 		}}));
 		StageFragment stageFragment = new StageFragment();
 		stageFragment.setAdapter(new StageAdapter(getChildFragmentManager(), new ArrayList<StageAdapter.Stage>(){{
-			add(new Stage("http://www.baidu.com/img/bdlogo.gif", "23"));
-			add(new Stage("http://www.baidu.com/img/bdlogo.gif", "23"));
-			add(new Stage("http://www.baidu.com/img/bdlogo.gif", "23"));
-			add(new Stage("http://www.baidu.com/img/bdlogo.gif", "23"));
+			add(new Stage("世界杯竞猜","http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", "23",55));
+			add(new Stage("世界杯竞猜","http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", "23",55));
+			add(new Stage("世界杯竞猜","http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", "23",55));
+			add(new Stage("世界杯竞猜","http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", "23",55));
 		}}));
 		getFragmentManager().beginTransaction().add(R.id.stage_fragment,stageFragment ).commit();
 		

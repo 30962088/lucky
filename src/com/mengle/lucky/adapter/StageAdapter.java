@@ -11,13 +11,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class StageAdapter extends FragmentPagerAdapter {
 
 	public static class Stage {
+		private String title;
 		private String photo;
 		private String endTime;
+		private int person;
 
-		public Stage(String photo, String endTime) {
+		
+
+		public Stage(String title, String photo, String endTime, int person) {
 			super();
+			this.title = title;
 			this.photo = photo;
 			this.endTime = endTime;
+			this.person = person;
+		}
+		
+		public int getPerson() {
+			return person;
+		}
+		public String getTitle() {
+			return title;
 		}
 
 		public String getEndTime() {
@@ -47,6 +60,6 @@ public class StageAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		Stage stage = list.get(position);
 
-		return StageItemFragment.newInstance(stage.photo, stage.endTime);
+		return StageItemFragment.newInstance(stage.title,stage.photo, stage.endTime,stage.person);
 	}
 }
