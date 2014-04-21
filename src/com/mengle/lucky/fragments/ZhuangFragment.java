@@ -10,11 +10,14 @@ import com.mengle.lucky.adapter.ZhuangListAdapter;
 import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
 import com.mengle.lucky.adapter.StageAdapter.Stage;
 import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
+import com.mengle.lucky.wiget.CatDropList;
+import com.mengle.lucky.wiget.CatDropList.OnStateChange;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
@@ -24,8 +27,12 @@ import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-public class ZhuangFragment extends Fragment{
-
+public class ZhuangFragment extends Fragment implements OnClickListener,OnStateChange{
+	
+	private CatDropList catList;
+	
+	private View catdropdown;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -37,6 +44,10 @@ public class ZhuangFragment extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		catList = (CatDropList) getView().findViewById(R.id.catList);
+		catList.setOnStateChange(this);
+		catdropdown = view.findViewById(R.id.catdropdown);
+		catdropdown.setOnClickListener(this);
 		ListView listView = (ListView) getView().findViewById(R.id.listview);
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header, null);
 		listView.addHeaderView(headView);
@@ -58,8 +69,8 @@ public class ZhuangFragment extends Fragment{
 		}}));
 		getFragmentManager().beginTransaction().add(R.id.stage_fragment,stageFragment ).commit();
 		
-		GridView catGrid = (GridView) view.findViewById(R.id.catgrid);
-		catGrid.setAdapter(new CatListAdater(getActivity(), new CatList(new ArrayList<Cat>(){{
+		
+		catList.setAdapter(new CatListAdater(getActivity(), new CatList(new ArrayList<Cat>(){{
 			add(new Cat("1","全部"));
 			add(new Cat("1","全部"));
 			add(new Cat("1","全部"));
@@ -75,6 +86,32 @@ public class ZhuangFragment extends Fragment{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+	}
+	
+	private void showDropDown(){
+		catList.show();
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.catdropdown:
+			showDropDown();
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+
+	public void onShow() {
+		catdropdown.setVisibility(View.GONE);
+		
+	}
+
+	public void onDismiss() {
+		catdropdown.setVisibility(View.VISIBLE);
 		
 	}
 	

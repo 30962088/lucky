@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:clickable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,73 +32,11 @@
         </TextView>
     </LinearLayout>
 
-    <LinearLayout
+    <com.mengle.lucky.wiget.CatDropList
+        android:id="@+id/catList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#d9000000"
-            android:orientation="vertical" >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/test_img_1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:paddingTop="10dp" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" 
-                    android:paddingLeft="12dp"
-                    android:paddingRight="13dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:gravity="center_vertical"
-                        android:text="分类"
-                        android:textColor="#fff"
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:background="#fff" />
-                </LinearLayout>
-
-                <GridView
-                    android:id="@+id/catgrid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="true"
-                    android:gravity="center"
-                    android:numColumns="4"
-                    android:layout_marginLeft="5dp"
-                    android:layout_gravity="center"
-                    android:paddingBottom="40dp" >
-                </GridView>
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="97dp"
-            android:layout_height="16.5dp"
-            android:layout_gravity="center"
-            android:background="@drawable/icon_drop_close" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_marginTop="46dp"></com.mengle.lucky.wiget.CatDropList>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -118,6 +56,24 @@
                 android:textColor="#fff"
                 android:textSize="18sp" />
         </RelativeLayout>
+        
+        <RelativeLayout 
+            android:id="@+id/catdropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <View 
+                android:layout_width="13.5dp"
+                android:layout_height="12dp"
+                android:background="@drawable/icon_dropdown"></View>
+        </RelativeLayout>
+        
     </RelativeLayout>
 
 </RelativeLayout>

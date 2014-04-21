@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/outer">
+
+    <LinearLayout
+        android:id="@+id/inner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#d9000000"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/test_img_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="13dp" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:gravity="center_vertical"
+                        android:text="分类"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="#fff" />
+                </LinearLayout>
+
+                <GridView
+                    android:id="@+id/catgrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:clipToPadding="true"
+                    android:gravity="center"
+                    android:numColumns="4"
+                    android:paddingBottom="40dp" >
+                </GridView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/close"
+            android:layout_width="97dp"
+            android:layout_height="16.5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/icon_drop_close" />
+    </LinearLayout>
+
+</RelativeLayout>
