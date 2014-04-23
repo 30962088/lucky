@@ -25,7 +25,7 @@ public class MainActivity extends SlidingFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initSlidingMenu();
-		switchContent(new ZhuangFragment());
+		switchContent(new CaiFragment());
 		switchRight(new CommentFragment());
 	}
 

@@ -1,0 +1,6 @@
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="71dp"
+    android:layout_height="66dp"
+    android:background="@drawable/bg_bubble" >
+
+</View>

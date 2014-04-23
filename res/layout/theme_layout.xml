@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <RelativeLayout
+                android:id="@+id/stage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" >
+
+                <ImageView
+                    android:id="@+id/header_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test_img_1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="12dp" >
+
+                    <LinearLayout
+                        android:id="@+id/intro"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="40.5dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/btn_intro" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            android:text="竞猜说明"
+                            android:textColor="#fff"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <com.mengle.lucky.wiget.PeronCountView
+                        android:id="@+id/personCountView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                    </com.mengle.lucky.wiget.PeronCountView>
+
+                    <LinearLayout
+                        android:id="@+id/tousu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="40.5dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/btn_tousu" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:gravity="center"
+                            android:text="投诉"
+                            android:textColor="#fff"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/titlebar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/stage"
+                android:layout_marginTop="-15dp" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="23dp"
+                    android:background="#e1e2e6" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="84dp"
+                        android:gravity="center_vertical"
+                        android:text="巴西对韩国谁会赢?"
+                        android:textColor="#434a54"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@+id/bubble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp" >
+                </FrameLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/titlebar"
+                android:background="#000"
+                android:visibility="gone" />
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titlebar"
+                android:clipToPadding="true"
+                android:gravity="center"
+                android:numColumns="3"
+                android:paddingBottom="85.5dp" >
+            </GridView>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/icon_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#e47134" >
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/selectCoin"
+        android:layout_alignTop="@+id/icon_bottom"
+        android:layout_alignBottom="@+id/icon_bottom"
+        android:layout_toRightOf="@+id/icon_center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:gravity="center" >
+
+        <View
+            android:layout_width="23.5dp"
+            android:layout_height="22.5dp"
+            android:background="@drawable/icon_count_selector"
+            android:duplicateParentState="true" />
+
+        <TextView
+            android:id="@+id/coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:duplicateParentState="true"
+            android:text="5"
+            android:textColor="@color/bottom_selector"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/submit"
+        android:layout_alignTop="@+id/icon_bottom"
+        android:layout_alignBottom="@+id/icon_bottom"
+        android:layout_toLeftOf="@+id/icon_center"
+        android:layout_alignParentLeft="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center" >
+
+        <View
+            android:layout_width="18.5dp"
+            android:layout_height="17.5dp"
+            android:background="@drawable/icon_ok_selector"
+            android:duplicateParentState="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:text="确定"
+            android:textColor="@color/bottom_selector"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/icon_center"
+        android:layout_width="161dp"
+        android:layout_height="80.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_timer" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal" >
+
+            <View
+                android:id="@+id/icon_clock"
+                android:layout_width="18.5dp"
+                android:layout_height="18.5dp"
+                android:background="@drawable/icon_clock" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/icon_clock"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/icon_clock"
+                android:text="竞猜倒计时："
+                android:textColor="#000"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="00:00"
+            android:textColor="#000"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
