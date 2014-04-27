@@ -7,5 +7,7 @@
     <string name="network_most">最佳效果（下载大图）</string>
     <string name="network_least">较省流量（智能下图）</string>
     <string name="network_none">极省流量（不下载图）</string>
-
+	<string name="popup_intro_fail">哦！你输了哦\n在本次竞猜中损失%1$d金币，还不通知闺蜜来后援?</string>
+	<string name="popup_intro_success">恭喜你！\n在本次竞猜中获得%1$d金币，还不通知闺蜜来捧场?</string>
+	<string name="popup_intro_check">你已成功下注%1$d金币，还不通知闺蜜来捧场</string>
 </resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/result_dialog" >
+
+    <RelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="39dp"
+        android:layout_marginRight="39dp"
+        android:background="@drawable/bg_popup_red"
+         >
+        
+        <View 
+            android:layout_width="174dp"
+            android:layout_height="89dp"
+            android:background="@drawable/bg_popup_flower"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/popup_inner"
+            android:layout_marginBottom="2dp"
+            android:layout_marginRight="3dp"/>
+
+        <LinearLayout
+            android:paddingLeft="20dp"
+        	android:paddingRight="20dp"
+            android:id="@+id/popup_inner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="哦！你输了哦\n在本次竞猜中损失10金币，还不通知闺蜜来后援?"
+                android:textColor="#fff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/coin"
+                android:layout_width="match_parent"
+                android:layout_height="111dp"
+                android:gravity="center"
+                android:text="-10"
+                android:textColor="#fff"
+                android:textSize="50dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/check_weibo"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_selector"
+                    android:drawableRight="@drawable/icon_weibo_white"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <CheckBox
+                        android:id="@+id/check_tencent"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:button="@drawable/checkbox_selector"
+                        android:drawableRight="@drawable/icon_tencent_white"/>
+                </RelativeLayout>
+
+                <CheckBox
+                    android:id="@+id/check_renren"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox_selector"
+                    android:drawableRight="@drawable/icon_renren_white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:text="不想分享可不勾选"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:layout_marginBottom="17dp"
+                android:layout_marginTop="17dp"
+                android:background="@drawable/btn_gray"
+                android:gravity="center"
+                android:text="关闭"
+                android:textColor="#a4aeb9"
+                android:textSize="22sp" />
+        </LinearLayout>
+        
+        
+        
+    </RelativeLayout>
+
+</RelativeLayout>

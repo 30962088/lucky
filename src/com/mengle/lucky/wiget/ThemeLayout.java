@@ -9,6 +9,8 @@ import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.wiget.PeronCountView.Count;
+import com.mengle.lucky.wiget.ResultDialog.Result;
+import com.mengle.lucky.wiget.ResultDialog.Status;
 
 import android.content.Context;
 import android.os.CountDownTimer;
@@ -16,12 +18,13 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ThemeLayout extends FrameLayout {
+public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 	public static class Theme {
 
@@ -105,6 +108,7 @@ public class ThemeLayout extends FrameLayout {
 		
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
 		submitBtn = findViewById(R.id.submit);
+		submitBtn.setOnClickListener(this);
 		peronCountView = (PeronCountView) findViewById(R.id.personCountView);
 		selectCoinBtn = findViewById(R.id.selectCoin);
 		introView = findViewById(R.id.intro);
@@ -217,6 +221,18 @@ public class ThemeLayout extends FrameLayout {
 		view.setLayoutParams(new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),DisplayUtils.Dp2Px(context, 61))));
 		return view;
 
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.submit:
+			new ResultDialog(getContext(), new Result(Status.FAIL, 10));
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 }

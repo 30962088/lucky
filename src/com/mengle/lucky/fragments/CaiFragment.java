@@ -45,7 +45,7 @@ public class CaiFragment extends Fragment {
 					new QuestionItem("A","结婚",0.5,Color.RED,QuestionLayout.TYPE_MOST);
 					add(new QuestionItem("A","结婚",0.5,Color.RED,QuestionLayout.TYPE_MOST));
 					add(new QuestionItem("A","结婚",0.5,Color.RED,QuestionLayout.TYPE_MOST));
-				}}), 5, new Date(11), false));
+				}}), 5, new Date(11), true));
 	}
 
 }
