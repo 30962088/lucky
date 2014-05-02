@@ -36,7 +36,7 @@ public class PhotoView extends RoundedImageView {
 	private void init() {
 		setScaleType(ScaleType.FIT_XY);
 		setOval(true);
-		setBackgroundColor(Color.WHITE);
+		
 		setRoundBackground(true);
 //		setBorderColor(getResources().getColor(R.color.photo_border));
 //		setBorderWidth((int)getResources().getDimension(R.dimen.border_size));
