@@ -18,6 +18,7 @@
             android:background="@drawable/icon_msg" />
 
         <View
+            android:id="@+id/icon_new"
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:layout_alignRight="@id/icon_msg"
@@ -34,22 +35,26 @@
             android:layout_marginTop="10dp" >
 
             <View
+                android:id="@+id/icon_male"
                 android:layout_width="23.5dp"
                 android:layout_height="23dp"
                 android:background="@drawable/icon_sex_male" />
 
             <View
+                android:id="@+id/icon_female"
                 android:layout_width="23.5dp"
                 android:layout_height="23dp"
                 android:background="@drawable/icon_sex_female"
                 android:visibility="gone" />
         </RelativeLayout>
 
-        <ImageView
+        <com.mengle.lucky.wiget.PhotoView
+            android:id="@+id/photo"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="21dp"
+            android:background="#fff"
             android:src="@drawable/test_img_user" />
 
         <LinearLayout
@@ -60,6 +65,7 @@
             android:gravity="center" >
 
             <TextView
+                android:id="@+id/nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Elin"
@@ -74,6 +80,7 @@
                 android:background="@drawable/icon_star_black" />
 
             <TextView
+                android:id="@+id/coin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20"
@@ -82,6 +89,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -124,6 +132,7 @@
                     android:textSize="11sp" />
 
                 <TextView
+                    android:id="@+id/level"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -164,6 +173,7 @@
                     android:textSize="11sp" />
 
                 <TextView
+                    android:id="@+id/focus_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -217,6 +227,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/fans_new"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

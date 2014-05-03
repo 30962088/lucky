@@ -1,13 +1,16 @@
 package com.mengle.lucky.wiget;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.utils.BitmapLoader;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class ChatItem extends FrameLayout{
+public abstract class ChatItem extends FrameLayout{
 
 	public enum Orientation{
 		LEFT,RIGHT
@@ -28,6 +31,10 @@ public class ChatItem extends FrameLayout{
 			this.time = time;
 			this.bgRes = bgRes;
 		}
+		public Orientation getOrientation() {
+			return orientation;
+		}
+		
 		
 		
 		
@@ -48,6 +55,8 @@ public class ChatItem extends FrameLayout{
 		
 	}
 	
+	protected abstract Orientation orientation();
+	
 	private Chat chat;
 	
 	public void setChatItem(Chat chat){
@@ -56,8 +65,18 @@ public class ChatItem extends FrameLayout{
 	}
 	
 	private void init(){
-		if()
-		LayoutInflater.from(getContext()).inflate(R.layout.zhuang_list_item2, this);
+		if(orientation() == Orientation.LEFT){
+			LayoutInflater.from(getContext()).inflate(R.layout.chat_left_item, this);
+		}else{
+			LayoutInflater.from(getContext()).inflate(R.layout.chat_right_item, this);
+		}
+		
+		ImageView imageView = (ImageView) findViewById(R.id.photo);
+		BitmapLoader.displayImage(getContext(), chat.photo, imageView);
+		TextView textView = ((TextView)findViewById(R.id.content)); 
+		textView.setText(chat.content);
+		((TextView) findViewById(R.id.time)).setText(chat.time);
+		textView.setBackgroundResource(chat.bgRes);
 	}
 
 	
