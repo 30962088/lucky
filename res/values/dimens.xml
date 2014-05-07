@@ -5,4 +5,6 @@
     <dimen name="slidingmenu_offset">60dp</dimen>
 	<dimen name="tab_indicator_margin">2dp</dimen>
 	<dimen name="tab_size">7dp</dimen>
+	<dimen name="nofity_tab">36dp</dimen>
+	<dimen name="msg_right">77dp</dimen>
 </resources>

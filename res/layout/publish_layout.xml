@@ -489,7 +489,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:button="@drawable/checkbox_selector"
+                        android:button="@drawable/checkbox_selector_gray"
                         android:text="阅读并同意遵守游戏规则。"
                         android:textColor="#a4a9ae"
                         android:textSize="15sp" />

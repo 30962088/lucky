@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:gravity="center_vertical"
+    android:paddingRight="10dp">
+    
+    <ImageView 
+        android:layout_width="14dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/msg_new_blue_selector"
+        android:scaleType="centerInside"/>
+    
+    <TextView 
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="3月1日18:00时系统维护   "
+        android:textSize="15sp"
+        android:textColor="@color/msg_color"
+        />
+    
+    <TextView 
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="详情 "
+        android:textSize="12sp"
+       
+        android:textColor="@color/msg_color"/>
+
+</LinearLayout>
