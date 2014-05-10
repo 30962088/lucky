@@ -97,11 +97,12 @@
                     android:background="#e1e2e6" >
 
                     <TextView
+                        android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="84dp"
                         android:gravity="center_vertical"
-                        android:text="巴西对韩国谁会赢?"
+                       
                         android:textColor="#434a54"
                         android:textSize="18sp" />
                 </RelativeLayout>

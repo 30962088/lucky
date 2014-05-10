@@ -8,6 +8,55 @@ import android.content.res.Resources;
 
 public class Preferences {
 
+	public static class User{
+		
+		private static final String NAME = "User";
+		
+		private SharedPreferences preferences;
+
+		public User(Context context) {
+			preferences = context.getSharedPreferences(NAME, 0);
+		}
+		
+		public void setToken(String val){
+			preferences.edit().putString("token", val).commit();
+		}
+		
+		public String getToken(){
+			return preferences.getString("token",null);
+		}
+		
+		public boolean isLogin(){
+			return getToken() != null && getUid() != null;
+		}
+		
+		public void setUid(int val){
+			preferences.edit().putString("uid", ""+val).commit();
+		}
+		
+		public Integer getUid(){
+			String val = preferences.getString("uid",null);
+			Integer uid = null;
+			if(val != null){
+				uid = Integer.parseInt(val);
+			}
+			return uid;
+		}
+		
+		public boolean isFirstLogin() {
+			
+			return preferences.getBoolean("isFirstLogin", true);
+			
+		}
+		
+		public void setFirstLogin(boolean val){
+			
+			preferences.edit().putBoolean("isFirstLogin", val).commit();
+			
+		}
+		
+	}
+	
 	public static class Push {
 		private static final String NAME = "Push";
 		

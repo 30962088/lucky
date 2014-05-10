@@ -16,9 +16,49 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <com.mengle.lucky.wiget.UserHeadView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" 
+                android:id="@+id/not_login">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp" 
+                    >
+
+                    <View
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/icon_login_qq1" />
+
+                    <View
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/icon_login_weibo1" />
+
+                    <View
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/icon_login_tencent1" />
+                </LinearLayout>
+                
+                <View 
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                     android:background="#d9d9da"/>
+                
+            </LinearLayout>
+
+            <com.mengle.lucky.wiget.UserHeadView
+                android:id="@+id/userhead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,6 +74,7 @@
                     android:layout_margin="3dp" >
 
                     <LinearLayout
+                        android:id="@+id/cai"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -56,6 +97,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/aizhuang"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -84,6 +126,7 @@
                     android:layout_margin="3dp" >
 
                     <LinearLayout
+                        android:id="@+id/jiyun"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -106,6 +149,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/aicai"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

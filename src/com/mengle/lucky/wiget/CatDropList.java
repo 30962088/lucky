@@ -1,6 +1,7 @@
 package com.mengle.lucky.wiget;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.utils.BitmapLoader;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.view.View.OnClickListener;;
 
@@ -40,13 +42,16 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 	private Animation animIn;
 	private Animation animOut;
 	private View innerView;
+	private ImageView adImg;
 	private OnStateChange onStateChange;
+	private View listContainer;
 	public void setOnStateChange(OnStateChange onStateChange) {
 		this.onStateChange = onStateChange;
 	}
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.cat_layout, this);
 		setVisibility(View.GONE);
+		listContainer = findViewById(R.id.listContainer);
 		animIn = AnimationUtils.loadAnimation(getContext(),
 				R.anim.slide_from_top);
 		animIn.setFillAfter(true);
@@ -58,11 +63,17 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		gridView = (GridView) findViewById(R.id.catgrid);
 		innerView = findViewById(R.id.inner);
 		innerView.setOnClickListener(this);
+		adImg = (ImageView) findViewById(R.id.adimg);
 		findViewById(R.id.outer).setOnClickListener(this);
 		findViewById(R.id.close).setOnClickListener(this);
 	}
 	
+	public void setAdimg(String photo){
+		BitmapLoader.displayImage(getContext(), photo, adImg);
+	}
+	
 	public void setAdapter(ListAdapter adapter){
+		listContainer.setVisibility(View.VISIBLE);
 		gridView.setAdapter(adapter);
 	}
 	

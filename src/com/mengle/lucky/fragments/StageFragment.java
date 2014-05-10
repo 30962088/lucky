@@ -41,7 +41,7 @@ public class StageFragment extends Fragment{
 	
 	private void init(){
 		if(getActivity() instanceof MainActivity){
-			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+//			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		}
 		if(adapter != null){
 			ViewPager viewpager = (ViewPager) getView().findViewById(R.id.viewpager);

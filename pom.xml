@@ -7,7 +7,7 @@
 	<version>0.0.1</version>
 	<packaging>apk</packaging>
 	<name>lucky</name>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<platform.version> 4.1.1.4
@@ -43,15 +43,15 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.2.1</version>
 		</dependency>
-		
-		
-		
-            
-		
-            
-            
-		
-		
+
+
+
+
+
+
+
+
+
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

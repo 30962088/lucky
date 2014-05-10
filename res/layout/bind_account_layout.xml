@@ -45,17 +45,20 @@
         android:orientation="vertical">
         
         <View 
+            android:id="@+id/qq"
             android:layout_width="186dp"
             android:layout_height="37dp"
             android:background="@drawable/icon_qq1"/>
         
         <View 
+            android:id="@+id/weibo"
             android:layout_width="186dp"
             android:layout_height="37dp"
             android:background="@drawable/icon_weibo2"
             android:layout_marginTop="7dp"/>
 
         <View
+            android:id="@+id/tencent"
             android:layout_width="186dp"
             android:layout_height="37dp"
             android:layout_marginTop="7dp"

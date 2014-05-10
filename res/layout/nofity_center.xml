@@ -4,6 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <RelativeLayout
+        android:background="@drawable/bg_header2"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:gravity="center_vertical" >
+
+        <FrameLayout 
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp">
+            
+            <View 
+                android:layout_width="12dp"
+                android:layout_height="23dp"
+                android:background="@drawable/icon_back"
+                android:layout_gravity="center"/>
+            
+        </FrameLayout>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="通知中心"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    
     <LinearLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"

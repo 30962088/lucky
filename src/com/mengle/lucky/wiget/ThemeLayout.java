@@ -26,6 +26,10 @@ import android.widget.TextView;
 
 public class ThemeLayout extends FrameLayout implements OnClickListener{
 
+	public static interface OnBtnClickListener{
+		public void onOKClick();
+	}
+	
 	public static class Theme {
 
 		public static class Header {
@@ -103,11 +107,21 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	private TextView coinView;
 
 	private TextView timerView;
+	
+	private TextView titleView;
+	
+	private OnBtnClickListener onBtnClickListener;
+	
+	public void setOnBtnClickListener(OnBtnClickListener onBtnClickListener) {
+		this.onBtnClickListener = onBtnClickListener;
+	}
 
 	private void init() {
 		
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
 		submitBtn = findViewById(R.id.submit);
+		titleView = (TextView) findViewById(R.id.title);
+		
 		submitBtn.setOnClickListener(this);
 		peronCountView = (PeronCountView) findViewById(R.id.personCountView);
 		selectCoinBtn = findViewById(R.id.selectCoin);
@@ -122,7 +136,11 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 	}
 
+	private QuestionAdapter adapter; 
+	
 	public void setTheme(Theme theme) {
+		adapter = new QuestionAdapter(getContext(), theme.question);
+		titleView.setText(theme.question.getTitle());
 		submitBtn.setEnabled(theme.enable);
 		selectCoinBtn.setEnabled(theme.enable);
 		bubbleView.addView(theme.bubble);
@@ -130,7 +148,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		BitmapLoader.displayImage(getContext(), theme.header.photo,
 				headerImageView);
 		tousuView.setVisibility(theme.header.tousu ? View.VISIBLE : View.GONE);
-		gridView.setAdapter(new QuestionAdapter(getContext(), theme.question));
+		gridView.setAdapter(adapter);
 		peronCountView.setCount(theme.header.count);
 		coinView.setText(""+theme.coin);
 		
@@ -147,6 +165,14 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			}
 			
 		}*/
+	}
+	
+	public GridView getGridView() {
+		return gridView;
+	}
+	
+	public QuestionAdapter getAdapter() {
+		return adapter;
 	}
 	
 	private static String format(long m){
@@ -222,11 +248,15 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		return view;
 
 	}
+	
 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.submit:
-			new ResultDialog(getContext(), new Result(Status.FAIL, 10));
+			if(onBtnClickListener != null){
+				onBtnClickListener.onOKClick();
+			}
+			
 			break;
 
 		default:

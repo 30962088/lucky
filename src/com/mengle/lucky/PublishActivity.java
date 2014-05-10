@@ -2,6 +2,7 @@ package com.mengle.lucky;
 
 import android.os.Bundle;
 
+
 public class PublishActivity extends BaseActivity{
 
 	@Override
@@ -10,4 +11,6 @@ public class PublishActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.publish_layout);
 	}
+
+
 }

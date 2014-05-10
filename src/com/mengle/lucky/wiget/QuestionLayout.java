@@ -1,14 +1,11 @@
 package com.mengle.lucky.wiget;
 
-import com.mengle.lucky.adapter.QuestionAdapter.Status;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class QuestionLayout extends RelativeLayout {

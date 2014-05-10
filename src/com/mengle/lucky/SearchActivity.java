@@ -5,15 +5,23 @@ import java.util.List;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class SearchActivity extends BaseActivity{
+public class SearchActivity extends BaseActivity implements OnClickListener{
 
 	private FlowLayout flowLayout;
+	
+	public static void open(Context context){
+		context.startActivity(new Intent(context, SearchActivity.class));
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +29,7 @@ public class SearchActivity extends BaseActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_layout);
 		flowLayout = (FlowLayout) findViewById(R.id.flow);
+		findViewById(R.id.leftnav).setOnClickListener(this);
 		init();
 	}
 
@@ -53,5 +62,19 @@ public class SearchActivity extends BaseActivity{
 		}
 		
 	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.leftnav:
+			finish();
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+
+	
 	
 }

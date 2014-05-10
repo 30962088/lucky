@@ -5,13 +5,41 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/no"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="A"
-        android:textColor="#1d856b"
-        android:textSize="24sp" />
+        android:layout_height="30dp"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/selected"
+            android:layout_width="72.5dp"
+            android:layout_height="25dp"
+            android:background="@drawable/bg_radius_green_deep"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/selected_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:text="A"
+                android:textColor="#fff"
+                android:textSize="24sp" />
+
+            <View
+                android:layout_width="18.5dp"
+                android:layout_height="16dp"
+                android:background="@drawable/icon_ok_white2" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A"
+            android:textColor="#1d856b"
+            android:textSize="24sp" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/name"

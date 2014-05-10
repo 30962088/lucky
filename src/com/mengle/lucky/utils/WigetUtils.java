@@ -24,6 +24,28 @@ public class WigetUtils {
 		}
 	}
 	
+	public static void switchVisible(ViewGroup viewGroup,int id){
+		for(int i = 0;i<viewGroup.getChildCount();i++){
+			View view = viewGroup.getChildAt(i);
+			if(view.getId() == id){
+				view.setVisibility(View.VISIBLE);
+			}else{
+				view.setVisibility(View.GONE);
+			}
+		}
+	}
+	
+	public static void switchVisible(ViewGroup viewGroup,View _view){
+		for(int i = 0;i<viewGroup.getChildCount();i++){
+			View view = viewGroup.getChildAt(i);
+			if(_view == view ){
+				view.setVisibility(View.VISIBLE);
+			}else{
+				view.setVisibility(View.GONE);
+			}
+		}
+	}
+	
 	public static void setSelected(ViewGroup viewGroup,boolean selected){
 		for(int i = 0;i<viewGroup.getChildCount();i++){
 			viewGroup.getChildAt(i).setSelected(selected);

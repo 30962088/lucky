@@ -40,15 +40,22 @@ public class QuestionAdapter extends BaseAdapter {
 	}
 	
 	public static class Question{
+		private String title;
 		private Status status;
 		private List<QuestionItem> list;
 		
-		public Question(Status status, List<QuestionItem> list) {
+		
+		
+		public Question(String title, Status status, List<QuestionItem> list) {
 			super();
+			this.title = title;
 			this.status = status;
 			this.list = list;
 		}
 		
+		public String getTitle() {
+			return title;
+		}
 		public List<QuestionItem> getList() {
 			return list;
 		}
@@ -66,13 +73,19 @@ public class QuestionAdapter extends BaseAdapter {
 		private double percent;
 		private int color;
 		private int type;
+		private int id;
 		
-		public QuestionItem(String no, String name, double percent, int color,int type) {
+		public QuestionItem(int id,String no, String name, double percent, int color,int type) {
+			this.id = id;
 			this.no = no;
 			this.name = name;
 			this.percent = percent;
 			this.color = color;
 			this.type = type;
+		}
+		
+		public int getId() {
+			return id;
 		}
 		public String getNo() {
 			return no;
@@ -144,13 +157,20 @@ public class QuestionAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.noView.setText(questionItem.no);
+		holder.selectedNo.setText(questionItem.no);
 		holder.noView.setTextColor(questionItem.color);
 		holder.nameView.setText(questionItem.name);
 		holder.nameView.setTextColor(questionItem.color);
 		holder.percentView.setText(""+(questionItem.percent*100));
 		holder.questionView.setColor(questionItem.color);
 		holder.questionView.setType(questionItem.type);
-		
+		if(questionItem.type == QuestionLayout.TYPE_MOST){
+			holder.selectedView.setVisibility(View.VISIBLE);
+			holder.noView.setVisibility(View.GONE);
+		}else{
+			holder.selectedView.setVisibility(View.GONE);
+			holder.noView.setVisibility(View.VISIBLE);
+		}
 		
 		if(question.status.gameover){
 			holder.gameoverView.setVisibility(View.VISIBLE);
@@ -178,6 +198,8 @@ public class QuestionAdapter extends BaseAdapter {
 		private View gameoverView;
 		private View passView;
 		private View notpassView;
+		private View selectedView;
+		private TextView selectedNo;
 		public ViewHolder(View view) {
 			noView = (TextView) view.findViewById(R.id.no);
 			nameView = (TextView) view.findViewById(R.id.name);
@@ -185,6 +207,8 @@ public class QuestionAdapter extends BaseAdapter {
 			percentView = (TextView) view.findViewById(R.id.percent);
 			gameoverView = view.findViewById(R.id.gameover);
 			passView = view.findViewById(R.id.pass);
+			selectedView = view.findViewById(R.id.selected);
+			selectedNo = (TextView) view.findViewById(R.id.selected_no);
 			notpassView = view.findViewById(R.id.notpass);
 		}
 	}

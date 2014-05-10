@@ -7,27 +7,73 @@ import com.mengle.lucky.fragments.CommentFragment;
 import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
 import com.mengle.lucky.fragments.ZhuangFragment;
+import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.WigetUtils;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
 
-public class MainActivity extends SlidingFragmentActivity {
+public class MainActivity extends SlidingFragmentActivity implements OnClickListener{
 
+	public static MainActivity instance;
+	
+	private View rightComment;
+	
+	private View rightSearch;
+	
+	private ViewGroup rightContainer;
+	
+	public static MainActivity getInstance() {
+		return instance;
+	}
+	
 	private SidingMenuFragment menuFragment;
+	
+	public MainActivity() {
+		instance = this;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		checkFirstLogin();
 		setContentView(R.layout.activity_main);
+		rightContainer = (ViewGroup) findViewById(R.id.right_container);
+		rightComment = findViewById(R.id.right_comment);
+		rightComment.setOnClickListener(this);
+		rightSearch = findViewById(R.id.right_search);
+		rightSearch.setOnClickListener(this);
 		initSlidingMenu();
-		switchContent(new CaiFragment());
-		switchRight(new CommentFragment());
+		
 	}
+	
+	public View getRightComment() {
+		return rightComment;
+	}
+	
+	public View getRightSearch() {
+		return rightSearch;
+	}
+
+	private void checkFirstLogin() {
+		Preferences.User user = new Preferences.User(this);
+		if(user.isFirstLogin()){
+			BuildAccountLoginActivity.open(this);
+			user.setFirstLogin(false);
+		}
+		
+	}
+	
+	public void switchRightIcon(View view){
+		WigetUtils.switchVisible(rightContainer, view);
+	}
+	
 
 	private void initSlidingMenu() {
 		menuFragment = new SidingMenuFragment();
@@ -57,31 +103,38 @@ public class MainActivity extends SlidingFragmentActivity {
 		
 	}
 	
-	private void switchRight(Fragment fragment){
+	public void switchRight(Fragment fragment){
 		getSupportFragmentManager().beginTransaction()
 		.replace(R.id.menu_frame_two, fragment).commit();
 	}
 
 	
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+	
 	
 	private Fragment mContent;
 	
 	public void switchContent(Fragment fragment) {
-		
-
-		
 
 		mContent = fragment;
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, fragment).commit();
 		getSlidingMenu().showContent();
+		
+		
+		
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.right_search:
+			SearchActivity.open(this);
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 }

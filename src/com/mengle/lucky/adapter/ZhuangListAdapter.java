@@ -12,16 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class ZhuangListAdapter extends BaseAdapter{
+public class ZhuangListAdapter extends BaseAdapter {
 
-	public static class ZhuangModel{
+	public static class ZhuangModel {
 		private String title;
 		private String photo;
 		private int person;
 		private String endTime;
-		public ZhuangModel(String title, String photo, int person) {
-			this(title,photo,person,null);
-		}
+
+		
+
 		public ZhuangModel(String title, String photo, int person,
 				String endTime) {
 			super();
@@ -30,13 +30,13 @@ public class ZhuangListAdapter extends BaseAdapter{
 			this.person = person;
 			this.endTime = endTime;
 		}
-		
+
 	}
-	
+
 	private Context context;
-	
+
 	private List<ZhuangModel> list;
-	
+
 	public ZhuangListAdapter(Context context, List<ZhuangModel> list) {
 		this.context = context;
 		this.list = list;
@@ -70,35 +70,26 @@ public class ZhuangListAdapter extends BaseAdapter{
 		holder.setModel(list.get(position));
 		return convertView;
 	}
-	
+
 	private static class ViewHolder {
-		private ZhuangItem item;
+
 		private ZhuangItem1 item1;
-		
+
 		public ViewHolder(View view) {
-			item = (ZhuangItem) view.findViewById(R.id.item);
+
 			item1 = (ZhuangItem1) view.findViewById(R.id.item1);
 		}
-		
-		public void setModel(ZhuangModel model){
-			if(model.endTime == null){
-				item.setVisibility(View.VISIBLE);
-				item.setTitle(model.title);
-				item.setPhoto(model.photo);
-				item.setPerson(model.person);
-				item1.setVisibility(View.GONE);
-			}else{
-				item.setVisibility(View.GONE);
-				
-				item1.setVisibility(View.VISIBLE);
-				item1.setTitle(model.title);
-				item1.setPhoto(model.photo);
-				item1.setPerson(model.person);
-				item1.setEndTime(model.endTime);
-			}
+
+		public void setModel(ZhuangModel model) {
+
+			item1.setVisibility(View.VISIBLE);
+			item1.setTitle(model.title);
+			item1.setPhoto(model.photo);
+			item1.setPerson(model.person);
+			item1.setEndTime(model.endTime);
+
 		}
-		
-		
+
 	}
 
 }

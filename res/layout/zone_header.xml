@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <com.mengle.lucky.wiget.UserHeadView
+        android:id="@+id/userhead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </com.mengle.lucky.wiget.UserHeadView>
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@drawable/bg_radius_blue_2"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="我的竞猜详情"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+        
+        <LinearLayout 
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="47dp">
+            
+            <TextView 
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="目前进行中的"
+                android:textSize="12sp"
+                android:textColor="#fff"
+                android:gravity="center"
+                android:background="@drawable/tab_line_orange_selector"/>
+            
+            <TextView 
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:background="@drawable/tab_line_orange_selector"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:text="我发起的"/>
+            
+            <TextView 
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_height="match_parent"
+                android:background="@drawable/tab_line_orange_selector"
+                android:gravity="center"
+                android:text="参与过的"/>
+            
+        </LinearLayout>
+
+        
+    </LinearLayout>
+
+</LinearLayout>

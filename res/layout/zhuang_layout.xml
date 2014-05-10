@@ -31,50 +31,27 @@
             android:textSize="18sp" >
         </TextView>
     </LinearLayout>
-
-    <com.mengle.lucky.wiget.CatDropList
-       
-        android:id="@+id/catList"
+    
+    <com.mengle.lucky.wiget.CommonHeaderView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="46dp"></com.mengle.lucky.wiget.CatDropList>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:background="@drawable/bg_header" >
-
+        android:id="@+id/headerView">
+        
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:gravity="center_vertical" >
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="好运7"
+                android:text="我爱装"
                 android:textColor="#fff"
                 android:textSize="18sp" />
+    
+            
         </RelativeLayout>
         
-        <RelativeLayout 
-            android:id="@+id/catdropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <View 
-                android:layout_width="13.5dp"
-                android:layout_height="12dp"
-                android:background="@drawable/icon_dropdown"></View>
-        </RelativeLayout>
-        
-    </RelativeLayout>
+    </com.mengle.lucky.wiget.CommonHeaderView>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.mengle.lucky.wiget;
 
+import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
@@ -8,11 +9,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserHeadView extends FrameLayout{
+public class UserHeadView extends FrameLayout implements OnClickListener{
 
 	public enum Sex{
 		MALE,FEMALE
@@ -101,6 +103,7 @@ public class UserHeadView extends FrameLayout{
 		focusCountView = (TextView) findViewById(R.id.focus_count);
 		fansCountView = (TextView) findViewById(R.id.fans_count);
 		fansNewView = (TextView) findViewById(R.id.fans_new);
+		findViewById(R.id.icon_msg).setOnClickListener(this);
 	}
 	
 	public void setData(UserHeadData data){
@@ -114,12 +117,24 @@ public class UserHeadView extends FrameLayout{
 			femaleView.setVisibility(View.GONE);
 			maleView.setVisibility(View.VISIBLE);
 		}
-		coinView.setText(data.coin);
-		statusView.setText(getContext().getString(R.string.user_head_status, new int[]{data.win,data.fail,data.eq}));
+		coinView.setText(""+data.coin);
+		statusView.setText(getContext().getString(R.string.user_head_status, data.win,data.fail,data.eq));
 		levelView.setText(data.level);
-		focusCountView.setText(data.focusCount);
-		fansCountView.setText(data.fansCount);
-		fansNewView.setText(data.fansNewCount);
+		focusCountView.setText(""+data.focusCount);
+		fansCountView.setText(""+data.fansCount);
+		fansNewView.setText(""+data.fansNewCount);
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.icon_msg:
+			NotifyCenterActivity.open(getContext());
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 	
