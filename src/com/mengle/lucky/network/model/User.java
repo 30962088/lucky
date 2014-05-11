@@ -2,6 +2,7 @@ package com.mengle.lucky.network.model;
 
 import java.util.List;
 
+import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.wiget.UserHeadView.Sex;
 import com.mengle.lucky.wiget.UserHeadView.UserHeadData;
 
@@ -91,11 +92,11 @@ public class User {
 	}
 
 	public String getAvatar() {
-		return avatar;
+		return BitmapLoader.getPhoto(avatar);
 	}
 
 	public String getHead() {
-		return head;
+		return BitmapLoader.getHead(head);
 	}
 
 	public int getGender() {
@@ -184,7 +185,7 @@ public class User {
 			sex = Sex.FEMALE;
 			break;
 		}
-		UserHeadData data = new UserHeadData(uid,false, avatar, nickname,sex , gold_coin, win_count, lost_count, fail_count, title, followings, followers, 0);
+		UserHeadData data = new UserHeadData(uid,false, getAvatar(),getHead(), nickname,sex , gold_coin, win_count, lost_count, fail_count, title, followings, followers, 0);
 		return data;
 	}
 

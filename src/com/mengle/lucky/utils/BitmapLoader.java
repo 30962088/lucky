@@ -3,6 +3,7 @@ package com.mengle.lucky.utils;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.mengle.lucky.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -26,6 +27,13 @@ public class BitmapLoader {
 		return imageLoader;
 	}
 	
+	public static String getPhoto(String photo){
+		return photo != null?photo:"drawable://" + R.drawable.test_img_user;
+	}
+	
+	public static String getHead(String head){
+		return head != null?head:"drawable://" + R.drawable.bg_user;
+	}
 	
 	public static void displayImage(Context context, String url,ImageView imageView){
 		ImageLoader imageLoader = getImageLoader(context);

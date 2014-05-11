@@ -5,6 +5,8 @@ import com.mengle.lucky.R;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.wiget.PhotoListDialog.OnResultClick;
+import com.mengle.lucky.wiget.PhotoListDialog.Type;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -15,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class UserHeadView extends FrameLayout implements OnClickListener{
+public class UserHeadView extends FrameLayout implements OnClickListener,OnResultClick{
 
 	public enum Sex{
 		MALE,FEMALE
@@ -24,6 +26,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 	public static class UserHeadData{
 		private int uid;
 		private boolean hasNewMsg;
+		private String head;
 		private String photo;
 		private String nick;
 		private Sex sex;
@@ -35,7 +38,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 		private int focusCount;
 		private int fansCount;
 		private int fansNewCount;
-		public UserHeadData(int uid,boolean hasNewMsg, String photo, String nick,
+		public UserHeadData(int uid,boolean hasNewMsg, String photo,String head, String nick,
 				Sex sex, int coin, int win, int eq, int fail, String level,
 				int focusCount, int fansCount, int fansNewCount) {
 			this.uid = uid;
@@ -96,8 +99,12 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 	
 	private View btnMsgView;
 	
+	private ImageView iconHead;
+	
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
+		iconHead = (ImageView) findViewById(R.id.icon_head);
+		iconHead.setOnClickListener(this);
 		btnFocusView = findViewById(R.id.btn_focus);
 		newIconView = findViewById(R.id.icon_new);
 		photoView = (ImageView) findViewById(R.id.photo);
@@ -112,15 +119,18 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 		fansNewView = (TextView) findViewById(R.id.fans_new);
 		btnMsgView = findViewById(R.id.icon_msg);
 		btnMsgView.setOnClickListener(this);
+		photoView.setOnClickListener(this);
 	}
 	
 	public void setData(UserHeadData data){
 		Preferences.User user = new Preferences.User(getContext());
-		
+		BitmapLoader.displayImage(getContext(), data.head, iconHead);
 		if(user.getUid() == data.uid){
+			photoView.setEnabled(true);
 			btnMsgView.setVisibility(View.VISIBLE);
 			btnFocusView.setVisibility(View.GONE);
 		}else{
+			photoView.setEnabled(false);
 			btnMsgView.setVisibility(View.GONE);
 			btnFocusView.setVisibility(View.VISIBLE);
 		}
@@ -147,9 +157,23 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 		case R.id.icon_msg:
 			NotifyCenterActivity.open(getContext());
 			break;
-
+		case R.id.photo:
+			new PhotoListDialog(getContext(), Type.AVATAR, this);
+			break;
+		case R.id.icon_head:
+			new PhotoListDialog(getContext(), Type.HEAD, this);
+			break;
 		default:
 			break;
+		}
+		
+	}
+
+	public void onResult(Type type, String uri) {
+		if(type == Type.AVATAR){
+			BitmapLoader.displayImage(getContext(),uri, photoView);
+		}else{
+			BitmapLoader.displayImage(getContext(), uri, iconHead);
 		}
 		
 	}

@@ -1,5 +1,7 @@
 package com.mengle.lucky;
 
+import java.io.InputStream;
+
 import com.mengle.lucky.fragments.UserGameCreatorFragment;
 import com.mengle.lucky.fragments.UserGameEndFragment;
 import com.mengle.lucky.fragments.UserGamingFragment;
@@ -16,6 +18,8 @@ import com.mengle.lucky.wiget.UserHeadView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -180,6 +184,34 @@ public class ZoneActivity extends FragmentActivity implements
 	public void onPageScrollStateChanged(int state) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public static final int SELECT_PHOTO = 1;
+	
+	public static interface OnPickListener{
+		public void onPick(Uri uri);
+	}
+	
+	private OnPickListener onPickListener;
+	
+	public void pick(OnPickListener onPickListener){
+		this.onPickListener = onPickListener;
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setType("image/*");
+		startActivityForResult(photoPickerIntent, SELECT_PHOTO);    
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
+	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
+
+	    switch(requestCode) { 
+	    case SELECT_PHOTO:
+	        if(resultCode == RESULT_OK){  
+	            Uri selectedImage = imageReturnedIntent.getData();
+	            onPickListener.onPick(selectedImage);
+	        }
+	    }
 	}
 	
 	

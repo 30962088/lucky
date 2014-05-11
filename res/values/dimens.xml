@@ -7,4 +7,5 @@
 	<dimen name="tab_size">7dp</dimen>
 	<dimen name="nofity_tab">36dp</dimen>
 	<dimen name="msg_right">77dp</dimen>
+	<dimen name="photo_item_padding">3dp</dimen>
 </resources>
