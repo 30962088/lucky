@@ -1,6 +1,8 @@
 package com.mengle.lucky.wiget;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.ZoneActivity;
@@ -8,6 +10,7 @@ import com.mengle.lucky.ZoneActivity.OnPickListener;
 import com.mengle.lucky.adapter.PhotoListAdapter;
 import com.mengle.lucky.adapter.PhotoListAdapter.Photo;
 import com.mengle.lucky.adapter.PhotoListAdapter.PhotoList;
+import com.mengle.lucky.database.DataBaseHelper;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -31,7 +34,6 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	
 	private Context context;
 
-
 	
 	public static interface OnResultClick{
 		public void onResult(Type type, String uri);
@@ -47,11 +49,14 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	
 	private OnResultClick onResultClick;
 	
+	private String defaultImg;
 	
-	public PhotoListDialog(Context context,Type type,OnResultClick onResultClick) {
+	
+	public PhotoListDialog(Context context,Type type,OnResultClick onResultClick,String defaultImg) {
 		this.context = context;
 		this.type = type;
 		this.onResultClick = onResultClick;
+		this.defaultImg = defaultImg;
 		init();
 	}
 	
@@ -80,7 +85,12 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		popup.setOnClickListener(this);
 		popup.startAnimation(rotation);
 		view.findViewById(R.id.ok).setOnClickListener(this);
-		request();
+		try {
+			request();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mPopupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 	}
 	
@@ -88,21 +98,26 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	
 	private PhotoList photoList;
 	
-	private void request(){
+	private void request() throws SQLException{
 		int resId;
 		if(type == Type.HEAD){
+			gridView.setNumColumns(2);
 			resId = R.drawable.icon_drag_big;
 		}else{
+			gridView.setNumColumns(3);
 			resId = R.drawable.icon_drag_small;
 		}
-		final int fresid = resId;
-		photoList = new PhotoList(new ArrayList<Photo>(){{
-			add(new Photo("1", "http://www.5wants.cc/WEB/File/U3325P704T93D1661F3923DT20090612155225.jpg"));
-			add(new Photo("1", "http://www.5wants.cc/WEB/File/U3325P704T93D1661F3923DT20090612155225.jpg"));
-			add(new Photo("1", "http://www.5wants.cc/WEB/File/U3325P704T93D1661F3923DT20090612155225.jpg"));
-			add(new Photo("1", "http://www.5wants.cc/WEB/File/U3325P704T93D1661F3923DT20090612155225.jpg"));
-			add(new Photo("1", "drawable://" + fresid));
-		}});
+		int type = Photo.TYPE_AVATAR;
+		if(this.type == Type.HEAD){
+			type = Photo.TYPE_HEAD;
+		}
+		List<Photo> list = new ArrayList<PhotoListAdapter.Photo>();
+//		list.add(new Photo(defaultImg, type));
+		list.addAll(Photo.findPhotosByType(context, type));
+		list.add(new Photo( "drawable://" + resId,type));
+		photoList =  new PhotoList(list);
+		
+		
 		photoList.setIndex(0);
 		adapter = new PhotoListAdapter(context, photoList);
 		gridView.setAdapter(adapter);
@@ -113,6 +128,8 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.alert:
+			mPopupWindow.dismiss();
+			break;
 		case R.id.ok:
 			onResultClick.onResult(type, photoList.getList().get(photoList.getIndex()).getPhoto());
 			mPopupWindow.dismiss();
@@ -125,9 +142,20 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	}
 	
 	public void onPick(Uri uri) {
+		int type = Photo.TYPE_AVATAR;
+		if(this.type == Type.HEAD){
+			type = Photo.TYPE_HEAD;
+		}
+		Photo photo = new Photo(uri.toString(),type);
+		try {
+			new DataBaseHelper(context).getPhotoDao().create(photo);
+			photoList.getList().add(photoList.getList().size()-1, photo);
+			adapter.notifyDataSetChanged();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		photoList.getList().add(photoList.getList().size()-1, new Photo("1", uri.toString()));
-		adapter.notifyDataSetChanged();
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position,

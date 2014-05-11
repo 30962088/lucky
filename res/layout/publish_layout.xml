@@ -124,6 +124,7 @@
                 android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/titleview"
                 android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginLeft="8dp"
@@ -179,6 +180,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/content"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="8dp"
@@ -194,6 +196,7 @@
                     android:layout_height="wrap_content" >
 
                     <View
+                        android:id="@+id/add_pic"
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:background="@drawable/icon_add_pic" />
@@ -242,6 +245,7 @@
                         android:textSize="15sp" />
 
                     <EditText
+                        android:id="@+id/question1"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_marginLeft="5dp"
@@ -266,6 +270,7 @@
                         android:textSize="15sp" />
 
                     <EditText
+                        android:id="@+id/question2"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_marginLeft="5dp"
@@ -290,6 +295,7 @@
                         android:textSize="15sp" />
 
                     <EditText
+                        android:id="@+id/question3"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_marginLeft="5dp"

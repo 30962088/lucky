@@ -23,12 +23,12 @@ public class MsgListAdapter extends BaseAdapter{
 	}
 	
 	public static class Msg{
-		private String id;
+		private int id;
 		private String title;
 		private boolean checked;
 		private Type type;
 		private String rightTitle;
-		public Msg(String id, String title, boolean checked, Type type,
+		public Msg(int id, String title, boolean checked, Type type,
 				String rightTitle) {
 			super();
 			this.id = id;
@@ -37,7 +37,7 @@ public class MsgListAdapter extends BaseAdapter{
 			this.type = type;
 			this.rightTitle = rightTitle;
 		}
-		public String getId() {
+		public int getId() {
 			return id;
 		}
 		
@@ -45,7 +45,7 @@ public class MsgListAdapter extends BaseAdapter{
 	
 	public static class Nofity extends Msg{
 		
-		public Nofity(String id, String title, boolean checked) {
+		public Nofity(int id, String title, boolean checked) {
 			super(id, title, checked, Type.NOFITY, "详情");
 			// TODO Auto-generated constructor stub
 		}
@@ -54,7 +54,7 @@ public class MsgListAdapter extends BaseAdapter{
 	
 	public static class Message extends Msg{
 		
-		public Message(String id, String title,String rightTitle,boolean checked
+		public Message(int id, String title,String rightTitle,boolean checked
 				) {
 			super(id, title, checked, Type.MSG, rightTitle);
 			// TODO Auto-generated constructor stub

@@ -2,6 +2,7 @@
 package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 
+import com.mengle.lucky.PublishActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.CatListAdater;
 import com.mengle.lucky.adapter.CatListAdater.CatList;
@@ -43,7 +44,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		
+		view.findViewById(R.id.icon_bottom).setOnClickListener(this);
 		ListView listView = (ListView) getView().findViewById(R.id.listview);
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header, null);
 		listView.addHeaderView(headView);
@@ -88,7 +89,14 @@ public class ZhuangFragment extends Fragment implements OnClickListener{
 	
 
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		case R.id.icon_bottom:
+			PublishActivity.open(getActivity());
+			break;
+
+		default:
+			break;
+		}
 		
 	}
 

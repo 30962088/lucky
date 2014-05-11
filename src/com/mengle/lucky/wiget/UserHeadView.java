@@ -1,7 +1,9 @@
 package com.mengle.lucky.wiget;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.ZoneActivity;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
@@ -44,6 +46,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 			this.uid = uid;
 			this.hasNewMsg = hasNewMsg;
 			this.photo = photo;
+			this.head = head;
 			this.nick = nick;
 			this.sex = sex;
 			this.coin = coin;
@@ -101,6 +104,8 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 	
 	private ImageView iconHead;
 	
+	private UserHeadData userHeadData;
+	
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
 		iconHead = (ImageView) findViewById(R.id.icon_head);
@@ -123,6 +128,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 	}
 	
 	public void setData(UserHeadData data){
+		this.userHeadData = data;
 		Preferences.User user = new Preferences.User(getContext());
 		BitmapLoader.displayImage(getContext(), data.head, iconHead);
 		if(user.getUid() == data.uid){
@@ -153,15 +159,24 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 	}
 
 	public void onClick(View v) {
+		Preferences.User user = new Preferences.User(getContext());
 		switch (v.getId()) {
 		case R.id.icon_msg:
 			NotifyCenterActivity.open(getContext());
 			break;
 		case R.id.photo:
-			new PhotoListDialog(getContext(), Type.AVATAR, this);
+			if(getContext() instanceof MainActivity){
+				ZoneActivity.open(getContext(), ""+userHeadData.uid);
+			}else if(user.getUid() == userHeadData.uid){
+				new PhotoListDialog(getContext(), Type.AVATAR, this,userHeadData.photo);
+			}
+			
 			break;
 		case R.id.icon_head:
-			new PhotoListDialog(getContext(), Type.HEAD, this);
+			if(!(getContext() instanceof MainActivity)&&user.getUid() == userHeadData.uid){
+				new PhotoListDialog(getContext(), Type.HEAD, this,userHeadData.head);
+			}
+			
 			break;
 		default:
 			break;
@@ -171,8 +186,10 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 
 	public void onResult(Type type, String uri) {
 		if(type == Type.AVATAR){
+			userHeadData.photo = uri;
 			BitmapLoader.displayImage(getContext(),uri, photoView);
 		}else{
+			userHeadData.head = uri;
 			BitmapLoader.displayImage(getContext(), uri, iconHead);
 		}
 		

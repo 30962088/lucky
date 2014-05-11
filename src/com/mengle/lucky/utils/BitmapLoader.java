@@ -1,6 +1,7 @@
 package com.mengle.lucky.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.mengle.lucky.R;
@@ -28,11 +29,11 @@ public class BitmapLoader {
 	}
 	
 	public static String getPhoto(String photo){
-		return photo != null?photo:"drawable://" + R.drawable.test_img_user;
+		return !TextUtils.isEmpty(photo)?photo:"drawable://" + R.drawable.test_img_user;
 	}
 	
 	public static String getHead(String head){
-		return head != null?head:"drawable://" + R.drawable.bg_user;
+		return !TextUtils.isEmpty(head)?head:"drawable://" + R.drawable.bg_user;
 	}
 	
 	public static void displayImage(Context context, String url,ImageView imageView){

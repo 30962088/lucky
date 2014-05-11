@@ -1,9 +1,17 @@
 package com.mengle.lucky.fragments;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 
+import com.j256.ormlite.dao.Dao;
 import com.mengle.lucky.adapter.MsgListAdapter;
-import com.mengle.lucky.adapter.MsgListAdapter.Msg;
+import com.mengle.lucky.database.DataBaseHelper;
+import com.mengle.lucky.network.NoticeGetRequest;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.Notice;
+import com.mengle.lucky.utils.Preferences;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,14 +40,50 @@ public class NofityFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		listView.setAdapter(new MsgListAdapter(getActivity(), new ArrayList<MsgListAdapter.Msg>(){{
-			add(new MsgListAdapter.Nofity("1", "3月1日18:00时系统维护", true));
-			add(new MsgListAdapter.Nofity("1", "3月1日18:00时系统维护", true));
-			add(new MsgListAdapter.Nofity("1", "3月1日18:00时系统维护", false));
-			add(new MsgListAdapter.Nofity("1", "3月1日18:00时系统维护", false));
-			add(new MsgListAdapter.Nofity("1", "3月1日18:00时系统维护", false));
-		}}));
 		
+		
+	}
+	
+	private List<MsgListAdapter.Msg> list;
+	
+	private MsgListAdapter adapter;
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		list = (List<MsgListAdapter.Msg>)Notice.getModelList(getActivity());
+		adapter = new MsgListAdapter(getActivity(), list);
+		listView.setAdapter(adapter);
+		try {
+			request();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	private void request() throws SQLException{
+		final Dao<Notice, Integer> dao = new DataBaseHelper(getActivity()).getNoticeDao();
+		Preferences.User user = new Preferences.User(getActivity());
+		final NoticeGetRequest noticeGetRequest = new NoticeGetRequest(new NoticeGetRequest.Params(user.getUid(), user.getToken()));
+		RequestAsync.request(noticeGetRequest, new Async() {
+			
+			public void onPostExecute(Request request) {
+				for(Notice notice : noticeGetRequest.getNotices()){
+					list.add(0, notice.toModel());
+					try {
+						dao.create(notice);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				adapter.notifyDataSetChanged();
+			}
+		});
 	}
 	
 }
