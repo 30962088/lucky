@@ -60,6 +60,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".NotifyDetailActivity" >
+        </activity>
+        
+        
         <activity android:name=".BuildAccountLoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,6 +87,8 @@
                 <data android:scheme="tencent101084337" /><!-- 100380359 100381104 222222 -->
             </intent-filter>
         </activity>
+        
+        
         
         
     </application>

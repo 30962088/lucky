@@ -38,7 +38,7 @@ public class Msg {
 	protected String sender;
 	
 	@DatabaseField
-	protected boolean checked;
+	protected boolean checked = true;
 	
 	public int getId() {
 		return id;

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
+import com.mengle.lucky.NotifyDetailActivity;
 import com.mengle.lucky.adapter.MsgListAdapter;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.NoticeGetRequest;
@@ -18,9 +19,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class NofityFragment extends Fragment{
+public class NofityFragment extends Fragment implements OnItemClickListener{
 
 	public static NofityFragment newInstance(){
 		return new NofityFragment();
@@ -52,9 +55,10 @@ public class NofityFragment extends Fragment{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		list = (List<MsgListAdapter.Msg>)Notice.getModelList(getActivity());
+		list = Notice.getModelList(getActivity());
 		adapter = new MsgListAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		try {
 			request();
 		} catch (SQLException e) {
@@ -84,6 +88,13 @@ public class NofityFragment extends Fragment{
 				adapter.notifyDataSetChanged();
 			}
 		});
+	}
+
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MsgListAdapter.Msg msg = list.get(position);
+		NotifyDetailActivity.open(getActivity(), msg.getId());
+		
 	}
 	
 }

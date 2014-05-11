@@ -9,11 +9,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import com.mengle.lucky.database.DataBaseHelper;
+import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.utils.Dirctionary;
 
 

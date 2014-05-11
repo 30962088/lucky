@@ -28,6 +28,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 	public void onCreate(SQLiteDatabase arg0, ConnectionSource arg1) {
 		try {
 			TableUtils.createTableIfNotExists(connectionSource, Photo.class);
+			TableUtils.createTableIfNotExists(connectionSource, Notice.class);
+			TableUtils.createTableIfNotExists(connectionSource, Msg.class);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -41,6 +43,8 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 			int arg3) {
 		try {
 			TableUtils.dropTable(connectionSource, Photo.class, true);
+			TableUtils.dropTable(connectionSource, Notice.class, true);
+			TableUtils.dropTable(connectionSource, Msg.class, true);
 			onCreate(database, connectionSource);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -71,7 +75,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 	
 	public Dao<Msg, Integer> getMsgDao() throws SQLException {
         if (msgDao == null) {
-        	msgDao = DaoManager.createDao(getConnectionSource(), Notice.class);
+        	msgDao = DaoManager.createDao(getConnectionSource(), Msg.class);
         }
         return msgDao;
     }

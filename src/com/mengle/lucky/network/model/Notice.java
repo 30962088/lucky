@@ -30,7 +30,7 @@ public class Notice {
 	private String send_time;
 	
 	@DatabaseField
-	private boolean checked;
+	private boolean checked = true;
 	
 	public Notice() {
 		// TODO Auto-generated constructor stub
