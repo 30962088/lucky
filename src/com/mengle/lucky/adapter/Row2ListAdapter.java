@@ -5,6 +5,7 @@ import java.util.List;
 import com.mengle.lucky.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,27 +14,33 @@ import android.widget.TextView;
 
 public class Row2ListAdapter extends BaseAdapter{
 
-	public static class Row{
-		private String title;
-		private int textColor;
-		private int bgColor;
-		public Row(String title, int textColor, int bgColor) {
-			super();
-			this.title = title;
-			this.textColor = textColor;
-			this.bgColor = bgColor;
-		}
-		
-	}
+
 	
 	public static class Row2{
-		private Row left;
-		private Row right;
-		public Row2(Row left, Row right) {
+		private int id;
+		private String leftText;
+		private String rightText;
+		private Integer color;
+		public Row2(int id, String leftText, String rightText, Integer color) {
 			super();
-			this.left = left;
-			this.right = right;
+			this.id = id;
+			this.leftText = leftText;
+			this.rightText = rightText;
+			this.color = color;
 		}
+		public Row2(int id, String leftText, String rightText) {
+			super();
+			this.id = id;
+			this.leftText = leftText;
+			this.rightText = rightText;
+		}
+		
+		public int getId() {
+			return id;
+		}
+		
+		
+		
 		
 	}
 	
@@ -74,10 +81,41 @@ public class Row2ListAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		int row1bgColor;
+		int row2bgColor;
+		int row1Color = Color.parseColor("#768082");
+		int row2Color = Color.parseColor("#768082");
+		if(position == 0){
+			row1Color = Color.parseColor("#e47033");
+			row2Color = Color.parseColor("#429db6");
+			row1bgColor = Color.parseColor("#f9e3d6");
+			row2bgColor = Color.parseColor("#dbf2fa");
+		}else{
+			if(row2.color != null){
+				row1Color = row2.color;
+				row2Color = row2.color;
+			}
+			if(position%2==0){
+				row1bgColor = Color.parseColor("#f6f8fa");
+				row2bgColor = Color.parseColor("#ffffff");
+			}else{
+				row2bgColor = Color.parseColor("#f6f8fa");
+				row1bgColor = Color.parseColor("#ffffff");
+			}
+		}
 		
-		holder.setData(row2);
 		
-		return convertView                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ;
+		
+		holder.row1.setBackgroundColor(row1bgColor);
+		holder.row2.setBackgroundColor(row2bgColor);
+		holder.row1.setTextColor(row1Color);
+		holder.row2.setTextColor(row2Color);
+		holder.row1.setText(row2.leftText);
+		holder.row2.setText(row2.rightText);
+		
+
+		
+		return convertView;
 	}
 	
 	private static class ViewHolder{
@@ -87,14 +125,7 @@ public class Row2ListAdapter extends BaseAdapter{
 			row1 = (TextView) view.findViewById(R.id.row1);
 			row2 = (TextView) view.findViewById(R.id.row2);
 		}
-		private void setData(Row2 row){
-			row1.setText(row.left.title);
-			row1.setBackgroundColor(row.left.bgColor);
-			row1.setTextColor(row.left.textColor);
-			row2.setText(row.right.title);
-			row2.setBackgroundColor(row.right.bgColor);
-			row2.setTextColor(row.right.textColor);
-		}
+		
 	}
 	
 

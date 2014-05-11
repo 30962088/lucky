@@ -1,291 +1,413 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:layout_height="46dp"
+        android:background="@drawable/bg_header2"
+        android:gravity="center_vertical" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:gravity="center"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="完善个人资料"
-                android:textColor="#29353f"
-                android:textSize="15sp" />
+        <FrameLayout
+            android:id="@+id/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp" >
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="1px"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/icon_dashed_orange_repeat" />
+                android:layout_width="12dp"
+                android:layout_height="23dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icon_back" />
+        </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20%"
-                android:textColor="#e47134"
-                android:textSize="24sp" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="个人设置"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:background="#e1e2e6"
-            android:gravity="center"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" >
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/bg_radius_gray_border"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Elin"
-                android:textColor="#80434a54"
-                android:textSize="12sp" />
-        </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#fff" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center_vertical" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="性  别"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-
-                <CheckBox
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:button="@drawable/checkbox_selector_gray"
-                    android:gravity="left"
-                    android:text="男"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-
-                <CheckBox
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:button="@drawable/checkbox_selector_gray"
-                    android:text="女"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#e3e4e8" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center_vertical" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="居住地"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_combo"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="请选择省/市的撒旦撒旦撒"
-                    android:textColor="#80434a54"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_combo"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="请选择省/市的撒旦撒旦撒"
-                    android:textColor="#80434a54"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#e3e4e8" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center_vertical" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="QQ"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_radius_gray_border"
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:text="30"
-                    android:textSize="15dp" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#e3e4e8" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="47dp"
-                android:gravity="center_vertical" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="联系电话"
-                    android:textColor="#29353f"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_radius_gray_border"
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:text="30"
-                    android:textSize="15dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_radius_header_gray"
             android:orientation="vertical" >
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:background="@drawable/bg_radius_header_gray1"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:text="账号绑定"
-                android:textColor="#434a54"
-                android:textSize="15sp" />
+                android:layout_height="41dp"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="完善个人资料"
+                    android:textColor="#29353f"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_dashed_orange_repeat" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20%"
+                    android:textColor="#e47134"
+                    android:textSize="24sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:background="#e1e2e6"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp" >
+
+                <EditText
+                    android:id="@+id/nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/bg_radius_gray_border"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Elin"
+                    android:textColor="#80434a54"
+                    android:textSize="12sp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="QQ"
-                        android:textColor="#29353f"
-                        android:textSize="12sp" />
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="点击绑定"
+                        android:text="性  别"
                         android:textColor="#29353f"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/male"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="8dp"
+                        android:button="@drawable/checkbox_selector_gray"
+                        android:paddingLeft="23dp"
+                        android:text="男"
+                        android:textColor="#29353f"
+                        android:textSize="15sp" />
+
+                    <CheckBox
+                        android:id="@+id/female"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:button="@drawable/checkbox_selector_gray"
+                        android:paddingLeft="23dp"
+                        android:text="女"
+                        android:textColor="#29353f"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e3e4e8" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="居住地"
+                        android:textColor="#29353f"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_combo"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="请选择省/市的撒旦撒旦撒"
+                        android:textColor="#80434a54"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_combo"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="请选择省/市的撒旦撒旦撒"
+                        android:textColor="#80434a54"
                         android:textSize="12sp" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e3e4e8" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
-                    android:background="#e1e2e6"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp" >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="QQ"
-                        android:textColor="#29353f"
-                        android:textSize="12sp" />
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="点击绑定"
+                        android:text="QQ"
                         android:textColor="#29353f"
-                        android:textSize="12sp" />
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/qq"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radius_gray_border"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="30"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e3e4e8" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="47dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="联系电话"
+                        android:textColor="#29353f"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="0dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_radius_gray_border"
+                        android:gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="30"
+                        android:textSize="15dp" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        
-        <RelativeLayout 
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:gravity="center">
-            
-            <ImageView 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_logout"/>
-            
-        </RelativeLayout>
-        
-        <ImageView 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_orange_ok1"/>
-        
-    </LinearLayout>
 
-</ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_radius_header_gray"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:background="@drawable/bg_radius_header_gray1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dp"
+                    android:text="账号绑定"
+                    android:textColor="#434a54"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/sns_qq"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="QQ"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sns_qq_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击绑定"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sns_weibo"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:background="#e1e2e6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="微博"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sns_weibo_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击绑定"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sns_tencent"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="腾讯微博"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sns_tencent_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击绑定"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sns_renren"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:background="#e1e2e6"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="人人网"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sns_renren_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击绑定"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sns_kaixin"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="开心网"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/sns_kaixin_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="点击绑定"
+                            android:textColor="#29353f"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_logout" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_orange_ok1" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

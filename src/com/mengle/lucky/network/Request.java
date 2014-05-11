@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 
 
-public abstract class Request implements Response{
+public abstract class Request implements Response,IRequest{
 
 	
 	
@@ -76,7 +76,7 @@ public abstract class Request implements Response{
 		
 	}
 	
-	public Request request(){
+	public void request(){
 		/*if(!Utils.isMobileNetworkAvailable(App.getInstance())){
 			AlertDialog.show(App.getInstance(), "网络未连接");
 			return;
@@ -134,7 +134,7 @@ public abstract class Request implements Response{
 			e.printStackTrace();
 		}
 		
-		return this;
+		
 		
 		
 	}

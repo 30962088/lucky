@@ -4,6 +4,7 @@ import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
+import com.mengle.lucky.utils.Preferences;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -21,6 +22,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 	}
 	
 	public static class UserHeadData{
+		private int uid;
 		private boolean hasNewMsg;
 		private String photo;
 		private String nick;
@@ -33,10 +35,10 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 		private int focusCount;
 		private int fansCount;
 		private int fansNewCount;
-		public UserHeadData(boolean hasNewMsg, String photo, String nick,
+		public UserHeadData(int uid,boolean hasNewMsg, String photo, String nick,
 				Sex sex, int coin, int win, int eq, int fail, String level,
 				int focusCount, int fansCount, int fansNewCount) {
-			super();
+			this.uid = uid;
 			this.hasNewMsg = hasNewMsg;
 			this.photo = photo;
 			this.nick = nick;
@@ -90,8 +92,13 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 	
 	private TextView fansNewView;
 	
+	private View btnFocusView;
+	
+	private View btnMsgView;
+	
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
+		btnFocusView = findViewById(R.id.btn_focus);
 		newIconView = findViewById(R.id.icon_new);
 		photoView = (ImageView) findViewById(R.id.photo);
 		nickView = (TextView) findViewById(R.id.nickname);
@@ -103,10 +110,20 @@ public class UserHeadView extends FrameLayout implements OnClickListener{
 		focusCountView = (TextView) findViewById(R.id.focus_count);
 		fansCountView = (TextView) findViewById(R.id.fans_count);
 		fansNewView = (TextView) findViewById(R.id.fans_new);
-		findViewById(R.id.icon_msg).setOnClickListener(this);
+		btnMsgView = findViewById(R.id.icon_msg);
+		btnMsgView.setOnClickListener(this);
 	}
 	
 	public void setData(UserHeadData data){
+		Preferences.User user = new Preferences.User(getContext());
+		
+		if(user.getUid() == data.uid){
+			btnMsgView.setVisibility(View.VISIBLE);
+			btnFocusView.setVisibility(View.GONE);
+		}else{
+			btnMsgView.setVisibility(View.GONE);
+			btnFocusView.setVisibility(View.VISIBLE);
+		}
 		newIconView.setVisibility(data.hasNewMsg?View.VISIBLE:View.GONE);
 		BitmapLoader.displayImage(getContext(), data.photo, photoView);
 		nickView.setText(data.nick);

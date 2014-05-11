@@ -1,13 +1,12 @@
 package com.mengle.lucky;
 
-
-
-import java.util.ArrayList;
-
-import com.mengle.lucky.adapter.Row2ListAdapter;
-import com.mengle.lucky.adapter.Row2ListAdapter.Row2;
+import com.mengle.lucky.fragments.UserGameCreatorFragment;
+import com.mengle.lucky.fragments.UserGameEndFragment;
+import com.mengle.lucky.fragments.UserGamingFragment;
+import com.mengle.lucky.network.IUserGet;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.UserGet;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
@@ -15,87 +14,174 @@ import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.WigetUtils.OnItemClickListener;
 import com.mengle.lucky.wiget.UserHeadView;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-public class ZoneActivity extends FragmentActivity implements OnItemClickListener{
-
-	private ListView listView;
+public class ZoneActivity extends FragmentActivity implements
+		OnItemClickListener, OnClickListener,OnPageChangeListener {
 	
+	public static void open(Context context, String uid){
+		Intent intent = new Intent(context, ZoneActivity.class);
+		intent.putExtra("uid", uid);
+		context.startActivity(intent);
+	}
+	
+	private int uid;
+
 	private UserHeadView userHeadView;
 	
+	private ViewPager viewPager;
+	
+	private ViewGroup tab;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zone_layout);
+//		uid = getIntent().getIntExtra("uid",-1);
+		uid = 11;
+		findViewById(R.id.leftnav).setOnClickListener(this);
 		
-		View headView = View.inflate(this, R.layout.zone_header, null);
-		userHeadView = (UserHeadView) headView.findViewById(R.id.userhead);
-		listView =  (ListView) findViewById(R.id.listview);
+		userHeadView = (UserHeadView) findViewById(R.id.userhead);
+
+		View rightNav = findViewById(R.id.rightNav);
+		rightNav.setOnClickListener(this);
+		if(new Preferences.User(this).getUid() == uid){
+			rightNav.setVisibility(View.VISIBLE);
+		}else{
+			rightNav.setVisibility(View.GONE);
+		}
+
+		viewPager = (ViewPager) findViewById(R.id.viewpager);
 		
-		listView.addHeaderView(headView);
+		viewPager.setOnPageChangeListener(this);
 		
-		listView.setAdapter(new Row2ListAdapter(this, new ArrayList<Row2ListAdapter.Row2>(){{
-			add(new Row2(new Row2ListAdapter.Row("结束时间", Color.parseColor("#e47033"), Color.parseColor("#f9e3d6")), 
-					new Row2ListAdapter.Row("结束时间", Color.parseColor("#e47033"), Color.parseColor("#f9e3d6"))));
-		}}));
+		tab = (ViewGroup) findViewById(R.id.tab);
 		
-		WigetUtils.onChildViewClick((ViewGroup) headView.findViewById(R.id.tab) ,this);
+		WigetUtils.onChildViewClick(tab, this);
 		
+		tab.getChildAt(0).performClick();
+		
+		viewPager.setAdapter(new ZonePageAdater(getSupportFragmentManager()));
+
 	}
-	
-	private void login(){
+
+	private void login() {
 		Preferences.User user = new Preferences.User(this);
-		final UserMe userMe = new UserMe(new UserMe.Params(user.getUid(), user.getToken()));
-		RequestAsync.request(userMe, new Async() {
-			
+		int uid = user.getUid();
+		String token = user.getToken();
+		IUserGet userGet;
+		if(uid == this.uid){
+			userGet = new UserMe(new UserMe.Params(uid, token));
+		}else{
+			userGet = new UserGet(new UserGet.Params(uid,token,this.uid));
+		}
+		
+		final IUserGet finalUserGet = userGet;
+		
+		RequestAsync.request(userGet, new Async() {
+
 			public void onPostExecute(Request request) {
-				if(userMe.getStatus() == Request.Status.SUCCESS){
-					userHeadView.setData(userMe.getUser().toUserHeadData());
+				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
+					userHeadView.setData(finalUserGet.getUser().toUserHeadData());
 				}
-				
+
 			}
 		});
 	}
 	
+	private class ZonePageAdater extends FragmentPagerAdapter{
+
+		private Fragment[] fragments;
+		
+		public ZonePageAdater(FragmentManager fm) {
+			super(fm);
+			fragments = new Fragment[]{UserGamingFragment.newInstance(uid),UserGameCreatorFragment.newInstance(uid),UserGameEndFragment.newInstance(uid)};
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			
+			return fragments[position];
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return fragments.length;
+		}
+		
+		
+		
+	}
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+
 		login();
-		
+
 	}
-	
+
 	private View lastView;
+
 	
-	
-	
-	private void onItemClick(int position){
+
+	public void onItemClick(ViewGroup group, View view, int position, long id) {
+		if (lastView != null) {
+			lastView.setSelected(false);
+		}
+
+		viewPager.setCurrentItem(position);
+
+		view.setSelected(true);
+
+		lastView = view;
+
+	}
+
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.rightNav:
+			UserSettingActivity.open(this);
+			break;
+		case R.id.leftnav:
+			finish();
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	public void onPageScrolled(int position, float positionOffset,
+			int positionOffsetPixels) {
+		// TODO Auto-generated method stub
 		
 	}
 
-	public void onItemClick(ViewGroup group, View view, int position, long id) {
-		if(lastView != null){
-			lastView.setSelected(false);
-		}
+	public void onPageSelected(int position) {
+		tab.getChildAt(position).performClick();
 		
-		onItemClick(position);
-		
-		view.setSelected(true);
-		
-		lastView = view;
+	}
+
+	public void onPageScrollStateChanged(int state) {
+		// TODO Auto-generated method stub
 		
 	}
 	
 	
-	
-	
-	
-	
+
 }

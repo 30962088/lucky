@@ -184,7 +184,7 @@ public class User {
 			sex = Sex.FEMALE;
 			break;
 		}
-		UserHeadData data = new UserHeadData(false, avatar, nickname,sex , gold_coin, win_count, lost_count, fail_count, title, followings, followers, 0);
+		UserHeadData data = new UserHeadData(uid,false, avatar, nickname,sex , gold_coin, win_count, lost_count, fail_count, title, followings, followers, 0);
 		return data;
 	}
 

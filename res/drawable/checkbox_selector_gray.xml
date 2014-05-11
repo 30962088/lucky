@@ -3,6 +3,7 @@
     
  	
  	<item android:state_selected="true" android:drawable="@drawable/icon_check_gray_selected"/>
+ 	<item android:state_checked="true" android:drawable="@drawable/icon_check_gray_selected"/>
  	<item android:state_selected="false" android:drawable="@drawable/icon_check_gray"/>
     <item android:drawable="@drawable/icon_check_gray"/>
 </selector>

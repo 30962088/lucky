@@ -9,6 +9,16 @@
         android:layout_height="142dp"
         android:background="@drawable/bg_user" >
 
+        
+        <ImageView 
+            android:id="@+id/btn_focus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_focus_selector"
+            android:scaleType="centerInside"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="16dp"/>
+        
         <View
             android:id="@+id/icon_msg"
             android:layout_width="23dp"
@@ -227,6 +237,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:visibility="gone"
                         android:id="@+id/fans_new"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

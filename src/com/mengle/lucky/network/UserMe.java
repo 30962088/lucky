@@ -7,8 +7,8 @@ import org.apache.http.NameValuePair;
 import com.google.gson.Gson;
 import com.mengle.lucky.network.model.User;
 
-public class UserMe extends Request{
-
+public class UserMe extends Request implements IUserGet{
+	
 	public static class Params{
 		protected int uid;
 		protected String token;

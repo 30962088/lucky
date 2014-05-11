@@ -40,6 +40,11 @@ import android.view.animation.Transformation;
  * 
  */
 public class Utils {
+	
+	public static String getString(String str){
+		return str == null?"":str;
+	}
+	
 	private static ImageLoader imageLoader = null;
 
 	public static int dpToPx(Context context, int dp) {

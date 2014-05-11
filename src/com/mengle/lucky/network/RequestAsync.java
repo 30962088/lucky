@@ -9,18 +9,18 @@ public class RequestAsync {
 		public void onPostExecute(Request request);
 	}
 	
-	public static void request(final Request request,final Async async){
+	public static void request(final IRequest request,final Async async){
 		new AsyncTask<Void, Void, Request>() {
 
 			@Override
 			protected Request doInBackground(Void... params) {
 				request.request();
-				return request;
+				return (Request) request;
 			}
 			
 			@Override
 			protected void onPostExecute(Request result) {
-				async.onPostExecute(request);
+				async.onPostExecute((Request) request);
 			}
 			
 			
