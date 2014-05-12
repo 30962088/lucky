@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#fff2cc">
+
+    
+
+    <ImageView 
+        android:id="@+id/bg_jiyun_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_jiyun_bottom"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="46dp"/>
+    
+    <ImageView 
+        android:layout_marginTop="66dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="-30dp"
+        android:src="@drawable/bg_jiyunbao"
+        android:scaleType="centerInside"
+        android:layout_above="@id/bg_jiyun_bottom"/>
+    
+    <View 
+        android:id="@+id/btn_play"
+        android:layout_width="94dp"
+        android:layout_height="94dp"
+        android:background="@drawable/btn_play"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/bg_jiyun_bottom"
+        android:layout_marginTop="10dp"
+        />
+    
+    <TextView 
+        android:id="@+id/guize"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="游戏规则"
+        android:textSize="18sp"
+        android:textColor="#a66000"
+        android:layout_below="@id/btn_play"/>
+    
+    <RelativeLayout
+        android:id="@+id/icon_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#e47134" >
+
+        <View
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_share" />
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/icon_center"
+        android:layout_width="161dp"
+        android:layout_height="80.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_timer" 
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        
+        <TextView 
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="今日剩余游戏次数"
+            android:textColor="#000"
+            android:textSize="11sp"
+            />
+        
+        <TextView 
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textColor="#000"
+            android:textSize="24sp"
+            />
+        
+    </LinearLayout>
+    
+    <com.mengle.lucky.wiget.CommonHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/headerView">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="集运宝"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+    
+            
+        </RelativeLayout>
+        
+    </com.mengle.lucky.wiget.CommonHeaderView>
+
+</RelativeLayout>

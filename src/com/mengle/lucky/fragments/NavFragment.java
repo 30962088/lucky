@@ -109,8 +109,6 @@ public class NavFragment extends Fragment implements OnClickListener {
 		case R.id.aizhuang:
 
 			mainActivity.switchContent(new ZhuangFragment());
-
-//			mainActivity.switchRight(new Fragment());
 			
 			mainActivity.switchRightIcon(mainActivity.getRightSearch());
 
@@ -118,7 +116,13 @@ public class NavFragment extends Fragment implements OnClickListener {
 			
 			break;
 
-		
+		case R.id.jiyun:
+			mainActivity.switchContent(JiyunIndexFragment.newInstance());
+			
+			mainActivity.switchRightIcon(new View(getActivity()));
+
+			mainActivity.getSlidingMenu().setMode(SlidingMenu.LEFT);
+			break;
 			
 		default:
 			break;

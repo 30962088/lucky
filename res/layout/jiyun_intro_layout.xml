@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alert"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b3fabe0c"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true" >
+
+        
+
+        
+
+        <View 
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="108dp"
+            android:layout_marginTop="108dp"
+            android:layout_marginLeft="34dp"
+            android:layout_marginRight="34dp"
+            android:background="#a66000"/>
+        
+        
+        <TextView
+            android:id="@+id/guize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="游戏规则"
+            android:textColor="#a66000"
+            android:layout_alignLeft="@id/bg"
+            android:layout_alignTop="@id/bg"
+            android:layout_marginTop="-40dp"
+            android:textSize="24sp" />
+        
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/bg"
+            android:layout_marginBottom="-50dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_close1" />
+        
+        
+        
+        <View 
+            android:layout_width="89dp"
+            android:layout_height="162dp"
+            android:background="@drawable/bg_chaoren"
+            android:layout_alignRight="@id/bg"
+            android:layout_alignTop="@id/bg"
+            android:layout_marginTop="-72dp"/>
+        
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/bg"
+            android:layout_alignRight="@id/bg"
+            android:layout_alignTop="@id/bg"
+            android:layout_alignBottom="@id/bg"
+            android:padding="23dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:text="系统每日（0:00-23:59）随机发布20道竞猜题，内容涉及天文、地理、历史、人文、生活等方面。每道竞猜题发布后，用户须在30秒内进行选择，超过时间视为放弃，自动转入下一题。每次竞猜正确，系统奖励用户2金币，回答错误不扣除金币，超时不扣除。每天最多累计奖励用户400金币。（分享不计算在内）未联网情况下，系统将无法进行金币奖惩。"
+                android:textColor="#fff"
+                android:lineSpacingExtra="5dp"
+                android:textSize="12sp"/>
+            
+            
+        </ScrollView>
+        
+        
+        
+        
+    </RelativeLayout>
+
+</RelativeLayout>
