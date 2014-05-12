@@ -91,7 +91,7 @@ public abstract class Request implements Response,IRequest{
 			    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 			    
 			    for(NameValuePair param : fillParams()){
-			    	builder.addTextBody(param.getName(), param.getValue(),ContentType.create("text/plain", MIME.UTF8_CHARSET));
+//			    	builder.addTextBody(param.getName(), param.getValue(),ContentType.create("text/plain", MIME.UTF8_CHARSET));
 			    }
 			    for(String filename:fileMap.keySet()){
 //			    	builder.addPart(filename, new FileBody(fileMap.get(filename)));
