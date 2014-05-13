@@ -7,19 +7,28 @@ import com.mengle.lucky.adapter.ShitiListAdapter;
 import com.mengle.lucky.adapter.ShitiListAdapter.Shiti;
 import com.mengle.lucky.adapter.ShitiListAdapter.ShitiList;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
-public class ShitiFragment extends Fragment{
+public class ShitiFragment extends Fragment implements OnItemClickListener{
 
 	
 	public static ShitiFragment newInstance(){
 		return new ShitiFragment();
 	}
+	
+	private TextView shitiNoView;
+	
+	private TextView coinView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -38,6 +47,13 @@ public class ShitiFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		listView = (ListView) view.findViewById(R.id.listview);
+		listView.setOnItemClickListener(this);
+		shitiNoView = (TextView) view.findViewById(R.id.shiti_no);
+		Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/SHOWG.TTF");
+		shitiNoView.setTypeface(face);
+		
+		coinView = (TextView) view.findViewById(R.id.coin);
+		coinView.setTypeface(face);
 	}
 	
 	@Override
@@ -56,6 +72,14 @@ public class ShitiFragment extends Fragment{
 		}});
 		adapter = new ShitiListAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		list.setIndex(position);
+		adapter.notifyDataSetChanged();
+		
 	}
 	
 	

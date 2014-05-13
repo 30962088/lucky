@@ -62,11 +62,11 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	}
 
 	private void checkFirstLogin() {
-		Preferences.User user = new Preferences.User(this);
-//		if(user.isFirstLogin()){
+		/*Preferences.User user = new Preferences.User(this);
+		if(user.isFirstLogin()){
 			BuildAccountLoginActivity.open(this);
-//			user.setFirstLogin(false);
-//		}
+			user.setFirstLogin(false);
+		}*/
 		
 	}
 	

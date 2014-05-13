@@ -4,10 +4,12 @@
     android:layout_height="wrap_content" >
 
     <LinearLayout
+        android:id="@+id/shiti_item"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/btn_shiti_item"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical"
+        android:padding="0dp" >
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -18,22 +20,26 @@
                 android:id="@+id/no"
                 android:layout_width="30.5dp"
                 android:layout_height="30.5dp"
-                android:background="@drawable/icon_shiti_item_selector" 
-                android:text="A"
-                android:textSize="20sp"
+                android:background="@drawable/icon_shiti_item_selector"
                 android:gravity="center"
-                android:textColor="#fff"/>
+                android:shadowColor="#a75a00"
+                android:shadowDx="1"
+                android:shadowDy="3"
+                android:shadowRadius="2"
+                android:text="A"
+                android:textColor="#fff"
+                android:textSize="20sp" />
         </FrameLayout>
 
         <TextView
             android:id="@+id/content"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:singleLine="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
-            android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="更快" />
     </LinearLayout>
 

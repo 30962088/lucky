@@ -5,6 +5,7 @@ import java.util.List;
 import com.mengle.lucky.R;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,13 @@ public class ShitiListAdapter extends BaseAdapter{
 	
 	private ShitiList list;
 
+	private Typeface face ;
+	
 	public ShitiListAdapter(Context context, ShitiList list) {
 		super();
 		this.context = context;
 		this.list = list;
+		face = Typeface.createFromAsset(context.getAssets(), "fonts/SHOWG.TTF");
 	}
 
 	@Override
@@ -89,24 +93,32 @@ public class ShitiListAdapter extends BaseAdapter{
 		holder.noView.setText(NOLIST[position]);
 		holder.contentView.setText(shiti.title);
 		if(list.index == null){
-			convertView.setSelected(true);
+			holder.setSelected(true);
 		}else{
 			if(list.index == position){
-				convertView.setSelected(true);
+				holder.setSelected(true);
 			}else{
-				convertView.setSelected(false);
+				holder.setSelected(false);
 			}
 		}
 		
 		return convertView;
 	}
 	
-	public static class ViewHolder{
+	public  class ViewHolder{
 		private TextView noView;
 		private TextView contentView;
+		private View shitiItem;
 		public ViewHolder(View view) {
+			shitiItem = view.findViewById(R.id.shiti_item);
 			noView = (TextView) view.findViewById(R.id.no);
 			contentView = (TextView) view.findViewById(R.id.content);
+			noView.setTypeface(face);
+		}
+		
+		public void setSelected(boolean val){
+			shitiItem.setSelected(val);
+			noView.setSelected(val);
 		}
 	}
 	

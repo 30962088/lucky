@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#fff">
+
+    <ListView 
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="46dp"
+        android:layout_marginBottom="50dp"></ListView>
+    
+    <RelativeLayout
+        android:id="@+id/icon_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#e47134" >
+
+        <View
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/btn_share" />
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:id="@+id/icon_center"
+        android:layout_width="161dp"
+        android:layout_height="80.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_timer" 
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        
+        <TextView 
+            android:layout_marginTop="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的当前排名"
+            android:textColor="#000"
+            android:textSize="11sp"
+            />
+        
+        <TextView 
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:textColor="#000"
+            android:textSize="24sp"
+            />
+        
+    </LinearLayout>
+    
+    <com.mengle.lucky.wiget.CommonHeaderView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/headerView">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="爱财榜"
+                android:textColor="#fff"
+                android:textSize="18sp" />
+    
+            
+        </RelativeLayout>
+        
+    </com.mengle.lucky.wiget.CommonHeaderView>
+
+</RelativeLayout>
