@@ -11,7 +11,11 @@ import com.mengle.lucky.adapter.ZhuangListAdapter;
 import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
 import com.mengle.lucky.adapter.StageAdapter.Stage;
 import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
+import com.mengle.lucky.network.GameGetsRequest;
+import com.mengle.lucky.network.GameGetsRequest.Pamras;
+import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.wiget.CatDropList;
+import com.mengle.lucky.wiget.GameListView;
 import com.mengle.lucky.wiget.CatDropList.OnStateChange;
 import com.mengle.lucky.wiget.CommonHeaderView;
 
@@ -31,7 +35,17 @@ import android.widget.ListView;
 
 public class ZhuangFragment extends Fragment implements OnClickListener{
 	
+	public static ZhuangFragment newInstance(int cid){
+		ZhuangFragment fragment = new ZhuangFragment();
+		fragment.setCid(cid);
+		return fragment;
+	}
 	
+	private int cid;
+	
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,24 +54,19 @@ public class ZhuangFragment extends Fragment implements OnClickListener{
 		return inflater.inflate(R.layout.zhuang_layout, null);
 	}
 	
+	private GameListView listView;
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		view.findViewById(R.id.icon_bottom).setOnClickListener(this);
-		ListView listView = (ListView) getView().findViewById(R.id.listview);
+		listView = (GameListView) getView().findViewById(R.id.listview);
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header, null);
-		listView.addHeaderView(headView);
-		listView.setAdapter(new ZhuangListAdapter(getActivity(), new ArrayList<ZhuangListAdapter.ZhuangModel>(){{
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-		}}));
+		listView.getRefreshableView().addHeaderView(headView);
+		Preferences.User user = new Preferences.User(getActivity());
+		listView.setRequest(new GameGetsRequest(new Pamras(user.getUid(), user.getToken(), cid)));
+		
 		StageFragment stageFragment = new StageFragment();
 		stageFragment.setAdapter(new StageAdapter(getChildFragmentManager(), new ArrayList<StageAdapter.Stage>(){{
 			add(new Stage("世界杯竞猜","http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", "23",55));
@@ -84,7 +93,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+		listView.load(true);
 	}
 	
 	

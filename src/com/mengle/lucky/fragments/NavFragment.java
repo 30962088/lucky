@@ -131,7 +131,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 
 		case R.id.aizhuang:
 
-			mainActivity.switchContent(new ZhuangFragment());
+			mainActivity.switchContent(ZhuangFragment.newInstance(0));
 			
 			mainActivity.switchRightIcon(mainActivity.getRightSearch());
 

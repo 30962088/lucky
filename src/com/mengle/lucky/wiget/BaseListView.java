@@ -13,8 +13,8 @@ import android.widget.ListView;
 
 
 
-public class BaseListView extends PullToRefreshListView{
 	
+public class BaseListView extends PullToRefreshListView{
 	public static interface OnLoadListener{
 		public boolean onLoad(int offset,int limit);
 		public void onLoadSuccess();

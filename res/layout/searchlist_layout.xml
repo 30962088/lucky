@@ -33,12 +33,12 @@
             android:textSize="18sp" />
     </RelativeLayout>
     
-    <ListView 
+    <com.mengle.lucky.wiget.GameListView 
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff">
         
-    </ListView>
+    </com.mengle.lucky.wiget.GameListView>
 
 </LinearLayout>
