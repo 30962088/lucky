@@ -161,7 +161,7 @@ public class QuestionAdapter extends BaseAdapter {
 		holder.noView.setTextColor(questionItem.color);
 		holder.nameView.setText(questionItem.name);
 		holder.nameView.setTextColor(questionItem.color);
-		holder.percentView.setText(""+(questionItem.percent*100));
+		holder.percentView.setText(""+String.format("%.2f", (questionItem.percent*100)));
 		holder.questionView.setColor(questionItem.color);
 		holder.questionView.setType(questionItem.type);
 		if(questionItem.type == QuestionLayout.TYPE_MOST){

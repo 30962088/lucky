@@ -3,12 +3,16 @@ package com.mengle.lucky.fragments;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.network.Login.Params;
+import com.mengle.lucky.network.Login;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.UserMe;
 
+import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.OauthUtils.Callback;
 import com.mengle.lucky.wiget.UserHeadView;
 
 import android.os.Bundle;
@@ -19,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 
-public class NavFragment extends Fragment implements OnClickListener {
+public class NavFragment extends Fragment implements OnClickListener,Callback {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +35,8 @@ public class NavFragment extends Fragment implements OnClickListener {
 	private View notLoginView;
 
 	private UserHeadView headView;
+	
+	private OauthUtils oauthUtils;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -41,6 +47,9 @@ public class NavFragment extends Fragment implements OnClickListener {
 
 		headView = (UserHeadView) view.findViewById(R.id.userhead);
 
+		oauthUtils = new OauthUtils(getActivity());
+		
+		oauthUtils.setCallback(this);
 		
 		
 		view.findViewById(R.id.cai).setOnClickListener(this);
@@ -53,6 +62,11 @@ public class NavFragment extends Fragment implements OnClickListener {
 		
 		view.findViewById(R.id.cai).performClick();
 		
+		view.findViewById(R.id.login_qq).setOnClickListener(this);
+		
+		view.findViewById(R.id.login_tencent).setOnClickListener(this);
+		
+		view.findViewById(R.id.login_weibo).setOnClickListener(this);
 
 	}
 
@@ -94,6 +108,15 @@ public class NavFragment extends Fragment implements OnClickListener {
 		
 		
 		switch (v.getId()) {
+		case R.id.login_qq:
+			oauthUtils.qqOauth();
+			break;
+		case R.id.login_tencent:
+			oauthUtils.tencentOauth();
+			break;
+		case R.id.login_weibo:
+			oauthUtils.sinaOauth();
+			break;
 		case R.id.cai:
 
 			mainActivity.switchContent(new CaiFragment());
@@ -137,6 +160,21 @@ public class NavFragment extends Fragment implements OnClickListener {
 			break;
 		}
 
+	}
+
+	@Override
+	public void onSuccess(Params params) {
+		final Login login = new Login(getActivity(), params);
+		RequestAsync.request(login, new Async() {
+			
+			public void onPostExecute(Request request) {
+				if(request.getStatus() == Request.Status.SUCCESS){
+					onResume();
+				}
+				
+			}
+		});
+		
 	}
 
 }

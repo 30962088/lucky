@@ -49,13 +49,14 @@ public class ZhuangFragment extends Fragment implements OnClickListener{
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header, null);
 		listView.addHeaderView(headView);
 		listView.setAdapter(new ZhuangListAdapter(getActivity(), new ArrayList<ZhuangListAdapter.ZhuangModel>(){{
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
 		}}));
 		StageFragment stageFragment = new StageFragment();
 		stageFragment.setAdapter(new StageAdapter(getChildFragmentManager(), new ArrayList<StageAdapter.Stage>(){{

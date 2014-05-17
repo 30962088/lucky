@@ -32,132 +32,12 @@ public class Login extends Request {
 		public void onLoginError(String msg);
 	}
 	
-	public static void onTencentOauth(final Context context){
-		UMSocialService mController = UMServiceFactory.getUMSocialService(
-				"com.umeng.login", RequestType.SOCIAL);
-
-		mController.doOauthVerify(context, SHARE_MEDIA.TENCENT,
-				new UMAuthListener() {
-
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-					}
-
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						if (value != null
-								&& !TextUtils.isEmpty(value.getString("uid"))) {
-							Toast.makeText(context, "授权成功.", Toast.LENGTH_SHORT)
-									.show();
-						} else {
-							Toast.makeText(context, "授权失败", Toast.LENGTH_SHORT)
-									.show();
-						}
-					}
-
-					public void onCancel(SHARE_MEDIA platform) {
-					}
-
-					public void onStart(SHARE_MEDIA platform) {
-					}
-				});
-	}
 	
-	public static void onQQOauth(final Context context){
-		UMSocialService mController = UMServiceFactory.getUMSocialService(
-				"com.umeng.login", RequestType.SOCIAL);
-		mController.getConfig().supportQQPlatform((Activity)context,"100424468","http://www.umeng.com/social");  
-		mController.doOauthVerify(context, SHARE_MEDIA.QQ,
-				new UMAuthListener() {
 
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-					}
-
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						if (value != null
-								&& !TextUtils.isEmpty(value.getString("uid"))) {
-							Toast.makeText(context, "授权成功.", Toast.LENGTH_SHORT)
-									.show();
-						} else {
-							Toast.makeText(context, "授权失败", Toast.LENGTH_SHORT)
-									.show();
-						}
-					}
-
-					public void onCancel(SHARE_MEDIA platform) {
-					}
-
-					public void onStart(SHARE_MEDIA platform) {
-					}
-				});
-	}
-
-	public static void onWeiboOauth(final Context context) {
-		UMSocialService mController = UMServiceFactory.getUMSocialService(
-				"com.umeng.login", RequestType.SOCIAL);
-
-		mController.doOauthVerify(context, SHARE_MEDIA.SINA,
-				new UMAuthListener() {
-
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-					}
-
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						if (value != null
-								&& !TextUtils.isEmpty(value.getString("uid"))) {
-							Toast.makeText(context, "授权成功.", Toast.LENGTH_SHORT)
-									.show();
-						} else {
-							Toast.makeText(context, "授权失败", Toast.LENGTH_SHORT)
-									.show();
-						}
-					}
-
-					public void onCancel(SHARE_MEDIA platform) {
-					}
-
-					public void onStart(SHARE_MEDIA platform) {
-					}
-				});
-	}
-
-	private static void onWeiboLoginSuccess(JSONObject obj,
-			final OnLoginListener loginListener) throws JSONException {
-		Params params = new Login.Params("92", "android", "weibo",
-				obj.getString("id"), obj.getString("name"));
-		String gender = obj.getString("gender");
-		if ("m".equals(gender)) {
-			params.setGender(1);
-		} else if ("f".equals(gender)) {
-			params.setGender(0);
-		} else {
-			params.setGender(-1);
-		}
-		params.setAvatar(obj.getString("avatar_hd"));
-		final Login login = new Login(params);
-		RequestAsync.request(login, new Async() {
-
-			public void onPostExecute(Request request) {
-				if (login.getStatus() == Request.Status.SUCCESS) {
-					Result result = login.getResult();
-					loginListener.onLoginSuccess(result);
-					onLoginSuccess(App.getInstance().getApplicationContext(),
-							result.getUid(), result.getToken());
-				} else {
-					loginListener.onLoginError(login.getErrorMsg());
-				}
-
-			}
-		});
-	}
+	
 
 
-	public static void onLoginSuccess(Context context, int uid, String token) {
-		Preferences.User user = new Preferences.User(context);
-		user.setToken(token);
-		user.setUid(uid);
-	}
+
 
 	public class Result extends User {
 		private String token;
@@ -169,9 +49,9 @@ public class Login extends Request {
 
 	public static class Params {
 
-		protected String channel_id;// 云推送的渠道Id
+		protected String channel_id = "99";// 云推送的渠道Id
 
-		protected String os;// 用户当前登录的操作系统
+		protected String os = "android";// 用户当前登录的操作系统
 
 		protected String via;// SNS的提供商(weibo/tqq/qq/renren/kaixin)
 
@@ -187,15 +67,77 @@ public class Login extends Request {
 
 		protected String expires_in;// 用户认证过后SNS平台分配的token的有效时间(暂时未用)
 
-		public Params(String channel_id, String os, String via, String openid,
-				String nickname) {
-			super();
-			this.channel_id = channel_id;
-			this.os = os;
+		public Params() {
+			// TODO Auto-generated constructor stub
+		}
+
+		
+		
+		
+
+
+		
+
+
+		public String getVia() {
+			return via;
+		}
+
+
+
+		public void setVia(String via) {
 			this.via = via;
+		}
+
+
+
+		public String getOpenid() {
+			return openid;
+		}
+
+
+
+		public void setOpenid(String openid) {
 			this.openid = openid;
+		}
+
+
+
+		public String getNickname() {
+			return nickname;
+		}
+
+
+
+		public void setNickname(String nickname) {
 			this.nickname = nickname;
 		}
+
+
+
+		public int getGender() {
+			return gender;
+		}
+
+
+
+		public String getAvatar() {
+			return avatar;
+		}
+
+
+
+		public String getAccess_token() {
+			return access_token;
+		}
+
+
+
+		public String getExpires_in() {
+			return expires_in;
+		}
+
+
 
 		public void setGender(int gender) {
 			this.gender = gender;
@@ -216,16 +158,21 @@ public class Login extends Request {
 	}
 
 	private Params params;
+	
+	private Context context;
 
 	private Result result;
 
-	public Login(Params params) {
+	public Login(Context context,Params params) {
+		this.context = context;
 		this.params = params;
 	}
 
 	public void onSuccess(String data) {
 		result = new Gson().fromJson(data, Result.class);
-
+		Preferences.User user = new Preferences.User(context);
+		user.setToken(result.token);
+		user.setUid(result.getUid());
 	}
 
 	public Result getResult() {

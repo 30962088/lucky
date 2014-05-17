@@ -30,11 +30,12 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class ZoneActivity extends FragmentActivity implements
 		OnItemClickListener, OnClickListener,OnPageChangeListener {
 	
-	public static void open(Context context, String uid){
+	public static void open(Context context, int uid){
 		Intent intent = new Intent(context, ZoneActivity.class);
 		intent.putExtra("uid", uid);
 		context.startActivity(intent);
@@ -47,16 +48,18 @@ public class ZoneActivity extends FragmentActivity implements
 	private ViewPager viewPager;
 	
 	private ViewGroup tab;
+	
+	private TextView titleView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zone_layout);
-//		uid = getIntent().getIntExtra("uid",-1);
-		uid = 11;
+		uid = getIntent().getIntExtra("uid",-1);
+//		uid = 11;
 		findViewById(R.id.leftnav).setOnClickListener(this);
-		
+		titleView = (TextView) findViewById(R.id.header_title);
 		userHeadView = (UserHeadView) findViewById(R.id.userhead);
 
 		View rightNav = findViewById(R.id.rightNav);
@@ -99,6 +102,7 @@ public class ZoneActivity extends FragmentActivity implements
 			public void onPostExecute(Request request) {
 				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
 					userHeadView.setData(finalUserGet.getUser().toUserHeadData());
+					titleView.setText(finalUserGet.getUser().getNickname());
 				}
 
 			}

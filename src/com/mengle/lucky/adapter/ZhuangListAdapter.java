@@ -15,6 +15,7 @@ import android.widget.BaseAdapter;
 public class ZhuangListAdapter extends BaseAdapter {
 
 	public static class ZhuangModel {
+		private int id;
 		private String title;
 		private String photo;
 		private int person;
@@ -22,9 +23,10 @@ public class ZhuangListAdapter extends BaseAdapter {
 
 		
 
-		public ZhuangModel(String title, String photo, int person,
+		public ZhuangModel(int id,String title, String photo, int person,
 				String endTime) {
 			super();
+			this.id = id;
 			this.title = title;
 			this.photo = photo;
 			this.person = person;

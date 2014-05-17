@@ -3,68 +3,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_first_login" >
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="43dp"
-        >
-        
-        <TextView 
+        android:layout_height="43dp" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="取消"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="#fff"/>
-        
-        <TextView 
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:text="绑定公共账号"
             android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="#fff"/>
-        
+            android:text="绑定公共账号"
+            android:textColor="#fff"
+            android:textSize="16sp" />
     </RelativeLayout>
-    
-    <ImageView 
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_width="206dp"
-        android:layout_height="107.5dp"
-        android:background="@drawable/icon_avater"/>
-    
-    <LinearLayout 
+
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" >
+
+        <ImageView
+            android:layout_width="206dp"
+            android:layout_height="107.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/icon_avater" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-        
-        <View 
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical" >
+
+        <View
             android:id="@+id/qq"
             android:layout_width="186dp"
             android:layout_height="37dp"
-            android:background="@drawable/icon_qq1"/>
-        
-        <View 
+            android:background="@drawable/icon_qq1" />
+
+        <View
             android:id="@+id/weibo"
             android:layout_width="186dp"
             android:layout_height="37dp"
-            android:background="@drawable/icon_weibo2"
-            android:layout_marginTop="7dp"/>
+            android:layout_marginTop="7dp"
+            android:background="@drawable/icon_weibo2" />
 
         <View
             android:id="@+id/tencent"
             android:layout_width="186dp"
             android:layout_height="37dp"
+            android:layout_marginBottom="78dp"
             android:layout_marginTop="7dp"
-            android:background="@drawable/icon_tencent2" 
-            android:layout_marginBottom="78dp"/>
-        
+            android:background="@drawable/icon_tencent2" />
     </LinearLayout>
 
 </RelativeLayout>

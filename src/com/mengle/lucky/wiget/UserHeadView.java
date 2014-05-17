@@ -166,7 +166,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 			break;
 		case R.id.photo:
 			if(getContext() instanceof MainActivity){
-				ZoneActivity.open(getContext(), ""+userHeadData.uid);
+				ZoneActivity.open(getContext(), userHeadData.uid);
 			}else if(user.getUid() == userHeadData.uid){
 				new PhotoListDialog(getContext(), Type.AVATAR, this,userHeadData.photo);
 			}

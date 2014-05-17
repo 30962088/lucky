@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView 
+            android:id="@+id/icon_star"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#e47134"
+            android:layout_marginTop="1px"
+            android:src="@drawable/btn_star_selector"
+            android:scaleType="centerInside"/>
+        
+        <com.mengle.lucky.wiget.TranslateRelativeLayout
+            android:id="@+id/center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_radius5" >
+            
+            <com.mengle.lucky.wiget.PhotoView
+                android:id="@+id/avatar"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:src="@drawable/test_img_user"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"/>
+            
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="80dp"
+                android:layout_centerVertical="true">
+                
+                <LinearLayout 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    
+                    <TextView 
+                        android:id="@+id/textrow1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Elin   地主"
+                        android:textColor="#29353f"
+                        android:textSize="12sp"/>
+                    
+                    <TextView 
+                        android:id="@+id/coin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/icon_count_black"
+                        android:text="20"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="12sp"
+                        android:drawablePadding="3dp"
+                        android:textColor="#29353f"/>
+                    
+                </LinearLayout>
+                
+                <TextView 
+                    android:id="@+id/textrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="胜22  负14  流3"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#798086"
+                    android:textSize="12sp"/>
+                
+            </LinearLayout>
+            
+            <ImageView 
+                android:id="@+id/icon_comment"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="#4fc0e8"
+                android:src="@drawable/icon_comment2"
+                android:scaleType="centerInside"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="1px"/>
+            
+        </com.mengle.lucky.wiget.TranslateRelativeLayout>
+        
+        
+        
+        
+        
+    </RelativeLayout>
+
+</FrameLayout>

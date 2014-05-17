@@ -11,4 +11,7 @@
 	<string name="popup_intro_success">恭喜你！\n在本次竞猜中获得%1$d金币，还不通知闺蜜来捧场?</string>
 	<string name="popup_intro_check">你已成功下注%1$d金币，还不通知闺蜜来捧场</string>
 	<string name="user_head_status">胜 %1$d   负 %2$d   流 %3$d</string>
+	<string name="user_item_row1">%1$s   %2$s</string>
+	<string name="user_item_row2">胜%1$d  负%2$d  流%3$d</string>
+	<string name="zhuang_item_count">( %1$d )</string>
 </resources>

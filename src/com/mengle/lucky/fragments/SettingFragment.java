@@ -1,6 +1,7 @@
 package com.mengle.lucky.fragments;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.utils.CacheManager;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Preferences.Network;
 import com.mengle.lucky.wiget.AlertDialog;
@@ -10,6 +11,8 @@ import com.mengle.lucky.wiget.NetworkDialog;
 import com.mengle.lucky.wiget.NetworkDialog.OnNetworkClick;
 import com.mengle.lucky.wiget.PushDialog;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,6 +27,8 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	
 	private TextView networkType;
 	
+	private TextView cacheSizeView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		root = view;
+		cacheSizeView = (TextView) view.findViewById(R.id.cache_size);
 		view.findViewById(R.id.checkNewVersion).setOnClickListener(this);
 		view.findViewById(R.id.pushManager).setOnClickListener(this);
 		view.findViewById(R.id.clearCache).setOnClickListener(this);
@@ -65,6 +71,34 @@ public class SettingFragment extends Fragment implements OnClickListener{
 				
 			}
 		}, root);
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		getCacheSize();
+	}
+	
+	private void getCacheSize() {
+		
+		new AsyncTask<Context, Void, Long>() {
+
+			@Override
+			protected Long doInBackground(Context... params) {
+				// TODO Auto-generated method stub
+				return CacheManager.folderSize(params[0].getCacheDir())
+						+ CacheManager.folderSize(params[0]
+								.getExternalCacheDir());
+			}
+
+			@Override
+			protected void onPostExecute(Long result) {
+				cacheSizeView.setText(Math.round(result / 1024 / 1024 * 100)
+						/ 100.0 + "M");
+			}
+
+		}.execute(getActivity());
 	}
 	
 	private void changeNetwork(){

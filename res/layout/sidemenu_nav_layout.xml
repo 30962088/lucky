@@ -30,6 +30,7 @@
                     >
 
                     <View
+                        android:id="@+id/login_qq"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="10dp"
@@ -37,12 +38,14 @@
                         android:background="@drawable/icon_login_qq1" />
 
                     <View
+                        android:id="@+id/login_weibo"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_marginRight="15dp"
                         android:background="@drawable/icon_login_weibo1" />
 
                     <View
+                        android:id="@+id/login_tencent"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/icon_login_tencent1" />

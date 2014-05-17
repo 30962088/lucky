@@ -8,6 +8,7 @@ import com.mengle.lucky.utils.DisplayUtils;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +109,7 @@ public class AicaiListAdapter extends BaseAdapter{
 		if(position > 2){
 			size = 18;
 		}
-		holder.noView.setTextSize(DisplayUtils.spToPx(context, size));
+		holder.noView.setTextSize(TypedValue.COMPLEX_UNIT_SP,size);;
 		
 		holder.noView.setText(""+(position+1));
 		

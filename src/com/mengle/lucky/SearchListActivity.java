@@ -24,13 +24,8 @@ public class SearchListActivity extends BaseActivity{
 
 	private void init() {
 		listView.setAdapter(new ZhuangListAdapter(this, new ArrayList<ZhuangListAdapter.ZhuangModel>(){{
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
-			add(new ZhuangModel("1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			add(new ZhuangModel(1,"1", "http://pic5.nipic.com/20100126/2177138_152546644456_2.jpg", 1,"2222"));
+			
 		}}));
 		
 	}

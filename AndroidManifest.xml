@@ -71,6 +71,12 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".UserListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        
         
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
