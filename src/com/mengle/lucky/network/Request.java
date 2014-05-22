@@ -98,10 +98,15 @@ public abstract class Request implements Response,IRequest{
 			    	builder.addBinaryBody(filename, fileMap.get(filename), ContentType.create("image/jpeg"), "uploadimg");
 			    }
 			    requsetEntity = builder.build();
+			    httpost.setEntity(requsetEntity);
 			}else{
-				requsetEntity = new UrlEncodedFormEntity(fillParams(), HTTP.UTF_8);
+				if(fillParams() != null){
+					requsetEntity = new UrlEncodedFormEntity(fillParams(), HTTP.UTF_8);
+					httpost.setEntity(requsetEntity);
+				}
+				
 			}
-			httpost.setEntity(requsetEntity);
+			
 			HttpResponse response = httpclient.execute(httpost);
 			HttpEntity entity = response.getEntity();
 			int status_code = response.getStatusLine().getStatusCode();

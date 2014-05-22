@@ -3,6 +3,7 @@ package com.mengle.lucky.network;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mengle.lucky.adapter.StageAdapter.Stage;
 import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
 import com.mengle.lucky.network.Request.Status;
 import com.mengle.lucky.network.model.Game;
@@ -36,10 +37,26 @@ public interface IGameGet extends IRequest{
 			this.nickname = nickname;
 			this.avatar = avatar;
 		}
+		public Result() {
+			// TODO Auto-generated constructor stub
+		}
 		public ZhuangModel toZhuangModel(){
 			ZhuangModel model = new ZhuangModel(uid, title, avatar, join_count, stop_time);
 			return model;
 		}
+		
+		public Stage toStage(){
+			return new Stage(title, image, stop_time, join_count);
+		}
+		
+		public static List<Stage> toStageList(List<Result> list){
+			List<Stage> stages = new ArrayList<Stage>();
+			for(Result result:list){
+				stages.add(result.toStage());
+			}
+			return stages;
+		}
+		
 		public static List<ZhuangModel> toZhuangModelList(List<Result> results){
 			List<ZhuangModel>  list = new ArrayList<ZhuangModel>();
 			for(Result result:results){
@@ -47,6 +64,32 @@ public interface IGameGet extends IRequest{
 			}
 			return list;
 		}
+		public int getId() {
+			return id;
+		}
+		public String getTitle() {
+			return title;
+		}
+		public String getImage() {
+			return image;
+		}
+		public int getJoin_count() {
+			return join_count;
+		}
+		public String getStop_time() {
+			return stop_time;
+		}
+		public int getUid() {
+			return uid;
+		}
+		public String getNickname() {
+			return nickname;
+		}
+		public String getAvatar() {
+			return avatar;
+		}
+		
+		
 		
 	}
 	

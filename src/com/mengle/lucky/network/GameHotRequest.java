@@ -9,44 +9,42 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mengle.lucky.network.model.Game;
-import com.mengle.lucky.network.model.GameLite;
+import com.mengle.lucky.network.IGameGet.Result;
 
-public class GameGetsRequest extends Request implements IGameGet{
+public class GameHotRequest extends Request{
 
-	public static class Pamras{
+	public static class Params{
 		protected Integer uid;
 		protected String token;
-		protected int cid;
-		protected int start;
-		protected int limit;
-		public Pamras(Integer uid, String token, int cid) {
+		protected int limit = 3;
+		public Params(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;
-			this.cid = cid;
 		}
 		
 	}
 	
-	private Pamras pamras;
+	private List<Result> results = new ArrayList<IGameGet.Result>();
 	
-	private List<Result> list = new ArrayList<Result>();
+	private Params params;
 	
-	public GameGetsRequest(Pamras pamras) {
+	public List<Result> getResults() {
+		return results;
+	}
+	
+	
+	public GameHotRequest(Params params) {
 		super();
-		this.pamras = pamras;
+		this.params = params;
 	}
 
 	@Override
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
-			list = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
+			results = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
 		}
-	}
-	
-	public List<Result> getResult(){
-		return list;
+		
 	}
 
 	@Override
@@ -70,21 +68,13 @@ public class GameGetsRequest extends Request implements IGameGet{
 	@Override
 	public String getURL() {
 		// TODO Auto-generated method stub
-		return HOST+"game/gets/";
+		return HOST+"game/hots/";
 	}
 
 	@Override
 	public List<NameValuePair> fillParams() {
 		// TODO Auto-generated method stub
-		return build(pamras);
-	}
-
-	@Override
-	public void request(int offset, int limit) {
-		pamras.start = offset;
-		pamras.limit = limit;
-		request();
-		
+		return build(params);
 	}
 
 }

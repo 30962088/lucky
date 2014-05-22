@@ -29,11 +29,14 @@ public class CatListAdater extends BaseAdapter{
 		}
 
 		public static class Cat{
-			private String id;
+			private int id;
 			private String name;
-			public Cat(String id, String name) {
+			public Cat(int id, String name) {
 				this.id = id;
 				this.name = name;
+			}
+			public int getId() {
+				return id;
 			}
 			
 		}

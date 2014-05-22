@@ -16,13 +16,13 @@ import android.view.ViewGroup;
 public class StageFragment extends Fragment{
 
 	
-	private StageAdapter adapter;
 	
-	
+	private ViewPager viewPager;
 	
 	public void setAdapter(StageAdapter adapter) {
-		this.adapter = adapter;
-		
+		viewPager.setAdapter(adapter);
+		TabPageIndicator indicator = (TabPageIndicator) getView().findViewById(R.id.indicator);
+		indicator.setViewPager(viewPager);
 	}
 	
 	@Override
@@ -36,6 +36,7 @@ public class StageFragment extends Fragment{
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 		init();
 	}
 	
@@ -43,13 +44,7 @@ public class StageFragment extends Fragment{
 		if(getActivity() instanceof MainActivity){
 //			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		}
-		if(adapter != null){
-			ViewPager viewpager = (ViewPager) getView().findViewById(R.id.viewpager);
-			viewpager.setAdapter(adapter);
-			
-			TabPageIndicator indicator = (TabPageIndicator) getView().findViewById(R.id.indicator);
-			indicator.setViewPager(viewpager);
-		}
+	
 		
 	}
 	

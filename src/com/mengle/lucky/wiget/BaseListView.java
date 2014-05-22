@@ -96,7 +96,7 @@ public class BaseListView extends PullToRefreshListView{
 	}
 	
 	public void load(boolean refresh){
-		setRefreshing();
+		
 		hasMode = false;
 		if(refresh){
 			offset = 0;
