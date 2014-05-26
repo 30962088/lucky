@@ -55,7 +55,7 @@ public class OauthUtils implements UMAuthListener,FetchUserListener{
 	
 	public void qqOauth(){
 		media = SHARE_MEDIA.QQ;
-		mController.getConfig().supportQQPlatform((Activity)context,"100424468","http://www.umeng.com/social");  
+		mController.getConfig().supportQQPlatform((Activity)context,"100424468","http://www.umeng.com/social","social");  
 		oauth();
 	}
 	

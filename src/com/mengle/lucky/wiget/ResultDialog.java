@@ -1,6 +1,20 @@
 package com.mengle.lucky.wiget;
 
+import java.util.Map;
+
 import com.mengle.lucky.R;
+import com.mengle.lucky.network.Login.Params;
+import com.mengle.lucky.utils.OauthUtils;
+import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.umeng.socialize.bean.MultiStatus;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.MulStatusListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,7 +29,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-public class ResultDialog implements OnClickListener{
+public class ResultDialog implements OnClickListener,SnsPostListener{
 
 	public enum Status{
 		CHECK,SUCCESS,FAIL
@@ -43,12 +57,18 @@ public class ResultDialog implements OnClickListener{
 	private View checkRenren;
 	
 	private View checkTencent;
+	
+	private OauthUtils oauthUtils;
+	
+	private UMSocialService mController;
 
 	public ResultDialog(Context context, Result result) {
 		super();
 		this.context = context;
 		this.result = result;
+		oauthUtils = new OauthUtils(context);
 		init();
+		mController  = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
 	}
 	
 	private void init(){
@@ -113,8 +133,64 @@ public class ResultDialog implements OnClickListener{
 		
 	}
 	
-	private void switchCheck(View v){
+	
+	private void switchCheck(final View v){
+		SHARE_MEDIA media = SHARE_MEDIA.SINA;
+		switch (v.getId()) {
+		case R.id.check_renren:
+			media = SHARE_MEDIA.RENREN;
+			break;
+		case R.id.check_tencent:
+			media = SHARE_MEDIA.TENCENT;
+			break;
+		case R.id.check_weibo:
+			media = SHARE_MEDIA.SINA;
+			break;
+		}
+		
+		
 		v.setSelected(!v.isSelected());
+		if(v.isSelected()){
+			mController.checkTokenExpired(context, new SHARE_MEDIA[]{media}, new UMDataListener() {
+				
+				@Override
+				public void onStart() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onComplete(int arg0, Map<String, Object> arg1) {
+					String key = arg1.keySet().toArray()[0].toString();
+					if((Boolean)arg1.get(key)  == false){
+						v.setSelected(false);
+						oauthUtils.setCallback(new Callback() {
+							
+							@Override
+							public void onSuccess(Params params) {
+								switchCheck(v);
+								
+							}
+						});
+						switch (v.getId()) {
+						case R.id.check_renren:
+							oauthUtils.renrenOauth();
+							break;
+						case R.id.check_tencent:
+							oauthUtils.tencentOauth();
+							break;
+						case R.id.check_weibo:
+							oauthUtils.sinaOauth();
+							break;
+						}
+						
+						
+					}
+					
+				}
+			});
+		}
+		
 	}
 	
 	public void onClick(View v) {
@@ -127,10 +203,35 @@ public class ResultDialog implements OnClickListener{
 		case R.id.result_dialog:
 		case R.id.cancel:
 			mPopupWindow.dismiss();
+			mController.setShareContent("測試22");
+			if(checkRenren.isSelected()){
+				
+				mController.directShare(context,SHARE_MEDIA.RENREN, this);
+			}
+			if(checkWeibo.isSelected()){
+				mController.directShare(context,SHARE_MEDIA.SINA, this);
+			}
+			if(checkTencent.isSelected()){
+				mController.directShare(context,SHARE_MEDIA.TENCENT, this);
+			}
+			
 		default:
 			break;
 		}
 
+	}
+
+
+	@Override
+	public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
