@@ -2,6 +2,7 @@ package com.mengle.lucky.adapter;
 
 import java.util.List;
 
+import com.mengle.lucky.KanZhuangActivity;
 import com.mengle.lucky.R;
 
 import android.content.Context;
@@ -87,7 +88,7 @@ public class Row2ListAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				if(row2.id>0){
-					System.out.println(row2.id);
+					KanZhuangActivity.open(context, row2.id);
 				}
 				
 			}

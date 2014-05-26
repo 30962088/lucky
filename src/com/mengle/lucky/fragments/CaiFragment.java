@@ -60,7 +60,7 @@ public class CaiFragment extends Fragment {
 		
 		MainActivity activity =  (MainActivity)getActivity();
 		
-		activity.switchRight(CommentFragment.newInstance(game.getId()));
+		activity.switchRight(CommentFragment.newInstance(game.getId(),game.getPraise()));
 		
 		final List<QuestionItem> list = game.toQuestionList();
 
@@ -71,7 +71,7 @@ public class CaiFragment extends Fragment {
 					Utils.tip(getActivity(), "请选择答案。");
 				}else{
 					ResultDialog.Status status;
-					if(game.getId() == lastItem.getId()){
+					if(lastItem.isAnswer()){
 						status = ResultDialog.Status.SUCCESS;
 					}else{
 						status = ResultDialog.Status.FAIL;

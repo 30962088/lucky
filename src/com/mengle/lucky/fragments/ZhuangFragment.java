@@ -2,6 +2,7 @@ package com.mengle.lucky.fragments;
 
 import java.util.List;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.PublishActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.CatListAdater;
@@ -28,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ZhuangFragment extends Fragment implements OnClickListener {
 
@@ -113,10 +116,21 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 						break;
 					}
 				}
-				CatList list = new CatList(cats, index);
+				final CatList list = new CatList(cats, index);
 
 				commonHeaderView.setAdapter(new CatListAdater(getActivity(),
 						list));
+				commonHeaderView.getGridView().setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						int id1 = list.getList().get(position).getId();
+						((MainActivity)getActivity()).switchContent(ZhuangFragment.newInstance(id1));
+						
+					}
+					
+				});
 			}
 		});
 	}

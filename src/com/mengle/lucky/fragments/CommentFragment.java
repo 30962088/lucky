@@ -10,6 +10,7 @@ import com.mengle.lucky.adapter.CommentModel.Reply;
 import com.mengle.lucky.network.GameCommentRequest;
 import com.mengle.lucky.network.GameCommentRequest.Result;
 import com.mengle.lucky.network.GameCommentUpdate;
+import com.mengle.lucky.network.GamePraiseRequest;
 import com.mengle.lucky.network.Login;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
@@ -43,9 +44,10 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class CommentFragment extends Fragment implements OnClickListener,Callback,OnLoadListener,OnItemClickListener,OnEditorActionListener{
 
-	public static CommentFragment newInstance(int gameId){
+	public static CommentFragment newInstance(int gameId,int praise){
 		CommentFragment fragment = new CommentFragment();
 		fragment.gameId = gameId;
+		fragment.praiseCount = praise;
 		return fragment;
 	}
 	
@@ -55,6 +57,13 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	
 	private int gameId;
 	
+	private int praiseCount;
+	
+	public void setPraiseCount(int praiseCount) {
+		this.praiseCount = praiseCount;
+		praiseView.setText(""+praiseCount);
+	}
+	
 	private BaseListView listView;
 	
 	private CommentListAdapter adapter;
@@ -62,6 +71,8 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	private View replylayout;
 	
 	private TextView replyTextView;
+	
+	private TextView praiseView;
 	
 	private List<CommentModel> list = new ArrayList<CommentModel>();
 	
@@ -78,8 +89,11 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		super.onViewCreated(view, savedInstanceState);
 		oauthUtils = new OauthUtils(getActivity());
 		oauthUtils.setCallback(this);
+		praiseView = (TextView) view.findViewById(R.id.praiseCount);
+		praiseView.setText(""+praiseCount);
 		nologinView = view.findViewById(R.id.nologinpanel);
 		replylayout = view.findViewById(R.id.replylayout);
+		view.findViewById(R.id.refresh).setOnClickListener(this);
 		replyTextView = (TextView) view.findViewById(R.id.reply_content);
 		replyTextView.setOnEditorActionListener(this);
 		view.findViewById(R.id.show_reply).setOnClickListener(this);
@@ -88,6 +102,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		view.findViewById(R.id.login_kaixin).setOnClickListener(this);
 		view.findViewById(R.id.login_tencent).setOnClickListener(this);
 		view.findViewById(R.id.login_weibo).setOnClickListener(this);
+		view.findViewById(R.id.btn_praise).setOnClickListener(this);
 		listView = (BaseListView) view.findViewById(R.id.listview);
 		listView.setOnLoadListener(this);
 		adapter = new CommentListAdapter(getActivity(), list);
@@ -122,10 +137,29 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		}
 	}
 	
+	private void onPraise(){
+		Preferences.User user = new Preferences.User(getActivity());
+		final GamePraiseRequest praiseRequest = new GamePraiseRequest(new GamePraiseRequest.Params(user.getUid(), user.getToken(), gameId));
+		RequestAsync.request(praiseRequest, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				
+				praiseView.setText(""+praiseRequest.getResult().getPraise());
+			}
+		});
+	}
+	
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.btn_praise:
+			onPraise();
+			break;
+		case R.id.refresh:
+			listView.load(true);
+			break;
 		case R.id.show_reply:
 			showReply(null);
 			break;
@@ -193,18 +227,21 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		});
 		
 	}
+	
+	private List<Result> results;
+	
+	private int offset;
 
 	@Override
 	public boolean onLoad(int offset, int limit) {
+		this.offset = offset;
+		this.results = null;
 		Preferences.User user = new Preferences.User(getActivity());
 		GameCommentRequest commentRequest = new GameCommentRequest(new GameCommentRequest.Params(user.getUid(), user.getToken(), gameId, offset, limit));
 		commentRequest.request();
-		List<Result> results = commentRequest.getResults();
+		results = commentRequest.getResults();
 		
-		if(offset == 0){
-			list.clear();
-		}
-		list.addAll(Result.toCommentModelList(results));
+		
 		
 		
 		return results.size()>=limit?true:false;
@@ -212,6 +249,15 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 
 	@Override
 	public void onLoadSuccess() {
+		
+		if(offset == 0){
+			list.clear();
+		}
+		if(results != null){
+			list.addAll(Result.toCommentModelList(results));
+		}
+		
+		
 		adapter.notifyDataSetChanged();
 		
 	}

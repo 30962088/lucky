@@ -78,7 +78,13 @@ public class Game {
 		public QuestionItem toQuestionItem(int i,int total){
 			String no = new String[]{"A","B","C","D","E","F","G"}[i];
 			String color = new String[]{"#a0d468","#4fc0e8","#e47134","#e47134","#e47134","#e47134","#e47134","#e47134","#e47134","#e47134"}[i];
-			QuestionItem item = new QuestionItem(id, no, content, (1.0*select_count)/(1.0*total) , Color.parseColor(color), QuestionLayout.TYPE_NORMAL);
+			double percent;
+			if(total == 0){
+				percent = 0;
+			}else{
+				percent = (1.0*select_count)/(1.0*total);
+			}
+			QuestionItem item = new QuestionItem(id, no, content, percent ,is_answer==1?true:false, Color.parseColor(color), QuestionLayout.TYPE_NORMAL);
 			return item;
 		}
 		
@@ -113,6 +119,8 @@ public class Game {
 	protected List<Creator> creator;
 	
 	protected List<Option> opts;
+	
+	protected int praise;
 
 	public int getId() {
 		return id;
@@ -181,6 +189,10 @@ public class Game {
 		}
 		return list;
 		
+	}
+	
+	public int getPraise() {
+		return praise;
 	}
 	
 	

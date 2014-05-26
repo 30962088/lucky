@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 
 public class CommonHeaderView extends RelativeLayout implements OnClickListener,OnStateChange{
@@ -34,6 +35,10 @@ public class CommonHeaderView extends RelativeLayout implements OnClickListener,
 	
 	private View catdropdown;
 	
+	public GridView getGridView() {
+		return catList.getGridView();
+	}
+	
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.common_header, this);
 		catList = (CatDropList) findViewById(R.id.catList);
@@ -46,6 +51,8 @@ public class CommonHeaderView extends RelativeLayout implements OnClickListener,
 		catList.setAdapter(catListAdater);
 
 	}
+	
+	
 
 	private void showDropDown(){
 		catList.show();

@@ -83,6 +83,10 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		onStateChange.onShow();
 	}
 	
+	public GridView getGridView() {
+		return gridView;
+	}
+	
 	public void dismiss(){
 		startAnimation(animOut);
 	}

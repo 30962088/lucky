@@ -20,7 +20,9 @@ public class CatListAdater extends BaseAdapter{
 		
 		private List<Cat> list;
 		
-		
+		public List<Cat> getList() {
+			return list;
+		}
 		
 		public CatList(List<Cat> list,int selected) {
 			super();

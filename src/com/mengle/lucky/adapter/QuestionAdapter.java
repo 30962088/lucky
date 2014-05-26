@@ -74,14 +74,20 @@ public class QuestionAdapter extends BaseAdapter {
 		private int color;
 		private int type;
 		private int id;
+		private boolean isAnswer;
 		
-		public QuestionItem(int id,String no, String name, double percent, int color,int type) {
+		public QuestionItem(int id,String no, String name, double percent,boolean isAnswer, int color,int type) {
 			this.id = id;
 			this.no = no;
 			this.name = name;
 			this.percent = percent;
 			this.color = color;
 			this.type = type;
+			this.isAnswer = isAnswer;
+		}
+		
+		public boolean isAnswer() {
+			return isAnswer;
 		}
 		
 		public int getId() {

@@ -249,10 +249,13 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 	}
 	
+	
+	
 
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.submit:
+		
 			if(onBtnClickListener != null){
 				onBtnClickListener.onOKClick();
 			}
