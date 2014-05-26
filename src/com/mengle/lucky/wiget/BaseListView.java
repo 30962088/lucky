@@ -99,9 +99,11 @@ public class BaseListView extends PullToRefreshListView{
 		
 		hasMode = false;
 		if(refresh){
+			setRefreshing(true);
 			offset = 0;
 		}
 		if(onLoadListener != null){
+			
 			new AsyncTask<Void, Void, Boolean>() {
 
 				@Override

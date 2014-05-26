@@ -22,7 +22,7 @@ public class UserMe extends Request implements IUserGet{
 	
 	private Params params;
 	
-	private User user;
+	private UserResult user;
 	
 	public UserMe(Params params) {
 		super();
@@ -30,11 +30,11 @@ public class UserMe extends Request implements IUserGet{
 	}
 
 	public void onSuccess(String data) {
-		user = new Gson().fromJson(data, User.class);
+		user = new Gson().fromJson(data, UserResult.class);
 		
 	}
 
-	public User getUser() {
+	public UserResult getUserResult() {
 		return user;
 	}
 	

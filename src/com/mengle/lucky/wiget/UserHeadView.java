@@ -3,7 +3,13 @@ package com.mengle.lucky.wiget;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.UserListActivity;
 import com.mengle.lucky.ZoneActivity;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.UserMeFollow;
+import com.mengle.lucky.network.UserMeUnFollow;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
@@ -15,6 +21,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +47,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 		private int focusCount;
 		private int fansCount;
 		private int fansNewCount;
+		private boolean fallow;
 		public UserHeadData(int uid,boolean hasNewMsg, String photo,String head, String nick,
 				Sex sex, int coin, int win, int eq, int fail, String level,
 				int focusCount, int fansCount, int fansNewCount) {
@@ -57,6 +65,12 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 			this.focusCount = focusCount;
 			this.fansCount = fansCount;
 			this.fansNewCount = fansNewCount;
+		}
+		public void setFallow(boolean fallow) {
+			this.fallow = fallow;
+		}
+		public boolean isFallow() {
+			return fallow;
 		}
 		
 	}
@@ -98,7 +112,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 	
 	private TextView fansNewView;
 	
-	private View btnFocusView;
+	private CheckBox btnFocusView;
 	
 	private View btnMsgView;
 	
@@ -110,7 +124,8 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
 		iconHead = (ImageView) findViewById(R.id.icon_head);
 		iconHead.setOnClickListener(this);
-		btnFocusView = findViewById(R.id.btn_focus);
+		btnFocusView = (CheckBox) findViewById(R.id.btn_focus);
+		btnFocusView.setOnClickListener(this);
 		newIconView = findViewById(R.id.icon_new);
 		photoView = (ImageView) findViewById(R.id.photo);
 		nickView = (TextView) findViewById(R.id.nickname);
@@ -125,6 +140,8 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 		btnMsgView = findViewById(R.id.icon_msg);
 		btnMsgView.setOnClickListener(this);
 		photoView.setOnClickListener(this);
+		findViewById(R.id.btn_toFollower).setOnClickListener(this);
+		findViewById(R.id.btn_toFollowing).setOnClickListener(this);
 	}
 	
 	public void setData(UserHeadData data){
@@ -138,6 +155,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 		}else{
 			photoView.setEnabled(false);
 			btnMsgView.setVisibility(View.GONE);
+			btnFocusView.setChecked(data.isFallow());
 			btnFocusView.setVisibility(View.VISIBLE);
 		}
 		newIconView.setVisibility(data.hasNewMsg?View.VISIBLE:View.GONE);
@@ -161,6 +179,15 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 	public void onClick(View v) {
 		Preferences.User user = new Preferences.User(getContext());
 		switch (v.getId()) {
+		case R.id.btn_toFollower:
+			UserListActivity.open(getContext(), userHeadData.uid,UserListActivity.Type.FOLLERS);
+			break;
+		case R.id.btn_toFollowing:
+			UserListActivity.open(getContext(), userHeadData.uid,UserListActivity.Type.FOLLOWS);
+			break;
+		case R.id.btn_focus:
+			onFocus();
+			break;
 		case R.id.icon_msg:
 			NotifyCenterActivity.open(getContext());
 			break;
@@ -181,6 +208,25 @@ public class UserHeadView extends FrameLayout implements OnClickListener,OnResul
 		default:
 			break;
 		}
+		
+	}
+
+	private void onFocus() {
+		Preferences.User user = new Preferences.User(getContext());
+		Request request = null;
+		if(!btnFocusView.isChecked()){
+			request = new UserMeUnFollow(new UserMeUnFollow.Params(user.getUid(), user.getToken(), userHeadData.uid));
+		}else{
+			request = new UserMeFollow(new UserMeFollow.Params(user.getUid(), user.getToken(), userHeadData.uid));
+		}
+		RequestAsync.request(request, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 

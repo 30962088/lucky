@@ -16,12 +16,14 @@
             android:src="@drawable/bg_user" 
             android:scaleType="centerCrop"/>
         
-        <ImageView 
+     
+        
+        <CheckBox 
             android:id="@+id/btn_focus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/btn_focus_selector"
-            android:scaleType="centerInside"
+            android:padding="10dp"
+            android:layout_width="42dp"
+            android:layout_height="44dp"
+            android:button="@drawable/btn_focus_selector"
             android:layout_marginLeft="19dp"
             android:layout_marginTop="16dp"/>
         
@@ -160,6 +162,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_toFollowing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -201,6 +204,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_toFollower"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

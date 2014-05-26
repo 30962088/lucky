@@ -101,8 +101,8 @@ public class ZoneActivity extends FragmentActivity implements
 
 			public void onPostExecute(Request request) {
 				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
-					userHeadView.setData(finalUserGet.getUser().toUserHeadData());
-					titleView.setText(finalUserGet.getUser().getNickname());
+					userHeadView.setData(finalUserGet.getUserResult().toUserHeadData());
+					titleView.setText(finalUserGet.getUserResult().getNickname());
 				}
 
 			}

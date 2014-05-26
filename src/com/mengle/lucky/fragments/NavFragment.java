@@ -78,7 +78,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 
 			public void onPostExecute(Request request) {
 				if (userMe.getStatus() == Request.Status.SUCCESS) {
-					headView.setData(userMe.getUser().toUserHeadData());
+					headView.setData(userMe.getUserResult().toUserHeadData());
 				}
 
 			}
@@ -120,8 +120,6 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 		case R.id.cai:
 
 			mainActivity.switchContent(new CaiFragment());
-
-			mainActivity.switchRight(new CommentFragment());
 			
 			mainActivity.switchRightIcon(mainActivity.getRightComment());
 			

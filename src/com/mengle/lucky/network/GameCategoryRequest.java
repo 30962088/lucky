@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.adapter.CatListAdater;
 import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
+import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
 
 public class GameCategoryRequest extends Request{
 
@@ -40,6 +41,18 @@ public class GameCategoryRequest extends Request{
 				cats.add(category.toCat());
 			}
 			return cats;
+		}
+		
+		public RadioItem toRadioItem(){
+			return new RadioItem(id,name);
+		}
+		
+		public static List<RadioItem> toRadioItemList(List<Category> categories){
+			List<RadioItem> list = new ArrayList<RadioItem>();
+			for(Category category:categories){
+				list.add(category.toRadioItem());
+			}
+			return list;
 		}
 		
 	}

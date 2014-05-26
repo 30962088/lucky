@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.mengle.lucky.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

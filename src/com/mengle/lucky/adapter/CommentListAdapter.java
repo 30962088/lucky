@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +79,7 @@ public class CommentListAdapter extends BaseAdapter {
 					R.layout.comment_list_item, null);
 			
 			String replyContent = ""; 
-			if(reply.getName() != null){
+			if(!TextUtils.isEmpty(reply.getName())){
 				replyContent = "回复"+reply.getName()+":";
 			}
 			SpannableString sp = new SpannableString(replyContent+reply.getContent());

@@ -3,6 +3,10 @@ package com.mengle.lucky.network;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.mengle.lucky.network.model.User;
@@ -25,7 +29,7 @@ public class UserGet extends Request implements IUserGet{
 	
 	private Params params;
 	
-	private User user;
+	private UserResult user;
 	
 	public UserGet(Params params) {
 		super();
@@ -33,11 +37,22 @@ public class UserGet extends Request implements IUserGet{
 	}
 
 	public void onSuccess(String data) {
-		user = new Gson().fromJson(data, User.class);
+		try {
+			JSONObject jsonObject = new JSONObject(data);
+			if(TextUtils.isEmpty(jsonObject.getString("sns"))){
+				jsonObject.put("sns", null);
+			}
+			user = new Gson().fromJson(jsonObject.toString(), UserResult.class);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 	}
 
-	public User getUser() {
+	public UserResult getUserResult() {
 		return user;
 	}
 	

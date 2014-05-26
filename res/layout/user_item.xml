@@ -4,17 +4,17 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <ImageView 
+        <CheckBox 
             android:id="@+id/icon_star"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="#e47134"
+            android:background="@drawable/btn_star_selector"
             android:layout_marginTop="1px"
-            android:src="@drawable/btn_star_selector"
-            android:scaleType="centerInside"/>
+            android:button="@null"/>
         
         <com.mengle.lucky.wiget.TranslateRelativeLayout
             android:id="@+id/center"

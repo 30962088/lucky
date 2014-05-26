@@ -148,7 +148,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 			public void onPostExecute(Request request) {
 				if (userMe.getStatus() == Request.Status.SUCCESS) {
-					User user = userMe.getUser();
+					User user = userMe.getUserResult();
 					qqView.setText(Utils.getString(user.getQq()));
 					phoneView.setText(Utils.getString(user.getMobile()));
 					nicknameView.setText(Utils.getString(user.getNickname()));

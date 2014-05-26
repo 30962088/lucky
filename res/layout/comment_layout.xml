@@ -60,6 +60,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/show_reply"
                 android:layout_width="90dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="9dp"
@@ -74,18 +75,44 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ListView
+        <com.mengle.lucky.wiget.BaseListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
-        </ListView>
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/replylayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_line"
+            android:gravity="center_vertical"
+            android:visibility="gone" >
+
+            <EditText
+                android:id="@+id/reply_content"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_radius_gray_border"
+                android:hint=""
+                android:imeOptions="actionDone"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:textColorHint="#aaa"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
-    
+
     <include
         android:id="@+id/nologinpanel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        layout="@layout/nologin"/>
+        android:layout_height="match_parent"
+        layout="@layout/nologin"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -73,7 +74,7 @@ public class Row2ListAdapter extends BaseAdapter{
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
-		Row2 row2 = list.get(position);
+		final Row2 row2 = list.get(position);
 		if(convertView == null){
 			convertView = LayoutInflater.from(context).inflate(R.layout.row_2_item, null);
 			holder = new ViewHolder(convertView);
@@ -81,6 +82,16 @@ public class Row2ListAdapter extends BaseAdapter{
 		}else{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		convertView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(row2.id>0){
+					System.out.println(row2.id);
+				}
+				
+			}
+		});
 		int row1bgColor;
 		int row2bgColor;
 		int row1Color = Color.parseColor("#768082");

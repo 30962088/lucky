@@ -2,12 +2,15 @@ package com.mengle.lucky.wiget;
 
 import java.util.Date;
 
+import com.mengle.lucky.utils.AnimationMargin;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
@@ -47,11 +50,11 @@ public class TranslateRelativeLayout extends RelativeLayout {
 	public void setExpand(boolean expand,long during){
 		
 		if(during == 0 || this.expand != expand){
-			TranslateAnimation translateAnimation;
+			Animation translateAnimation;
 			if(expand){
-				translateAnimation = new TranslateAnimation(0, max, 0, 0);
+				translateAnimation = new AnimationMargin(this, max);
 			}else{
-				translateAnimation = new TranslateAnimation(max, 0, 0, 0);
+				translateAnimation =  new AnimationMargin(this, 0);
 			}
 			translateAnimation.setDuration(during);
 			translateAnimation.setFillAfter(true);

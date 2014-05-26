@@ -65,7 +65,10 @@ public class TabPageIndicator extends LinearLayout{
 			addView(view, params);
 			
 		}
-		setSelected(0);
+		if(viewPager.getAdapter().getCount()>0){
+			setSelected(0);
+		}
+		
 	}
 
 	public void setSelected(int position) {

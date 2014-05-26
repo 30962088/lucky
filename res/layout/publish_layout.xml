@@ -163,37 +163,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="填写竞猜内容"
-                        android:textColor="#434a54"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="（* 图片不是必添加项）"
-                        android:textColor="#b8bac0"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/content"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_radius_gray_border"
-                    android:gravity="left|top"
-                    android:hint="请输入..."
-                    android:padding="8dp"
-                    android:textSize="12sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    <ImageView
+                        android:id="@+id/image"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:visibility="gone" />
 
                     <View
                         android:id="@+id/add_pic"
@@ -332,19 +306,10 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <LinearLayout
+                <com.mengle.lucky.wiget.RadioGroupLayout
+                    android:id="@+id/radio1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:layout_width="68dp"
-                        android:layout_height="31dp"
-                        android:background="@drawable/bg_radius_gray"
-                        android:gravity="center"
-                        android:text="其他"
-                        android:textColor="@color/bg_tab_color_selector"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"></com.mengle.lucky.wiget.RadioGroupLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -389,20 +354,11 @@
                         android:background="@drawable/icon_star" />
                 </LinearLayout>
 
-                <LinearLayout
+                 <com.mengle.lucky.wiget.RadioGroupLayout
+                    android:id="@+id/radio2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="14dp" >
-
-                    <TextView
-                        android:layout_width="68dp"
-                        android:layout_height="31dp"
-                        android:background="@drawable/bg_radius_gray"
-                        android:gravity="center"
-                        android:text="其他"
-                        android:textColor="@color/bg_tab_color_selector"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"></com.mengle.lucky.wiget.RadioGroupLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -543,35 +499,33 @@
                     android:text="命题发布后，XX小时内可填写，答案将在竞猜结束后公布"
                     android:textColor="#434a54"
                     android:textSize="12sp" />
-                
-                <RelativeLayout 
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:gravity="center">
-                    
-                    <EditText 
+                    android:gravity="center" >
+
+                    <EditText
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:background="@drawable/bg_radius_orange_border"
-                        android:gravity="center"/>
-                    
+                        android:gravity="center" />
                 </RelativeLayout>
-                
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="#e3e4e8" />
-                
-                <TextView 
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginTop="15dp"
                     android:text="填写理由"
                     android:textColor="#434a54"
-                    android:textSize="12sp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="13dp"/>
-                
-                
+                    android:textSize="12sp" />
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -581,31 +535,24 @@
                     android:hint="请输入..."
                     android:padding="8dp"
                     android:textSize="12sp" />
-                
-                <RelativeLayout 
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:gravity="center">
-                    
-                    <ImageView 
+                    android:gravity="center" >
+
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/btn_orange_ok"/>
-                    
+                        android:background="@drawable/btn_orange_ok" />
                 </RelativeLayout>
-                
-                
             </LinearLayout>
-            
-            
-            
         </LinearLayout>
-        
-        <ImageView 
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_orange_publish"/>
-        
+            android:background="@drawable/btn_orange_publish" />
     </LinearLayout>
 
 </ScrollView>

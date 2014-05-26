@@ -3,6 +3,7 @@ package com.mengle.lucky.fragments;
 import java.util.Date;
 import java.util.List;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.adapter.QuestionAdapter.QuestionItem;
@@ -56,7 +57,11 @@ public class CaiFragment extends Fragment {
 	}
 
 	private void doSuccess(final Game game) {
-
+		
+		MainActivity activity =  (MainActivity)getActivity();
+		
+		activity.switchRight(CommentFragment.newInstance(game.getId()));
+		
 		final List<QuestionItem> list = game.toQuestionList();
 
 		themeLayout.setOnBtnClickListener(new OnBtnClickListener() {
