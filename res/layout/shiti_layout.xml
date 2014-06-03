@@ -29,6 +29,7 @@
             android:paddingTop="33dp" >
 
             <TextView
+                android:id="@+id/shiti_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="菜汤上浮着一层油会使菜汤凉得："
@@ -54,24 +55,24 @@
             android:layout_marginBottom="-10dp"
             android:layout_marginLeft="5dp"
             android:background="@drawable/bg_shiti_count" />
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/coin"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:layout_alignRight="@id/bg_shiti_count"
+            android:layout_alignTop="@id/bg_shiti_count"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp"
+            android:gravity="right"
+            android:paddingRight="5dp"
+            android:shadowColor="#000"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:shadowColor="#000"
-            android:textSize="14sp"
+            android:text="1"
             android:textColor="#fff"
-            android:layout_alignTop="@id/bg_shiti_count"
-            android:gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"
-            android:paddingRight="5dp"
-            android:layout_alignRight="@id/bg_shiti_count"/>
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/bg_shiti_item"
@@ -92,16 +93,16 @@
             android:layout_alignTop="@id/bg_shiti_item"
             android:layout_marginTop="-15dp"
             android:gravity="center"
+            android:shadowColor="#a75a00"
             android:shadowDx="1"
             android:shadowDy="3"
             android:shadowRadius="2"
-            android:shadowColor="#a75a00"
             android:text="1"
             android:textColor="#fff"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
 
         <View
-            android:id="@+id/btn_shiti_left"
+            android:id="@+id/btn_prev"
             android:layout_width="40dp"
             android:layout_height="41dp"
             android:layout_alignTop="@id/bg_shiti_count"
@@ -110,18 +111,19 @@
             android:background="@drawable/btn_shiti_left" />
 
         <View
+            android:id="@+id/btn_next"
             android:layout_width="40dp"
             android:layout_height="41dp"
-            android:layout_alignTop="@id/btn_shiti_left"
+            android:layout_alignTop="@id/btn_prev"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/btn_shiti_left"
+            android:layout_toRightOf="@id/btn_prev"
             android:background="@drawable/btn_shiti_right" />
 
         <View
             android:layout_width="40dp"
             android:layout_height="41dp"
             android:layout_alignRight="@id/bg"
-            android:layout_alignTop="@id/btn_shiti_left"
+            android:layout_alignTop="@id/btn_prev"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/btn_shiti_finish" />

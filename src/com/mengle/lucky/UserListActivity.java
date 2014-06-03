@@ -7,6 +7,8 @@ import com.mengle.lucky.adapter.UserListAdapter;
 
 import com.mengle.lucky.network.IUserListRequest;
 import com.mengle.lucky.network.IUserListRequest.Result;
+import com.mengle.lucky.network.UserFollowersRequest;
+import com.mengle.lucky.network.UserFollowingRequest;
 import com.mengle.lucky.network.UserMeFollowersRequest;
 import com.mengle.lucky.network.UserMeFollowingsRequest;
 
@@ -118,13 +120,19 @@ public class UserListActivity extends Activity implements OnLoadListener,OnClick
 			}else{
 				request = new UserMeFollowingsRequest(new UserMeFollowingsRequest.Params(fuid, user.getToken(), offset, limit));
 			}
+		}else{
+			if(type == Type.FOLLERS){
+				request = new UserFollowersRequest(new UserFollowersRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
+			}else{
+				request = new UserFollowingRequest(new UserFollowingRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
+			}
 		}
 		boolean rev = false;
 		if(request != null){
 			results = null;
 			request.request();
 			results = request.getResults();
-			
+			rev = results.size()>=limit?true:false;
 		}
 		return rev;
 	}

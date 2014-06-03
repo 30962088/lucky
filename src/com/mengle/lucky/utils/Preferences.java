@@ -43,6 +43,14 @@ public class Preferences {
 			return uid;
 		}
 		
+		public int getLastShitiId(){
+			return preferences.getInt("LastShitiId", 0);
+		}
+		
+		public void setLastShitiId(int LastShitiId){
+			preferences.edit().putInt("LastShitiId", LastShitiId).commit();
+		}
+		
 		public boolean isFirstLogin() {
 			
 			return preferences.getBoolean("isFirstLogin", true);
