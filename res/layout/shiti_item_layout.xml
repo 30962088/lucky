@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp" >
-
+			
             <TextView
                 android:id="@+id/no"
                 android:layout_width="30.5dp"
@@ -29,6 +29,14 @@
                 android:text="A"
                 android:textColor="#fff"
                 android:textSize="20sp" />
+            
+            <View 
+                android:visibility="gone"
+                android:id="@+id/icon_answer"
+                android:layout_width="30.5dp"
+                android:layout_height="30.5dp"
+                android:background="@drawable/shiti_answer_selector"/>
+            
         </FrameLayout>
 
         <TextView

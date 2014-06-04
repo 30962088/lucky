@@ -15,6 +15,9 @@ import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.ShitiOverView;
+import com.mengle.lucky.wiget.ShitiOverView.Model;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,13 +27,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ShitiFragment extends Fragment implements OnItemClickListener,OnClickListener{
+public class ShitiFragment extends Fragment implements OnItemClickListener,OnClickListener,AnimationListener{
 
 	
 	public static ShitiFragment newInstance(){
@@ -42,6 +50,10 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	private TextView coinView;
 	
 	private TextView titleView;
+	
+	private View parentView;
+	
+	private ShitiOverView shitiOverView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,14 +76,23 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	
 	private View btnNext;
 	
+	private View btnOK;
+	
 	private View headerView;
 	
 	private ImageView headerImg;
+	
+	private View add_anim;
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		shitiOverView = (ShitiOverView) view.findViewById(R.id.shitiover);
+		add_anim = view.findViewById(R.id.add_anim);
+		btnOK = view.findViewById(R.id.btn_ok);
+		btnOK.setOnClickListener(this);
+		parentView = view.findViewById(R.id.parent);
 		btnPrev = view.findViewById(R.id.btn_prev);
 		btnPrev.setOnClickListener(this);
 		btnNext = view.findViewById(R.id.btn_next);
@@ -114,12 +135,16 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
+//		submit();
 	}
 	
 	private int i = 0;
 	
 	private void next(){
+		if(list != null && list.getIndex() == null){
+			Utils.tip(getActivity(), "您还没有作答");
+			return;
+		}
 		i++;
 		build();
 	}
@@ -129,6 +154,10 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 		build();
 	}
 	
+	private void submit(){
+		shitiOverView.setModel(new Model(3, 2, 18));
+	}
+	
 	private void build(){
 		if(i==0){
 			btnPrev.setVisibility(View.INVISIBLE);
@@ -136,9 +165,11 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 			btnPrev.setVisibility(View.VISIBLE);
 		}
 		if(i==results.size()-1){
-			btnNext.setVisibility(View.INVISIBLE);
+			btnNext.setVisibility(View.GONE);
+			btnOK.setVisibility(View.VISIBLE);
 		}else{
 			btnNext.setVisibility(View.VISIBLE);
+			btnOK.setVisibility(View.GONE);
 		}
 		
 		shitiNoView.setText(""+(i+1));
@@ -165,8 +196,31 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		list.setIndex(position-1);
-		adapter.notifyDataSetChanged();
+		
+		if(list.getIndex()==null){
+			if(position-1 == list.getC()){
+				startAnimation();
+			}
+			list.setIndex(position-1);
+			adapter.notifyDataSetChanged();
+		}
+		
+		
+	}
+	
+	private void startAnimation(){
+		
+		add_anim.setVisibility(View.VISIBLE);
+		AnimationSet set = new AnimationSet(true);
+		TranslateAnimation translate = new TranslateAnimation(0,(coinView.getLeft()-add_anim.getLeft())*2.1f, 0,(coinView.getTop()-add_anim.getTop())*2.1f);
+		ScaleAnimation scale = new ScaleAnimation(1f, 0.2f, 1f, 0.2f,Animation.RELATIVE_TO_SELF, 0f,Animation.RELATIVE_TO_SELF, 1f);
+		set.setDuration(700);
+		scale.initialize(add_anim.getWidth(), add_anim.getWidth(), parentView.getWidth(), parentView.getHeight());
+		set.addAnimation(translate);
+		set.addAnimation(scale);
+		set.setAnimationListener(this);
+
+		add_anim.startAnimation(set);
 		
 	}
 
@@ -179,9 +233,31 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 		case R.id.btn_next:
 			next();
 			break;
+		case R.id.btn_ok:
+			submit();
+			break;
 		default:
 			break;
 		}
+		
+	}
+
+	@Override
+	public void onAnimationStart(Animation animation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		add_anim.setVisibility(View.INVISIBLE);
+		coinView.setText(""+(Integer.parseInt(coinView.getText().toString())+1));
+		
+	}
+
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+		// TODO Auto-generated method stub
 		
 	}
 	

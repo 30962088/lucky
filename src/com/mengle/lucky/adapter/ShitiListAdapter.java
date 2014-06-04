@@ -17,10 +17,12 @@ public class ShitiListAdapter extends BaseAdapter{
 	public static class Shiti{
 		private int id;
 		private String title;
-		public Shiti(int id,  String title) {
+		private boolean c;
+		public Shiti(int id,  String title,boolean c) {
 			super();
 			this.id = id;
 			this.title = title;
+			this.c = c;
 		}
 		
 		public int getId() {
@@ -31,14 +33,23 @@ public class ShitiListAdapter extends BaseAdapter{
 	
 	public static class ShitiList{
 		private Integer index;
+		private int c;
 		private List<Shiti> list;
-		public ShitiList(List<Shiti> list) {
+		public ShitiList(List<Shiti> list,int c) {
 			super();
 			this.list = list;
+			this.c = c;
 		}
 		
 		public void setIndex(Integer index) {
 			this.index = index;
+		}
+		public Integer getIndex() {
+			return index;
+		}
+		
+		public int getC() {
+			return c;
 		}
 		
 		
@@ -92,15 +103,26 @@ public class ShitiListAdapter extends BaseAdapter{
 		}
 		holder.noView.setText(NOLIST[position]);
 		holder.contentView.setText(shiti.title);
+		holder.answer.setVisibility(View.GONE);
 		if(list.index == null){
 			holder.setSelected(true);
 		}else{
-			if(list.index == position){
+			if(shiti.c){
 				holder.setSelected(true);
+				holder.answer.setVisibility(View.VISIBLE);
+				holder.answer.setEnabled(true);
 			}else{
-				holder.setSelected(false);
+				if(list.index == position){
+					holder.answer.setVisibility(View.VISIBLE);
+					holder.answer.setEnabled(false);
+					holder.setSelected(true);
+				}else{
+					holder.setSelected(false);
+				}
 			}
 		}
+		
+		
 		
 		return convertView;
 	}
@@ -109,7 +131,9 @@ public class ShitiListAdapter extends BaseAdapter{
 		private TextView noView;
 		private TextView contentView;
 		private View shitiItem;
+		private View answer;
 		public ViewHolder(View view) {
+			answer = view.findViewById(R.id.icon_answer);
 			shitiItem = view.findViewById(R.id.shiti_item);
 			noView = (TextView) view.findViewById(R.id.no);
 			contentView = (TextView) view.findViewById(R.id.content);

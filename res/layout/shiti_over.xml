@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e6e1e44a" >
+
+    <RelativeLayout
+        android:id="@+id/bg"
+        android:layout_width="240dp"
+        android:layout_height="239dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_shiti" >
+
+        <View
+            android:id="@+id/star"
+            android:layout_width="133dp"
+            android:layout_height="48.5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/star_0" />
+
+        <RelativeLayout
+            android:id="@+id/center"
+            android:layout_width="95.5dp"
+            android:layout_height="37.5dp"
+            android:layout_below="@id/star"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_coin_22" >
+
+            <TextView
+                android:id="@+id/current"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:gravity="right|center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:shadowColor="#e6442204"
+                android:shadowDx="1"
+                android:shadowDy="3"
+                android:shadowRadius="2"
+                android:text="16"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/addcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/center"
+            android:layout_alignTop="@id/center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_toRightOf="@id/center"
+            android:gravity="center"
+            android:text="+2"
+            android:textColor="#4d9e692f"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:shadowColor="#3a230a"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="3"
+            android:text="总金额：18"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="128dp"
+        android:layout_height="44.5dp"
+        android:layout_alignBottom="@id/bg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-15dp" >
+
+        <View
+            android:id="@+id/over"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_again" />
+
+        <TextView
+            android:id="@+id/again"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_again_green"
+            android:gravity="center"
+            android:shadowColor="#bf157506"
+            android:shadowDx="1"
+            android:shadowDy="3"
+            android:shadowRadius="2"
+            android:text="再来一次 (4)"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </FrameLayout>
+
+</RelativeLayout>

@@ -59,10 +59,15 @@ public class GameLibraryGets extends Request{
 		public ShitiList toShiti(){
 			
 			List<Shiti> list = new ArrayList<Shiti>();
+			int i = 0,k=0;
 			for(Opt opt:opts){
-				list.add(new Shiti(opt.id,opt.opt));
+				if(opt.c==1){
+					k=i;
+				}
+				list.add(new Shiti(opt.id,opt.opt,opt.c==1?true:false));
+				i++;
 			}
-			ShitiList list1 = new ShitiList(list);
+			ShitiList list1 = new ShitiList(list,k);
 			return list1;
 		}
 		
@@ -96,7 +101,8 @@ public class GameLibraryGets extends Request{
 		super();
 		this.params = params;
 		user = new Preferences.User(context);
-		this.params.last = user.getLastShitiId();
+//		this.params.last = user.getLastShitiId();
+		this.params.last = 0;
 	}
 
 	@Override
