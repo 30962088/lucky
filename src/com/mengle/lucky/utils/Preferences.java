@@ -63,6 +63,14 @@ public class Preferences {
 			
 		}
 		
+		public boolean isBuildProvince(){
+			return preferences.getBoolean("isBuildProvince", false);
+		}
+		
+		public void setBuildProvince(boolean val){
+			preferences.edit().putBoolean("isBuildProvince", val).commit();
+		}
+		
 	}
 	
 	public static class Push {

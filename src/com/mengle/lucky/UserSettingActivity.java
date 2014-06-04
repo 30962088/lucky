@@ -1,7 +1,9 @@
 package com.mengle.lucky;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.SNSBindRequest;
@@ -10,6 +12,7 @@ import com.mengle.lucky.network.UserEditRequest;
 import com.mengle.lucky.network.UserEditRequest.Params;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.Province;
 import com.mengle.lucky.network.model.User;
 import com.mengle.lucky.network.model.User.SNS;
 import com.mengle.lucky.utils.OauthUtils;
@@ -66,13 +69,34 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	private TextView snsKaixinText;
 
 	private OauthUtils oauthUtils;
+	
+	private DataBaseHelper dataBaseHelper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_setting_layout);
-
+		
+		try {
+			Province.build(this);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		dataBaseHelper = new DataBaseHelper(this);
+		
+		try {
+			List<Province> provinces = dataBaseHelper.getProvinceDao().queryForAll();
+			for(Province province:provinces){
+				System.out.println(province.getName());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		oauthUtils = new OauthUtils(this);
 		oauthUtils.setCallback(this);
 
