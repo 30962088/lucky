@@ -24,6 +24,9 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mengle.lucky.App;
+import com.mengle.lucky.utils.Utils;
+
 
 
 public abstract class Request implements Response,IRequest{
@@ -177,6 +180,7 @@ public abstract class Request implements Response,IRequest{
 		errorMsg = msg;
 		onResultError(code, msg);
 		onError(code,msg);
+		Utils.tip(App.getInstance().getApplicationContext(), msg);
 	}
 	
 	public String getErrorMsg() {

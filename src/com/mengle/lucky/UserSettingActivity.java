@@ -1,8 +1,10 @@
 package com.mengle.lucky;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
+import com.j256.ormlite.dao.EagerForeignCollection;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
@@ -12,6 +14,7 @@ import com.mengle.lucky.network.UserEditRequest;
 import com.mengle.lucky.network.UserEditRequest.Params;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.City;
 import com.mengle.lucky.network.model.Province;
 import com.mengle.lucky.network.model.User;
 import com.mengle.lucky.network.model.User.SNS;
@@ -21,7 +24,9 @@ import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -71,6 +76,10 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	private OauthUtils oauthUtils;
 	
 	private DataBaseHelper dataBaseHelper;
+	
+	private TextView provinceView;
+	
+	private TextView cityView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,16 +96,11 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		
 		dataBaseHelper = new DataBaseHelper(this);
 		
-		try {
-			List<Province> provinces = dataBaseHelper.getProvinceDao().queryForAll();
-			for(Province province:provinces){
-				System.out.println(province.getName());
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
+		provinceView = (TextView) findViewById(R.id.province);
+		provinceView.setOnClickListener(this);
+		cityView = (TextView) findViewById(R.id.city);
+		cityView.setOnClickListener(this);
 		oauthUtils = new OauthUtils(this);
 		oauthUtils.setCallback(this);
 
@@ -163,6 +167,27 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			maleCheckbox.setChecked(true);
 		}
 	}
+	
+	private void fillCity(int id) throws SQLException{
+		City city = dataBaseHelper.getCityDao().queryForId(id);
+		String str = "请选择市";
+		if(city != null){
+			str = city.getName();
+			cityView.setTag(city);
+		}
+		cityView.setText(str);
+	}
+	
+	private void fillProvince(int id) throws SQLException{
+		Province province = dataBaseHelper.getProvinceDao().queryForId(id);
+		String str = "请选择省";
+		if(province != null){
+			str = province.getName();
+			provinceView.setTag(province);
+			
+		}
+		provinceView.setText(str);
+	}
 
 	private void fill() {
 		Preferences.User user = new Preferences.User(this);
@@ -177,6 +202,13 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 					phoneView.setText(Utils.getString(user.getMobile()));
 					nicknameView.setText(Utils.getString(user.getNickname()));
 					switchGender(user.getGender());
+					try {
+						fillCity(user.getCity());
+						fillProvince(user.getProvince());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					fillSns(user);
 				}
 
@@ -211,10 +243,19 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 	private void request() {
 		Preferences.User user = new Preferences.User(this);
-
+		int province = 0;
+		if(provinceView.getTag() != null){
+			province = ((Province)provinceView.getTag()).getId();
+		}
+		
+		int city = 0;
+		if(cityView.getTag() != null){
+			city = ((City)cityView.getTag()).getId();
+		}
+		
 		UserEditRequest editRequest = new UserEditRequest(new Params(
 				user.getUid(), user.getToken(), nicknameView.getText()
-						.toString(), gender, -1, -1, qqView.getText()
+						.toString(), gender, province, city, qqView.getText()
 						.toString(), phoneView.getText().toString()));
 
 		RequestAsync.request(editRequest, new Async() {
@@ -257,6 +298,22 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	public void onClick(View v) {
 
 		switch (v.getId()) {
+		case R.id.province:
+			try {
+				onProvinceChange();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case R.id.city:
+			try {
+				onCityChange();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		case R.id.sns_qq:
 			if (v.isSelected()) {
 				unbindRequest("qq");
@@ -292,6 +349,61 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			break;
 		}
 
+	}
+	
+	private void onCityChange() throws SQLException {
+		Province province = (Province) provinceView.getTag();
+		if(province == null){
+			Utils.tip(this, "请先选择省份");
+			return;
+		}
+		final List<City> cities = dataBaseHelper.getCityDao().queryForEq("province_id", province.getId());
+		final String[] d = new String[cities.size()];
+		for(int i = 0;i<cities.size();i++){
+			d[i] = cities.get(i).getName();
+		}
+		openDialog("请选择城市", d, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				cityView.setText(d[which]);
+				cityView.setTag(cities.get(which));
+				
+			}
+		});
+		
+	}
+
+	private void onProvinceChange() throws SQLException {
+		
+		final List<Province> list = dataBaseHelper.getProvinceDao().queryForAll();
+		final String[] d = new String[list.size()];
+		
+		for(int i = 0;i<list.size();i++){
+			d[i] = list.get(i).getName();
+		}
+		
+		openDialog("请选择省份", d, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				provinceView.setText(d[which]);
+				provinceView.setTag(list.get(which));
+				cityView.setText("请选择市");
+				cityView.setTag(null);
+				
+			}
+		});
+		
+	}
+
+	private void openDialog(String title,String[] array,DialogInterface.OnClickListener clickListener){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    builder.setTitle(title)
+	           .setItems(array,clickListener);
+	    builder.create().show();
 	}
 
 	@Override

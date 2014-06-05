@@ -153,6 +153,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/province"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_marginLeft="10dp"
@@ -162,11 +163,12 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="请选择省/市的撒旦撒旦撒"
+                        android:text="请选择省"
                         android:textColor="#80434a54"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/city"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_weight="1"
@@ -174,7 +176,7 @@
                         android:ellipsize="end"
                         android:gravity="center"
                         android:singleLine="true"
-                        android:text="请选择省/市的撒旦撒旦撒"
+                        android:text="请选择市"
                         android:textColor="#80434a54"
                         android:textSize="12sp" />
                 </LinearLayout>
