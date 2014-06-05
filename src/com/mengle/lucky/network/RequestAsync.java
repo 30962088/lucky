@@ -20,7 +20,10 @@ public class RequestAsync {
 			
 			@Override
 			protected void onPostExecute(Request result) {
-				async.onPostExecute((Request) request);
+				if(async != null){
+					async.onPostExecute((Request) request);
+				}
+				
 			}
 			
 			

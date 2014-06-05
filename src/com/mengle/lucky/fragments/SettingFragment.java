@@ -1,9 +1,15 @@
 package com.mengle.lucky.fragments;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.network.IUserGet.UserResult;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.UserMe;
+import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.CacheManager;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Preferences.Network;
+import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.ConfirmDialog;
 import com.mengle.lucky.wiget.ConfirmDialog.OnConfirmClick;
@@ -51,7 +57,13 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	}
 	
 	private void pushManager(){
-		PushDialog.open(getActivity(), root);
+		boolean letter = true;
+		boolean notice = true;
+		if(user != null){
+			letter = user.getPush_letter()==1?true:false;
+			notice = user.getPush_notice()==1?true:false;
+		}
+		PushDialog.open(getActivity(), root,letter,notice);
 	}
 	
 	private void checkNewVersion(){
@@ -77,7 +89,28 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		login();
 		getCacheSize();
+	}
+	
+	private UserResult user;
+	
+	private void login(){
+		Preferences.User user = new Preferences.User(getActivity());
+		if(user.isLogin()){
+			final UserMe userMe = new UserMe(new UserMe.Params(user.getUid(),
+					user.getToken()));
+			RequestAsync.request(userMe, new Async() {
+
+				public void onPostExecute(Request request) {
+					if (userMe.getStatus() == Request.Status.SUCCESS) {
+						SettingFragment.this.user = userMe.getUserResult();
+					}
+
+				}
+			});
+		}
+		
 	}
 	
 	private void getCacheSize() {

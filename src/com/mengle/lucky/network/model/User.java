@@ -75,6 +75,11 @@ public class User {
 
 	protected int followings;// 关注了多少人
 	protected int followers;// 被关注多少人(粉丝数量)
+	
+	protected int push_notice;
+	
+	protected int push_letter;
+	
 	protected String create_time;// 创建时间
 	protected String last_login_time;// 最后一次登录时间
 	protected List<SNS> sns;// 用户的SNS信息,实际上一个json字符串
@@ -169,6 +174,13 @@ public class User {
 	
 	public List<SNS> getSns() {
 		return sns;
+	}
+	
+	public int getPush_letter() {
+		return push_letter;
+	}
+	public int getPush_notice() {
+		return push_notice;
 	}
 	
 	

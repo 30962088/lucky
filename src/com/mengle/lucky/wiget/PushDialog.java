@@ -1,7 +1,12 @@
 package com.mengle.lucky.wiget;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.UserMeSetPushLetterRequest;
+import com.mengle.lucky.network.UserMeSetPushNoticeRequest;
+import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Preferences.Push;
+import com.mengle.lucky.utils.Preferences.User;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -26,14 +31,20 @@ public class PushDialog implements OnClickListener{
 	
 	private View parent;
 	
-	private PushDialog(Context context,View parent) {
+	private boolean letter;
+	
+	private boolean msg;
+	
+	private PushDialog(Context context,View parent,boolean letter,boolean msg) {
 		this.context = context;
 		this.parent = parent;
+		this.letter = letter;
+		this.msg = msg;
 		init();
 	}
 	
-	public static void open(Context context,View parent){
-		new PushDialog(context,parent);
+	public static void open(Context context,View parent,boolean letter,boolean msg){
+		new PushDialog(context,parent,letter,msg);
 	}
 	
 	private void init(){
@@ -75,13 +86,29 @@ public class PushDialog implements OnClickListener{
 		Push push = new Push(context);
 		View msg = view.findViewById(R.id.msg);
 		msg.setOnClickListener(this);
-		msg.setSelected(push.isMsg());
+		msg.setSelected(this.letter);
 		View result = view.findViewById(R.id.result);
 		result.setSelected(push.isResult());
 		result.setOnClickListener(this);
 		View announcement = view.findViewById(R.id.announcement);
 		announcement.setOnClickListener(this);
-		announcement.setSelected(push.isAnnouncement());
+		announcement.setSelected(this.msg);
+	}
+	
+	private void changeLetter(boolean val){
+		Preferences.User user = new Preferences.User(context);
+		if(user.isLogin()){
+			UserMeSetPushLetterRequest letterRequest = new UserMeSetPushLetterRequest(new UserMeSetPushLetterRequest.Param(user.getUid(), user.getToken(), val?1:0));
+			RequestAsync.request(letterRequest, null);
+		}
+	}
+	
+	private void changeMsg(boolean val){
+		Preferences.User user = new Preferences.User(context);
+		if(user.isLogin()){
+			UserMeSetPushNoticeRequest letterRequest = new UserMeSetPushNoticeRequest(new UserMeSetPushNoticeRequest.Param(user.getUid(), user.getToken(), val?1:0));
+			RequestAsync.request(letterRequest, null);
+		}
 	}
 	
 	public void onClick(View v) {
@@ -93,11 +120,13 @@ public class PushDialog implements OnClickListener{
 			break;
 		case R.id.msg:
 			v.setSelected(!v.isSelected());
-			push.setMsg(v.isSelected());
+			changeLetter(v.isSelected());
+//			push.setMsg(v.isSelected());
 			break;
 		case R.id.announcement:
 			v.setSelected(!v.isSelected());
-			push.setAnnouncement(v.isSelected());
+			changeMsg(v.isSelected());
+//			push.setAnnouncement(v.isSelected());
 			break;
 		case R.id.result:
 			v.setSelected(!v.isSelected());

@@ -69,6 +69,7 @@ public abstract class Request implements Response,IRequest{
 	
 	
 	
+	
 	private Status status;
 	
 	private String data;
@@ -76,6 +77,22 @@ public abstract class Request implements Response,IRequest{
 	private String errorMsg;
 	
 	public Request() {
+		
+	}
+	
+	public static class BinaryBody{
+		private String filename;
+		private File file;
+		private String contentType;
+		private String uploadName;
+		public BinaryBody(String filename, File file, String contentType,
+				String uploadName) {
+			super();
+			this.filename = filename;
+			this.file = file;
+			this.contentType = contentType;
+			this.uploadName = uploadName;
+		}
 		
 	}
 	
@@ -87,18 +104,20 @@ public abstract class Request implements Response,IRequest{
 		try{
 			DefaultHttpClient httpclient = new DefaultHttpClient();
 			HttpPost httpost = new HttpPost(getURL());
-			Map<String, File> fileMap = fillFiles();
+			List<BinaryBody> binaryBodies = fillFiles();
 			HttpEntity requsetEntity = null;
-			if(fileMap != null){
+			if(binaryBodies != null){
 				MultipartEntityBuilder builder = MultipartEntityBuilder.create();        
 			    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-			    
-			    for(NameValuePair param : fillParams()){
-//			    	builder.addTextBody(param.getName(), param.getValue(),ContentType.create("text/plain", MIME.UTF8_CHARSET));
+			    if(fillParams() != null){
+			    	for(NameValuePair param : fillParams()){
+				    	builder.addTextBody(param.getName(), param.getValue(),ContentType.create("text/plain", MIME.UTF8_CHARSET));
+				    }
 			    }
-			    for(String filename:fileMap.keySet()){
+			    
+			    for(BinaryBody body:binaryBodies){
 //			    	builder.addPart(filename, new FileBody(fileMap.get(filename)));
-			    	builder.addBinaryBody(filename, fileMap.get(filename), ContentType.create("image/jpeg"), "uploadimg");
+			    	builder.addBinaryBody(body.uploadName, body.file, ContentType.create(body.contentType), body.filename);
 			    }
 			    requsetEntity = builder.build();
 			    httpost.setEntity(requsetEntity);
@@ -149,7 +168,7 @@ public abstract class Request implements Response,IRequest{
 	
 	
 	
-	protected Map<String, File> fillFiles(){
+	protected List<BinaryBody> fillFiles(){
 		return null;
 	}
 	
