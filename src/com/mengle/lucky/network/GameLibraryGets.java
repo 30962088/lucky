@@ -67,7 +67,7 @@ public class GameLibraryGets extends Request{
 				list.add(new Shiti(opt.id,opt.opt,opt.c==1?true:false));
 				i++;
 			}
-			ShitiList list1 = new ShitiList(list,k);
+			ShitiList list1 = new ShitiList(id, list,k);
 			return list1;
 		}
 		

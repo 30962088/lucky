@@ -1,6 +1,8 @@
 package com.mengle.lucky.wiget;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.fragments.ShitiFragment;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -9,18 +11,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
-public class ShitiOverView extends FrameLayout{
+public class ShitiOverView extends FrameLayout implements OnClickListener{
 
 	public static class Model{
 		private int count;
 		private int addCoin;
 		private int currentCoin;
-		public Model(int count, int addCoin, int currentCoin) {
+		private int star;
+		public Model(int count, int addCoin, int currentCoin,int star) {
 			super();
 			this.count = count;
 			this.addCoin = addCoin;
 			this.currentCoin = currentCoin;
+			this.star = star;
 		}
 		
 	}
@@ -64,15 +69,21 @@ public class ShitiOverView extends FrameLayout{
 		addcount.setTypeface(face);
 		totalView = (TextView) findViewById(R.id.total);
 		btnOver = findViewById(R.id.over);
+		btnOver.setOnClickListener(this);
 		btnAgain = (TextView) findViewById(R.id.again);
+		btnAgain.setOnClickListener(this);
 	}
 	
+	private Model model;
+	
 	public void setModel(Model model){
+		this.model = model;
 		setVisibility(View.VISIBLE);
-		starView.setBackgroundResource(STARTS[model.addCoin]);
+		starView.setBackgroundResource(STARTS[model.star]);
 		currentView.setText(""+model.currentCoin);
 		addcount.setText("+"+model.addCoin);
 		totalView.setText("总金额："+(model.addCoin+model.currentCoin));
+		model.count--;
 		if(model.count <= 0){
 			btnOver.setVisibility(View.VISIBLE);
 			btnAgain.setVisibility(View.GONE);
@@ -81,6 +92,25 @@ public class ShitiOverView extends FrameLayout{
 			btnAgain.setVisibility(View.VISIBLE);
 			btnAgain.setText("再来一次("+model.count+")");
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.over:
+			
+			break;
+			
+		case R.id.again:
+			
+			((MainActivity)getContext()).switchContent(ShitiFragment.newInstance(model.count));
+			
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 	
 	

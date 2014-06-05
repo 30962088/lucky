@@ -32,11 +32,13 @@ public class ShitiListAdapter extends BaseAdapter{
 	}
 	
 	public static class ShitiList{
+		private int id;
 		private Integer index;
 		private int c;
 		private List<Shiti> list;
-		public ShitiList(List<Shiti> list,int c) {
+		public ShitiList(int id,List<Shiti> list,int c) {
 			super();
+			this.id = id;
 			this.list = list;
 			this.c = c;
 		}
@@ -50,6 +52,13 @@ public class ShitiListAdapter extends BaseAdapter{
 		
 		public int getC() {
 			return c;
+		}
+		public int getId() {
+			return id;
+		}
+		
+		public List<Shiti> getList() {
+			return list;
 		}
 		
 		

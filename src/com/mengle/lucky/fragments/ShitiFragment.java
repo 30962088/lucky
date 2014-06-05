@@ -10,6 +10,9 @@ import com.mengle.lucky.adapter.ShitiListAdapter;
 import com.mengle.lucky.adapter.ShitiListAdapter.ShitiList;
 import com.mengle.lucky.network.GameLibraryGets.Result;
 import com.mengle.lucky.network.GameLibraryGets;
+import com.mengle.lucky.network.GameLibrarySubmitRequest;
+import com.mengle.lucky.network.GameLibrarySubmitRequest.Param;
+import com.mengle.lucky.network.GameLibrarySubmitRequest.Param.Log;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
@@ -41,8 +44,10 @@ import android.widget.TextView;
 public class ShitiFragment extends Fragment implements OnItemClickListener,OnClickListener,AnimationListener{
 
 	
-	public static ShitiFragment newInstance(){
-		return new ShitiFragment();
+	public static ShitiFragment newInstance(int count){
+		ShitiFragment fragment = new ShitiFragment();
+		fragment.count = count;
+		return fragment;
 	}
 	
 	private TextView shitiNoView;
@@ -54,6 +59,8 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	private View parentView;
 	
 	private ShitiOverView shitiOverView;
+	
+	private int count;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,7 +124,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	
 	private void request(){
 		Preferences.User user = new Preferences.User(getActivity());
-		final GameLibraryGets gets = new GameLibraryGets(getActivity(), new GameLibraryGets.Params(user.getUid(), user.getToken(), 20));
+		final GameLibraryGets gets = new GameLibraryGets(getActivity(), new GameLibraryGets.Params(user.getUid(), user.getToken(), 1));
 		RequestAsync.request(gets, new Async() {
 			
 			@Override
@@ -155,7 +162,33 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	}
 	
 	private void submit(){
-		shitiOverView.setModel(new Model(3, 2, 18));
+		if(list != null && list.getIndex() == null){
+			Utils.tip(getActivity(), "您还没有作答");
+			return;
+		}
+		final GameLibrarySubmitRequest submitRequest = new GameLibrarySubmitRequest(toSubmitParam());
+		RequestAsync.request(submitRequest, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				shitiOverView.setModel(submitRequest.getResult().toModel(count));
+				
+				
+			}
+		});
+		
+	}
+	
+	private GameLibrarySubmitRequest.Param toSubmitParam(){
+		List<Log> logs = new ArrayList<GameLibrarySubmitRequest.Param.Log>();
+		for(ShitiList list : hashMap.values()){
+			int u = list.getList().get(list.getIndex()).getId();
+			int c = list.getList().get(list.getC()).getId();
+			logs.add(new Log(list.getId(), u, c));
+		}
+		Preferences.User user = new Preferences.User(getActivity());
+		return new GameLibrarySubmitRequest.Param(user.getUid(), user.getToken(), logs); 
+		
 	}
 	
 	private void build(){
