@@ -1,10 +1,18 @@
 package com.mengle.lucky;
 
+import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.mengle.lucky.KanZhuangPreviewActivity.PreviewModel;
 import com.mengle.lucky.network.GameCategoryRequest;
+import com.mengle.lucky.network.GameCreateRequest;
+import com.mengle.lucky.network.GameCreateRequest.Param.Opt;
 import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.Request.Status;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.GameCategoryRequest.Category;
@@ -12,6 +20,7 @@ import com.mengle.lucky.network.IUserGet.UserResult;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.UserMe.Callback;
 import com.mengle.lucky.utils.BitmapLoader;
+import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.RadioGroupLayout;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
@@ -60,6 +69,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	
 	private RadioGroupLayout radioGroupLayout2;
 	
+	private RadioGroupLayout radioGroupLayout3;
+	
+	private EditText reasonText;
+	
 	private void openGallery(){
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
@@ -89,6 +102,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.publish_layout);
+		reasonText = (EditText) findViewById(R.id.reasonView);
 		totalCoinView = (TextView) findViewById(R.id.totalCoin);
 		nickView = (TextView) findViewById(R.id.nickname);
 		avatarView = (ImageView) findViewById(R.id.user_photo);
@@ -106,6 +120,13 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			add(new RadioItem("3", "3倍"));
 			add(new RadioItem("4", "4倍"));
 		}});
+		radioGroupLayout3 = (RadioGroupLayout) findViewById(R.id.radio3);
+		radioGroupLayout3.setList(new ArrayList<RadioGroupLayout.RadioItem>(){{
+			add(new RadioItem("A", "A"));
+			add(new RadioItem("B", "B"));
+			add(new RadioItem("C", "C"));
+		}});
+		
 		
 		imageView = (ImageView) findViewById(R.id.add_pic);
 		imageView.setOnClickListener(this);
@@ -222,7 +243,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String hour = hourText.getText().toString();
 		String miniute = minuteText.getText().toString();
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
-			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title, imagePath, A, B, C, jishu));
+			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title, Uri.fromFile(new File(imagePath)).toString(), A, B, C, jishu));
 		}
 		
 	}
@@ -241,8 +262,39 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String beishu = radioGroupLayout2.getValue();
 		String hour = hourText.getText().toString();
 		String miniute = minuteText.getText().toString();
+		String reason = reasonText.getText().toString();
+		String answer = radioGroupLayout3.getValue();
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
-			
+			List<Opt> opts = new ArrayList<GameCreateRequest.Param.Opt>();
+			String[] contents = new String[]{A,B,C};
+			for(int i = 0;i<contents.length;i++){
+				String content = contents[i];
+				if(content == null){
+					break;
+				}
+				int isanwser = 0;
+				if(answer != null){
+					int index = ArrayUtils.indexOf(new String[]{"A","B","C"}, answer);
+					if(index == i){
+						isanwser = 1;
+					}
+				}
+				opts.add(new Opt(content, isanwser));
+			}
+			Preferences.User user = new Preferences.User(this);
+			GameCreateRequest createRequest = new GameCreateRequest(new GameCreateRequest.
+					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), 
+			new File(imagePath));
+			RequestAsync.request(createRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					if(request.getStatus() == Status.SUCCESS){
+						Utils.tip(PublishActivity.this, "创建成功");
+					}
+					
+				}
+			});
 		}
 		
 	}
