@@ -18,11 +18,11 @@ import android.widget.RadioButton;
 public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 
 	public static class RadioItem{
-		private int id;
+		private String value;
 		private String name;
-		public RadioItem(int id, String name) {
+		public RadioItem(String value, String name) {
 			super();
-			this.id = id;
+			this.value = value;
 			this.name = name;
 		}
 	}
@@ -73,7 +73,7 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.radio_layout, null);
 		RadioButton button = (RadioButton) v.findViewById(R.id.radio);
 		button.setOnClickListener(this);
-		button.setTag(item.id);
+		button.setTag(item.value);
 		button.setText(item.name);
 		((ViewGroup)view.findViewById(res)).addView(v);
 	}
@@ -100,6 +100,8 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 	}
 	
 	private RadioButton selectedView;
+	
+	
 
 	@Override
 	public void onClick(View v) {
@@ -110,6 +112,14 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 		button.setChecked(true);
 		selectedView = button;
 		
+	}
+	
+	public String getValue(){
+		String value = null;
+		if(selectedView != null && selectedView.getTag() != null ){
+			value = selectedView.getTag().toString();
+		}
+		return value;
 	}
 
 }

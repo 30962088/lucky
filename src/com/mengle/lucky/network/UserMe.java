@@ -4,10 +4,39 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
+import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.model.User;
+import com.mengle.lucky.utils.Preferences;
 
 public class UserMe extends Request implements IUserGet{
+	
+	public static interface Callback{
+		public void onsuccess(UserResult userResult);
+	}
+	
+	public static void get(Context context,final Callback callback){
+		if(userResult != null){
+			callback.onsuccess(userResult);
+			return;
+		}
+		
+		Preferences.User user = new Preferences.User(context);
+		final UserMe userMe = new UserMe(new Params(user.getUid(), user.getToken()));
+		RequestAsync.request(userMe, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				if(userMe.getStatus() == Status.SUCCESS){
+					callback.onsuccess(userMe.getUserResult());
+				}
+				
+				
+			}
+		});
+	}
 	
 	public static class Params{
 		protected int uid;
@@ -24,6 +53,8 @@ public class UserMe extends Request implements IUserGet{
 	
 	private UserResult user;
 	
+	private static UserResult userResult;
+	
 	public UserMe(Params params) {
 		super();
 		this.params = params;
@@ -31,7 +62,7 @@ public class UserMe extends Request implements IUserGet{
 
 	public void onSuccess(String data) {
 		user = new Gson().fromJson(data, UserResult.class);
-		
+		userResult = user;
 	}
 
 	public UserResult getUserResult() {

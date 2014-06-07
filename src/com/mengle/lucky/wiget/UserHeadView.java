@@ -18,6 +18,7 @@ import com.mengle.lucky.network.UserMeUnFollow;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.PhotoListDialog.OnResultClick;
 import com.mengle.lucky.wiget.PhotoListDialog.Type;
@@ -252,25 +253,11 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 
 	}
 
-	public String getRealPathFromURI(Uri contentUri) {
-
-		// can post image
-		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = getContext().getContentResolver().query(contentUri, proj, // Which columns to
-														// return
-				null, // WHERE clause; which rows to return (all rows)
-				null, // WHERE clause selection arguments (none)
-				null); // Order-by clause (ascending by name)
-		int column_index = cursor
-				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		cursor.moveToFirst();
-
-		return cursor.getString(column_index);
-	}
+	
 
 	public void onResult(Type type, final String uri) {
 		Preferences.User user = new Preferences.User(getContext());
-		File file = new File(getRealPathFromURI(Uri.parse(uri)));
+		File file = new File(Utils.getRealPathFromURI(getContext(), Uri.parse(uri)));
 		if (type == Type.AVATAR) {
 			
 			

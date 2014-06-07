@@ -44,7 +44,7 @@ public class GameCategoryRequest extends Request{
 		}
 		
 		public RadioItem toRadioItem(){
-			return new RadioItem(id,name);
+			return new RadioItem(String.valueOf(id),name);
 		}
 		
 		public static List<RadioItem> toRadioItemList(List<Category> categories){
