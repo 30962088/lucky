@@ -4,7 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.j256.ormlite.dao.Dao;
+import com.mengle.lucky.ChatActivity;
 import com.mengle.lucky.adapter.MsgListAdapter;
+import com.mengle.lucky.adapter.MsgListAdapter.Message;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.MsgGetRequest;
 import com.mengle.lucky.network.Request;
@@ -18,9 +20,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class MsgFragment extends Fragment{
+public class MsgFragment extends Fragment implements OnItemClickListener{
 
 	public static MsgFragment newInstance(){
 		return new MsgFragment();
@@ -28,17 +32,20 @@ public class MsgFragment extends Fragment{
 	
 	private ListView listView;
 	
+	private DataBaseHelper helper;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		helper = new DataBaseHelper(getActivity());
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		listView = new ListView(getActivity());
+		listView.setOnItemClickListener(this);
 		return listView;
 	}
 	
@@ -91,6 +98,21 @@ public class MsgFragment extends Fragment{
 				adapter.notifyDataSetChanged();
 			}
 		});
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		MsgListAdapter.Message msg = (Message) list.get(position);
+		ChatActivity.open(getActivity(), msg.getUid());
+		try {
+			Msg msg2= helper.getMsgDao().queryForId(msg.getId());
+			msg2.setChecked(false);
+			helper.getMsgDao().update(msg2);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

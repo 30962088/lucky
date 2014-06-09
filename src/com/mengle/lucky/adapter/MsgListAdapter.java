@@ -41,6 +41,8 @@ public class MsgListAdapter extends BaseAdapter{
 			return id;
 		}
 		
+		
+		
 	}
 	
 	public static class Nofity extends Msg{
@@ -54,10 +56,16 @@ public class MsgListAdapter extends BaseAdapter{
 	
 	public static class Message extends Msg{
 		
+		private int uid;
+		
 		public Message(int id, String title,String rightTitle,boolean checked
-				) {
+				,int uid) {
 			super(id, title, checked, Type.MSG, rightTitle);
-			// TODO Auto-generated constructor stub
+			this.uid = uid;
+		}
+		
+		public int getUid() {
+			return uid;
 		}
 
 		

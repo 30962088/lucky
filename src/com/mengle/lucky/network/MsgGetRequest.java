@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.text.TextUtils;
 
@@ -37,8 +40,26 @@ public class MsgGetRequest extends Request{
 	private List<Msg> msgs = new ArrayList<Msg>();
 
 	public void onSuccess(String data) {
+		
 		if(!TextUtils.isEmpty(data)){
-			msgs = new Gson().fromJson(data, new TypeToken<List<Notice>>(){}.getType());
+			try {
+				JSONArray array = new JSONArray(data);
+				String[] ids = new String[array.length()];
+				for(int i = 0;i<array.length();i++){
+					JSONObject obj = array.getJSONObject(i);
+					obj.put("sender", obj.getString("sender"));
+					ids[i] = obj.getString("id");
+					
+				}
+				UserMeLetterReceiptRequest receiptRequest = new UserMeLetterReceiptRequest(
+						new UserMeLetterReceiptRequest.Param(params.uid, params.token, ids));
+				RequestAsync.request(receiptRequest, null);
+				msgs = new Gson().fromJson(array.toString(), new TypeToken<List<Msg>>(){}.getType());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}

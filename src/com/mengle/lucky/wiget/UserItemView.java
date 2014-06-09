@@ -1,5 +1,6 @@
 package com.mengle.lucky.wiget;
 
+import com.mengle.lucky.ChatActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.ZoneActivity;
 import com.mengle.lucky.network.Request;
@@ -149,7 +150,7 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 			onStar();
 			break;
 		case R.id.icon_comment:
-			System.out.println("comment");
+			ChatActivity.open(getContext(), model.uid);
 			break;
 		case R.id.container:
 			ZoneActivity.open(getContext(), model.uid);

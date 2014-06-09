@@ -1,5 +1,7 @@
 package com.mengle.lucky.wiget;
 
+import java.io.Serializable;
+
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.BitmapLoader;
 
@@ -16,7 +18,7 @@ public abstract class ChatItem extends FrameLayout{
 		LEFT,RIGHT
 	}
 	
-	public static class Chat{
+	public static class Chat implements Serializable{
 		private Orientation orientation;
 		private String photo;
 		private String content;
@@ -42,42 +44,43 @@ public abstract class ChatItem extends FrameLayout{
 	
 	public ChatItem(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		
+		_init();
 	}
 
 	public ChatItem(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
+		_init();
 	}
 
 	public ChatItem(Context context) {
 		super(context);
-		
+		_init();
 	}
-	
-	protected abstract Orientation orientation();
-	
-	private Chat chat;
-	
-	public void setChatItem(Chat chat){
-		this.chat = chat;
-		init();
-	}
-	
-	private void init(){
+	private ImageView imageView;
+	private TextView textView;
+	private TextView timeView;
+	private void _init(){
 		if(orientation() == Orientation.LEFT){
 			LayoutInflater.from(getContext()).inflate(R.layout.chat_left_item, this);
 		}else{
 			LayoutInflater.from(getContext()).inflate(R.layout.chat_right_item, this);
 		}
+		imageView = (ImageView) findViewById(R.id.photo);
+		textView = ((TextView)findViewById(R.id.content));
+		timeView = ((TextView) findViewById(R.id.time));
+	}
+	
+	protected abstract Orientation orientation();
+	
+	
+	public void setChatItem(Chat chat){
 		
-		ImageView imageView = (ImageView) findViewById(R.id.photo);
 		BitmapLoader.displayImage(getContext(), chat.photo, imageView);
-		TextView textView = ((TextView)findViewById(R.id.content)); 
 		textView.setText(chat.content);
-		((TextView) findViewById(R.id.time)).setText(chat.time);
+		timeView.setText(chat.time);
 		textView.setBackgroundResource(chat.bgRes);
 	}
+
 
 	
 	

@@ -87,8 +87,11 @@ public class ChatListAdapter extends BaseAdapter{
 			chatTitleItem = (ChatTitleItem) view.findViewById(R.id.title_layout);
 		}
 		private void setItem(Item item){
+			chatTitleItem.setVisibility(View.GONE);
+			chatLeftItem.setVisibility(View.GONE);
+			chatRightItem.setVisibility(View.GONE);
 			if(item.chat != null){
-				chatTitleItem.setVisibility(View.GONE);
+				
 				if(item.chat.getOrientation() == Orientation.LEFT){
 					chatLeftItem.setVisibility(View.VISIBLE);
 					chatLeftItem.setChatItem(item.chat);

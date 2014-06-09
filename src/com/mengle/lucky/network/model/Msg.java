@@ -7,11 +7,11 @@ import java.util.List;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.mengle.lucky.adapter.MsgListAdapter;
 import com.mengle.lucky.adapter.MsgListAdapter.Message;
-import com.mengle.lucky.adapter.MsgListAdapter.Nofity;
 import com.mengle.lucky.database.DataBaseHelper;
 
 
@@ -35,6 +35,7 @@ public class Msg {
 	protected String send_time;
 	
 	@DatabaseField
+	@Expose(deserialize=false,serialize=false)
 	protected String sender;
 	
 	@DatabaseField
@@ -78,8 +79,13 @@ public class Msg {
 	}
 	
 	public Message toModel(){
-		Message nofity = new Message(id, content,getSender().nickname, checked);
+		Sender sender = getSender();
+		Message nofity = new Message(id, content,sender.nickname, checked,sender.uid);
 		return nofity;
+	}
+	
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 	
 }
