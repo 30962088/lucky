@@ -6,14 +6,18 @@
     <com.mengle.lucky.wiget.ChatLeftItem
         android:id="@+id/left"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
         
     </com.mengle.lucky.wiget.ChatLeftItem>
     
     <com.mengle.lucky.wiget.ChatRightItem
         android:id="@+id/right"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
         
     </com.mengle.lucky.wiget.ChatRightItem>
     

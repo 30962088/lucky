@@ -1,5 +1,6 @@
 package com.mengle.lucky.network;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.network.model.Msg;
 import com.mengle.lucky.network.model.Notice;
+import com.mengle.lucky.utils.Utils;
 
 public class MsgGetRequest extends Request{
 
@@ -48,8 +50,13 @@ public class MsgGetRequest extends Request{
 				for(int i = 0;i<array.length();i++){
 					JSONObject obj = array.getJSONObject(i);
 					obj.put("sender", obj.getString("sender"));
+					try {
+						obj.put("send_time", ""+Utils.parseDate(obj.getString("send_time")).getTime());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					ids[i] = obj.getString("id");
-					
 				}
 				UserMeLetterReceiptRequest receiptRequest = new UserMeLetterReceiptRequest(
 						new UserMeLetterReceiptRequest.Param(params.uid, params.token, ids));

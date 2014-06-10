@@ -22,7 +22,7 @@ public class MsgMe {
 	
 	
 	@DatabaseField
-	private String send_time;
+	private long send_time;
 
 
 	@SuppressWarnings("deprecation")
@@ -31,7 +31,7 @@ public class MsgMe {
 		this.id = ""+new Date().getTime();
 		this.toUid = toUid;
 		this.content = content;
-		this.send_time = Utils.formatDate(send_time);
+		this.send_time = send_time.getTime();
 	}
 	
 	public MsgMe() {
@@ -44,7 +44,7 @@ public class MsgMe {
 	public String getId() {
 		return id;
 	}
-	public String getSend_time() {
+	public long getSend_time() {
 		return send_time;
 	}
 	public int getToUid() {

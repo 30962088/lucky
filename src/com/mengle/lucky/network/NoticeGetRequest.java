@@ -9,8 +9,11 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mengle.lucky.App;
 import com.mengle.lucky.network.model.GameLite;
 import com.mengle.lucky.network.model.Notice;
+import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Preferences.User;
 
 public class NoticeGetRequest extends Request{
 
@@ -39,6 +42,14 @@ public class NoticeGetRequest extends Request{
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
 			notices = new Gson().fromJson(data, new TypeToken<List<Notice>>(){}.getType());
+			String[] ids = new String[notices.size()];
+			for(int i = 0;i<ids.length;i++){
+				ids[i] = ""+notices.get(i).getId();
+			}
+			Preferences.User user = new Preferences.User(App.getInstance());
+			UserMeNoticeReceiptRequest receiptRequest = new UserMeNoticeReceiptRequest(
+					new UserMeNoticeReceiptRequest.Param(user.getUid(),	user.getToken(), ids));
+			RequestAsync.request(receiptRequest, null);
 		}
 		
 	}

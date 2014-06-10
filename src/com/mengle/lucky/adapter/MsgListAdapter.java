@@ -41,7 +41,9 @@ public class MsgListAdapter extends BaseAdapter{
 			return id;
 		}
 		
-		
+		public void setChecked(boolean checked) {
+			this.checked = checked;
+		}
 		
 	}
 	

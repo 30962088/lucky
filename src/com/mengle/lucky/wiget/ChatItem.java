@@ -4,10 +4,13 @@ import java.io.Serializable;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.BitmapLoader;
+import com.mengle.lucky.utils.DisplayUtils;
+import com.mengle.lucky.utils.Utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,9 +40,6 @@ public abstract class ChatItem extends FrameLayout{
 			return orientation;
 		}
 		
-		
-		
-		
 	}
 	
 	public ChatItem(Context context, AttributeSet attrs, int defStyle) {
@@ -65,8 +65,11 @@ public abstract class ChatItem extends FrameLayout{
 		}else{
 			LayoutInflater.from(getContext()).inflate(R.layout.chat_right_item, this);
 		}
+		WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
 		imageView = (ImageView) findViewById(R.id.photo);
 		textView = ((TextView)findViewById(R.id.content));
+		textView.setMaxWidth(wm.getDefaultDisplay().getWidth()-DisplayUtils.Dp2Px(getContext(), 120));
 		timeView = ((TextView) findViewById(R.id.time));
 	}
 	

@@ -5,26 +5,25 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:background="@drawable/bg_header2"
         android:layout_width="match_parent"
         android:layout_height="46dp"
+        android:background="@drawable/bg_header2"
         android:gravity="center_vertical" >
 
-        <FrameLayout 
+        <FrameLayout
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="14dp"
-            android:paddingRight="14dp">
-            
-            <View 
+            android:paddingRight="14dp" >
+
+            <View
                 android:layout_width="12dp"
                 android:layout_height="23dp"
-                android:background="@drawable/icon_back"
-                android:layout_gravity="center"/>
-            
+                android:layout_gravity="center"
+                android:background="@drawable/icon_back" />
         </FrameLayout>
-        
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +32,7 @@
             android:textColor="#fff"
             android:textSize="18sp" />
     </RelativeLayout>
-    
+
     <LinearLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
@@ -41,40 +40,54 @@
         android:paddingBottom="1px"
         android:paddingTop="1px" >
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="1px"
             android:layout_weight="1"
             android:background="@drawable/tab_line_selector"
-            android:text="系统公告"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="15sp" />
+            android:gravity="center" >
+
+            
+            <ImageView
+                android:id="@+id/new_notice"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/icon_msg_new" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统公告"
+                android:textColor="#fff"
+                android:textSize="15sp"/>
+            
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/tab_line_selector" >
+            android:background="@drawable/tab_line_selector"
+            android:gravity="center" >
 
-            <ImageView 
+            <ImageView
+                android:id="@+id/new_letter"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_msg_new"
-                android:layout_marginRight="5dp"/>
-            
+                android:layout_marginRight="5dp"
+                android:background="@drawable/icon_msg_new" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="私信"
                 android:textColor="#fff"
                 android:textSize="15sp" />
-            
         </LinearLayout>
     </LinearLayout>
-    
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"

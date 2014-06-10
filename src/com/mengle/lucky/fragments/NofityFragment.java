@@ -3,6 +3,10 @@ package com.mengle.lucky.fragments;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.j256.ormlite.dao.Dao;
 import com.mengle.lucky.NotifyDetailActivity;
 import com.mengle.lucky.adapter.MsgListAdapter;
@@ -11,6 +15,7 @@ import com.mengle.lucky.network.NoticeGetRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.Msg;
 import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.utils.Preferences;
 
@@ -23,18 +28,23 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class NofityFragment extends Fragment implements OnItemClickListener{
+public class NofityFragment extends Fragment implements OnItemClickListener,OnRefreshListener<ListView>{
 
-	public static NofityFragment newInstance(){
-		return new NofityFragment();
+	public static NofityFragment newInstance(View newMsg){
+		NofityFragment fragment = new NofityFragment();
+		fragment.newMsg = newMsg;
+		return fragment;
 	}
 	
-	private ListView listView;
+	private PullToRefreshListView listView;
+	
+	private View newMsg;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		listView = new ListView(getActivity());
+		listView = new PullToRefreshListView(getActivity());
+		listView.setOnRefreshListener(this);
 		return listView;
 	}
 	
@@ -43,19 +53,8 @@ public class NofityFragment extends Fragment implements OnItemClickListener{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		
-		
-		
-	}
-	
-	private List<MsgListAdapter.Msg> list;
-	
-	private MsgListAdapter adapter;
-	
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 		list = Notice.getModelList(getActivity());
+		
 		adapter = new MsgListAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
@@ -68,6 +67,23 @@ public class NofityFragment extends Fragment implements OnItemClickListener{
 		
 	}
 	
+	private List<MsgListAdapter.Msg> list;
+	
+	private MsgListAdapter adapter;
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		checkNew();
+	}
+	private void checkNew(){
+		if(Notice.getNewCount(getActivity())>0){
+			newMsg.setVisibility(View.VISIBLE);
+		}else{
+			newMsg.setVisibility(View.GONE);
+		}
+	}
 	
 	private void request() throws SQLException{
 		final Dao<Notice, Integer> dao = new DataBaseHelper(getActivity()).getNoticeDao();
@@ -85,16 +101,32 @@ public class NofityFragment extends Fragment implements OnItemClickListener{
 						e.printStackTrace();
 					}
 				}
+				checkNew();
 				adapter.notifyDataSetChanged();
+				listView.onRefreshComplete();
 			}
 		});
 	}
 
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		MsgListAdapter.Msg msg = list.get(position);
+		MsgListAdapter.Msg msg = list.get(position-1);
+		msg.setChecked(false);
+		adapter.notifyDataSetChanged();
 		NotifyDetailActivity.open(getActivity(), msg.getId());
 		
+	}
+
+	
+
+	@Override
+	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+		try {
+			request();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
 	
 }

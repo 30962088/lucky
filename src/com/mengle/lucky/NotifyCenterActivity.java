@@ -59,9 +59,9 @@ public class NotifyCenterActivity extends FragmentActivity implements
 			public Fragment getItem(int position) {
 				Fragment fragment;
 				if (position == 0) {
-					fragment = NofityFragment.newInstance();
+					fragment = NofityFragment.newInstance(findViewById(R.id.new_notice));
 				} else {
-					fragment = MsgFragment.newInstance();
+					fragment = MsgFragment.newInstance(findViewById(R.id.new_letter));
 				}
 				return fragment;
 			}

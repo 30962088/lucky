@@ -1,5 +1,6 @@
 package com.mengle.lucky.network.model;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.mengle.lucky.adapter.MsgListAdapter;
 import com.mengle.lucky.adapter.MsgListAdapter.Message;
 import com.mengle.lucky.database.DataBaseHelper;
+import com.mengle.lucky.utils.Utils;
 
 
 @DatabaseTable(tableName = "msg")
@@ -22,6 +24,9 @@ public class Msg {
 		protected int uid;
 		protected String avatar;
 		protected String nickname;
+		public String getAvatar() {
+			return avatar;
+		}
 		
 	}
 	
@@ -32,7 +37,7 @@ public class Msg {
 	protected String content;
 	
 	@DatabaseField
-	protected String send_time;
+	protected long send_time;
 	
 	@DatabaseField
 	@Expose(deserialize=false,serialize=false)
@@ -40,6 +45,7 @@ public class Msg {
 	
 	@DatabaseField
 	protected boolean checked = true;
+	
 	
 	public int getId() {
 		return id;
@@ -52,7 +58,7 @@ public class Msg {
 		return content;
 	}
 	public String getSend_time() {
-		return send_time;
+		return Utils.formatDate(new Date(send_time));
 	}
 	public Sender getSender() {
 		return new Gson().fromJson(sender, Sender.class) ;
@@ -61,7 +67,7 @@ public class Msg {
 	public static List<Msg> getMsg(Context context) throws SQLException{
 		List<Msg> list = new ArrayList<Msg>();
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-		list.addAll(dataBaseHelper.getMsgDao().queryForAll());
+		list.addAll(dataBaseHelper.getMsgDao().queryBuilder().orderBy("send_time", false).query());
 		return list;
 	}
 	
@@ -76,6 +82,18 @@ public class Msg {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	public static long getNewCount(Context context){
+		long res = 0;
+		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+		try {
+			res = dataBaseHelper.getMsgDao().queryBuilder().where().eq("checked", true).countOf();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return  res;
 	}
 	
 	public Message toModel(){

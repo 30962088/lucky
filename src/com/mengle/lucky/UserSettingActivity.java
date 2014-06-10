@@ -3,6 +3,7 @@ package com.mengle.lucky;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import com.j256.ormlite.dao.EagerForeignCollection;
 import com.mengle.lucky.database.DataBaseHelper;
@@ -22,6 +23,13 @@ import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -69,9 +77,6 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 	private TextView snsRenrenText;
 
-	private View snsKaixinView;
-
-	private TextView snsKaixinText;
 
 	private OauthUtils oauthUtils;
 	
@@ -80,6 +85,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	private TextView provinceView;
 	
 	private TextView cityView;
+	
+	private UMSocialService mController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		mController  = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
 		
 		dataBaseHelper = new DataBaseHelper(this);
 		
@@ -127,9 +136,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		snsRenrenView.setOnClickListener(this);
 		snsRenrenText = (TextView) findViewById(R.id.sns_renren_text);
 
-		snsKaixinView = findViewById(R.id.sns_kaixin);
-		snsKaixinView.setOnClickListener(this);
-		snsKaixinText = (TextView) findViewById(R.id.sns_kaixin_text);
+		
 
 		maleCheckbox.setOnClickListener(new OnClickListener() {
 
@@ -209,35 +216,61 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					fillSns(user);
 				}
 
 			}
 		});
 	}
 
-	private void fillSns(User user) {
-		List<SNS> list = user.getSns();
-		for (SNS sns : list) {
-			String name = sns.getVia();
-			if (TextUtils.equals(name, "weibo")) {
-				snsWeiboView.setSelected(true);
-				snsWeiboText.setText("取消绑定");
-			} else if (TextUtils.equals(name, "tqq")) {
-				snsTencentView.setSelected(true);
-				snsTencentText.setText("取消绑定");
-			} else if (TextUtils.equals(name, "qq")) {
-				snsQQView.setSelected(true);
-				snsQQText.setText("取消绑定");
-			} else if (TextUtils.equals(name, "renren")) {
-				snsRenrenView.setSelected(true);
-				snsRenrenText.setText("取消绑定");
-			} else if (TextUtils.equals(name, "kaixin")) {
-				snsKaixinView.setSelected(true);
-				snsKaixinText.setText("取消绑定");
+	private void fillSns() {
+		
+		mController.checkTokenExpired(this, new SHARE_MEDIA[]{SHARE_MEDIA.RENREN,SHARE_MEDIA.QQ,SHARE_MEDIA.TENCENT,SHARE_MEDIA.SINA}, new UMDataListener() {
+			//{tencent=false, sina=false, qq=true, renren=false}
+			@Override
+			public void onComplete(int arg0, Map<String, Object> arg1) {
+				if ((Boolean) arg1.get("sina")) {
+					snsWeiboView.setSelected(true);
+					snsWeiboText.setText("取消绑定");
+				}else{
+					snsWeiboView.setSelected(false);
+					snsWeiboText.setText("点击绑定");
+				}
+				
+				
+				if ((Boolean) arg1.get("tencent")) {
+					snsTencentView.setSelected(true);
+					snsTencentText.setText("取消绑定");
+				}else{
+					snsTencentView.setSelected(false);
+					snsTencentText.setText("点击绑定");
+				}
+				
+				if ((Boolean) arg1.get("qq")) {
+					snsQQView.setSelected(true);
+					snsQQText.setText("取消绑定");
+				}else{
+					snsQQView.setSelected(false);
+					snsQQText.setText("点击绑定");
+				}
+				
+				if ((Boolean) arg1.get("renren")) {
+					snsRenrenView.setSelected(true);
+					snsRenrenText.setText("取消绑定");
+				}else{
+					snsRenrenView.setSelected(false);
+					snsRenrenText.setText("点击绑定");
+				}
+				
 			}
 
-		}
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+		
+		});
+		
 
 	}
 
@@ -275,21 +308,23 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 		fill();
+		fillSns();
 
 	}
 
-	private void unbindRequest(String via) {
-		Preferences.User user = new Preferences.User(this);
-		final SNSUnBindRequest snsUnBindRequest = new SNSUnBindRequest(
-				new SNSUnBindRequest.Params(user.getUid(), user.getToken(), via));
-
-		RequestAsync.request(snsUnBindRequest, new Async() {
-
-			public void onPostExecute(Request request) {
-				if (snsUnBindRequest.getUser() != null) {
-					fillSns(snsUnBindRequest.getUser());
-				}
-
+	private void unbindRequest(SHARE_MEDIA media) {
+		mController.deleteOauth(this, media, new SocializeClientListener() {
+			
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onComplete(int arg0, SocializeEntity arg1) {
+				fillSns();
+				
 			}
 		});
 
@@ -316,28 +351,28 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			break;
 		case R.id.sns_qq:
 			if (v.isSelected()) {
-				unbindRequest("qq");
+				unbindRequest(SHARE_MEDIA.QQ);
 			} else {
 				oauthUtils.qqOauth();
 			}
 			break;
 		case R.id.sns_weibo:
 			if (v.isSelected()) {
-				unbindRequest("weibo");
+				unbindRequest(SHARE_MEDIA.SINA);
 			} else {
 				oauthUtils.sinaOauth();
 			}
 			break;
 		case R.id.sns_tencent:
 			if (v.isSelected()) {
-				unbindRequest("tqq");
+				unbindRequest(SHARE_MEDIA.TENCENT);
 			} else {
 				oauthUtils.tencentOauth();
 			}
 			break;
 		case R.id.sns_renren:
 			if (v.isSelected()) {
-				unbindRequest("renren");
+				unbindRequest(SHARE_MEDIA.RENREN);
 			} else {
 				oauthUtils.renrenOauth();
 			}
@@ -408,17 +443,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 	@Override
 	public void onSuccess(com.mengle.lucky.network.Login.Params params) {
-		Preferences.User user = new Preferences.User(this);
-		SNSBindRequest.Params sParams = new SNSBindRequest.Params(
-				user.getUid(), user.getToken(), params);
-		SNSBindRequest bindRequest = new SNSBindRequest(sParams);
-		RequestAsync.request(bindRequest, new Async() {
-
-			@Override
-			public void onPostExecute(Request request) {
-				onResume();
-			}
-		});
+		fillSns();
 
 	}
 

@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -53,6 +54,16 @@ public class Utils {
 	public static String formatDate(Date date){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return format.format(date);
+	}
+	
+	public static Date parseDate(String date) throws ParseException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return format.parse(date);
+	}
+	
+	public static String formatDate(long date){
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		return format.format(new Date(date));
 	}
 	
 	public static String getRealPathFromURI(Context context, Uri contentUri) {

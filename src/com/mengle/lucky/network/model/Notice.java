@@ -78,8 +78,20 @@ public class Notice {
 	public static List<Notice> getNotices(Context context) throws SQLException{
 		List<Notice> list = new ArrayList<Notice>();
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-		list.addAll(dataBaseHelper.getNoticeDao().queryForAll());
+		list.addAll(dataBaseHelper.getNoticeDao().queryBuilder().orderBy("send_time", false).query());
 		return list;
+	}
+	
+	public static long getNewCount(Context context){
+		long res = 0;
+		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+		try {
+			res = dataBaseHelper.getNoticeDao().queryBuilder().where().eq("checked", true).countOf();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return  res;
 	}
 	
 	public static List<MsgListAdapter.Msg> getModelList(Context context){
