@@ -89,7 +89,7 @@ public class CaiFragment extends Fragment {
 				.getBubbleCaiView(getActivity()), new Header(new Count(
 				R.drawable.btn_count, game.getJoin_count()), true, false, game
 				.getImage()), new Question(game.getTitle(), new Status(false,
-				null), list), game.getGold_coin(), new Date(11), true));
+				null), list), game.getGold_coin(), 0, true));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {

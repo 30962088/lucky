@@ -55,7 +55,7 @@ public class ZhuangItem1 extends FrameLayout implements OnClickListener{
 	
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.zhuang_layout_new, this);
-		findViewById(R.id.layout).setOnClickListener(this);
+//		findViewById(R.id.layout).setOnClickListener(this);
 		layout1 = (ViewGroup) findViewById(R.id.layout1);
 		titleView = (TextView) findViewById(R.id.title);
 		arrowView = findViewById(R.id.arrow);
@@ -93,11 +93,21 @@ public class ZhuangItem1 extends FrameLayout implements OnClickListener{
 	
 	public void setExpand(boolean expand,long during){
 		
-		if(during == 0 || this.expand != expand){
+		if(expand){
 			arrowView.setVisibility(View.VISIBLE);
 			layout1.setBackgroundResource(R.drawable.bg_zhuang);
 			titleView.setTextColor(Color.parseColor("#ffffff"));
 			TranslateAnimation translateAnimation = new TranslateAnimation(0, left, 0, 0);
+			
+			translateAnimation.setDuration(during);
+			translateAnimation.setFillAfter(true);
+			layout1.startAnimation(translateAnimation);
+			this.expand = expand;
+		}else{
+			arrowView.setVisibility(View.GONE);
+			layout1.setBackgroundResource(R.drawable.bg_zhuang_select);
+			titleView.setTextColor(Color.parseColor("#000000"));
+			TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0);
 			
 			translateAnimation.setDuration(during);
 			translateAnimation.setFillAfter(true);

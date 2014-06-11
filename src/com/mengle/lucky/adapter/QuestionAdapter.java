@@ -6,6 +6,7 @@ import com.mengle.lucky.R;
 import com.mengle.lucky.wiget.QuestionLayout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -180,15 +181,24 @@ public class QuestionAdapter extends BaseAdapter {
 		
 		if(question.status.gameover){
 			holder.gameoverView.setVisibility(View.VISIBLE);
-			if(question.status.passIndex.indexOf(position) != -1){
-				holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, true));
-				holder.passView.setVisibility(View.VISIBLE);
-				holder.notpassView.setVisibility(View.GONE);
+			if(question.status.passIndex != null){
+				if(question.status.passIndex.indexOf(position) != -1){
+					holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, true));
+					holder.passView.setVisibility(View.VISIBLE);
+					holder.notpassView.setVisibility(View.GONE);
+				}else{
+					holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, false));
+					holder.passView.setVisibility(View.GONE);
+					holder.notpassView.setVisibility(View.VISIBLE);
+				}
 			}else{
 				holder.questionView.setStatus(new QuestionLayout.Status(question.status.gameover, false));
 				holder.passView.setVisibility(View.GONE);
-				holder.notpassView.setVisibility(View.VISIBLE);
+				holder.notpassView.setVisibility(View.GONE);
+				holder.noView.setTextColor(Color.parseColor("#b9b9b9"));
+				holder.nameView.setTextColor(Color.parseColor("#b9b9b9"));
 			}
+			
 		}else{
 			holder.gameoverView.setVisibility(View.GONE);
 		}

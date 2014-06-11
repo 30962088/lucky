@@ -82,7 +82,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 		loadHot();
 		
 		loadCat();
-		
+		listView.load(true);
 	}
 
 	private void loadHot() {
@@ -139,7 +139,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		listView.load(true);
+		
 	}
 
 	public void onClick(View v) {

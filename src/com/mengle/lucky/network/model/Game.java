@@ -38,10 +38,10 @@ public class Game {
 	 */
 	
 	public static class Creator{
-		private String uid;
+		private int uid;
 		private String nickname;
 		private String avatar;
-		public String getUid() {
+		public int getUid() {
 			return uid;
 		}
 		public String getNickname() {
@@ -195,6 +195,16 @@ public class Game {
 		return praise;
 	}
 	
+	public int getAnswer(){
+		int res = 0;
+		for(int i = 0;i<opts.size();i++){
+			if(opts.get(i).is_answer == 1){
+				res = i;
+				break;
+			}
+		}
+		return res;
+	}
 	
 	
 }

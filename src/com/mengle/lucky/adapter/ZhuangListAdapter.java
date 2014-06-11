@@ -1,7 +1,9 @@
 package com.mengle.lucky.adapter;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.mengle.lucky.KanZhuangActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.wiget.ZhuangItem;
 import com.mengle.lucky.wiget.ZhuangItem1;
@@ -9,6 +11,7 @@ import com.mengle.lucky.wiget.ZhuangItem1;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
@@ -58,9 +61,16 @@ public class ZhuangListAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		return position;
 	}
+	
+	HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public void reset(){
+		map.clear();
+	}
+	
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
+		final ZhuangModel model = list.get(position);
 		if (convertView == null) {
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.zhuang_list_item, null);
@@ -69,7 +79,26 @@ public class ZhuangListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.setModel(list.get(position));
+		final ZhuangItem1 zhuangItem1 = holder.item1;
+		zhuangItem1.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				boolean expanded = map.get(position) == null || map.get(position)==false ? false:true;
+				if(!expanded){
+					zhuangItem1.setExpand(true, 200);
+					map.put(position, true);
+				}else{
+					KanZhuangActivity.open(context, model.id);
+				}
+				
+				
+			}
+		});
+		boolean expanded = map.get(position) == null || map.get(position)==false ? false:true;
+		 
+		zhuangItem1.setExpand(expanded,0);
+		holder.setModel(model);
 		return convertView;
 	}
 

@@ -5,6 +5,13 @@ import java.util.List;
 
 import org.apmem.tools.layouts.FlowLayout;
 
+import com.mengle.lucky.network.GameHotKeywordRequest;
+import com.mengle.lucky.network.GameHotRequest;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.utils.Preferences;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,40 +41,45 @@ public class SearchActivity extends BaseActivity implements OnClickListener {
 		flowLayout = (FlowLayout) findViewById(R.id.flow);
 		findViewById(R.id.search_btn).setOnClickListener(this);
 		findViewById(R.id.leftnav).setOnClickListener(this);
-		init();
+		request();
 	}
 
-	private void init() {
-		List<Recommand> list = new ArrayList<SearchActivity.Recommand>() {
-			{
-				add(new Recommand("1", "关键字"));
-				add(new Recommand("1", "关键字"));
-				add(new Recommand("1", "关键字"));
-				add(new Recommand("1", "关键字"));
-				add(new Recommand("1", "关键字"));
+	private void request() {
+		Preferences.User user = new Preferences.User(this);
+		final GameHotKeywordRequest keywordRequest = new GameHotKeywordRequest(
+				new GameHotKeywordRequest.Param(user.getUid(),user.getToken()));
+		RequestAsync.request(keywordRequest, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				init(keywordRequest.getResults());
+				
 			}
-		};
-		for (Recommand recommand : list) {
+		});
+	}
+
+	private void init(List<String> list) {
+		
+		for (final String name : list) {
 			TextView textView = (TextView) LayoutInflater.from(this).inflate(
 					R.layout.search_item, null);
-			SpannableString content = new SpannableString(recommand.name);
+			SpannableString content = new SpannableString(name);
 			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 			textView.setText(content);
 			flowLayout.addView(textView);
+			textView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					SearchListActivity.open(SearchActivity.this, name);
+					
+				}
+			});
 		}
 
 	}
 
-	private static class Recommand {
-		private String id;
-		private String name;
-
-		public Recommand(String id, String name) {
-			this.id = id;
-			this.name = name;
-		}
-
-	}
+	
 
 	public void onClick(View v) {
 		switch (v.getId()) {

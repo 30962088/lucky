@@ -38,13 +38,14 @@ public class SearchListActivity extends BaseActivity{
 		keyword = getIntent().getStringExtra("keyword");
 		Preferences.User user = new Preferences.User(this);
 		listView.setRequest(new GameSearchRequest(new Pamras(user.getUid(), user.getToken(), keyword)));
+		listView.load(true);
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		listView.load(true);
+		
 	}
 
 

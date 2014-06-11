@@ -42,7 +42,7 @@ public class StageFragment extends Fragment{
 	
 	private void init(){
 		if(getActivity() instanceof MainActivity){
-//			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		}
 	
 		

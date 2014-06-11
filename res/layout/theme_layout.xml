@@ -102,7 +102,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="84dp"
                         android:gravity="center_vertical"
-                       
                         android:textColor="#434a54"
                         android:textSize="18sp" />
                 </RelativeLayout>
@@ -122,16 +121,31 @@
                 android:background="#000"
                 android:visibility="gone" />
 
-            <GridView
-                android:id="@+id/gridview"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/titlebar"
-                android:clipToPadding="true"
-                android:gravity="center"
-                android:numColumns="3"
-                android:paddingBottom="85.5dp" >
-            </GridView>
+                android:layout_height="wrap_content" 
+                android:layout_below="@id/titlebar">
+
+                <GridView
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="true"
+                    android:gravity="center"
+                    android:numColumns="3"
+                    android:paddingBottom="85.5dp" >
+                </GridView>
+                
+                <ImageView 
+                    android:visibility="gone"
+                    android:id="@+id/lost"
+                    android:layout_centerInParent="true"
+                    android:layout_width="108dp"
+                    android:layout_height="74dp"
+                    android:src="@drawable/icon_lost"
+                    android:scaleType="centerInside"/>
+                
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
@@ -145,12 +159,12 @@
 
     <LinearLayout
         android:id="@+id/selectCoin"
-        android:layout_alignTop="@+id/icon_bottom"
-        android:layout_alignBottom="@+id/icon_bottom"
-        android:layout_toRightOf="@+id/icon_center"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/icon_bottom"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/icon_bottom"
+        android:layout_toRightOf="@+id/icon_center"
         android:clickable="true"
         android:gravity="center" >
 
@@ -173,12 +187,12 @@
 
     <LinearLayout
         android:id="@+id/submit"
-        android:layout_alignTop="@+id/icon_bottom"
-        android:layout_alignBottom="@+id/icon_bottom"
-        android:layout_toLeftOf="@+id/icon_center"
-        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/icon_bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/icon_bottom"
+        android:layout_toLeftOf="@+id/icon_center"
         android:clickable="true"
         android:gravity="center" >
 

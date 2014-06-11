@@ -41,7 +41,7 @@ public interface IGameGet extends IRequest{
 			// TODO Auto-generated constructor stub
 		}
 		public ZhuangModel toZhuangModel(){
-			ZhuangModel model = new ZhuangModel(uid, title, avatar, join_count, stop_time);
+			ZhuangModel model = new ZhuangModel(id, title, avatar, join_count, stop_time);
 			return model;
 		}
 		

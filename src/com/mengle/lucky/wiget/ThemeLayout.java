@@ -56,12 +56,12 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 		private int coin;
 
-		private Date endDate;
+		private long endDate;
 
 		private boolean enable;
 
 		public Theme(View bubble, Header header, Question question, int coin,
-				Date endDate, boolean enable) {
+				long endDate, boolean enable) {
 			super();
 			this.bubble = bubble;
 			this.header = header;
@@ -112,6 +112,8 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	
 	private OnBtnClickListener onBtnClickListener;
 	
+	private View lostView;
+	
 	public void setOnBtnClickListener(OnBtnClickListener onBtnClickListener) {
 		this.onBtnClickListener = onBtnClickListener;
 	}
@@ -119,6 +121,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	private void init() {
 		
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
+		lostView = findViewById(R.id.lost);
 		submitBtn = findViewById(R.id.submit);
 		titleView = (TextView) findViewById(R.id.title);
 		
@@ -152,19 +155,15 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		peronCountView.setCount(theme.header.count);
 		coinView.setText(""+theme.coin);
 		
-		startTimer(90*1000);
 		
-		/*if (theme.endDate == null) {
+		
+		if (theme.endDate <= 0) {
 			timerView.setText("今日已结束");
 		} else {
-			long left = new Date().getTime()-theme.endDate.getTime();
-			if(left < 0){
-				timerView.setText("今日已结束");
-			}else{
-				startTimer(left);
-			}
+			startTimer(theme.endDate);
 			
-		}*/
+			
+		}
 	}
 	
 	public GridView getGridView() {
@@ -226,7 +225,8 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	}
 
 	public static View getBubbleDaanView(Context context, int color, String name) {
-
+		
+		
 		View view = LayoutInflater.from(context).inflate(
 				R.layout.bubble_daan_view, null);
 		BubbleAnswerView answerView = (BubbleAnswerView) view
@@ -250,7 +250,9 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	}
 	
 	
-	
+	public View getLostView() {
+		return lostView;
+	}
 
 	public void onClick(View v) {
 		switch (v.getId()) {

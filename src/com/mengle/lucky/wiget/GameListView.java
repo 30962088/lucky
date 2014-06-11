@@ -44,7 +44,7 @@ public class GameListView extends BaseListView implements OnLoadListener{
 	
 	private void init(){
 		setOnLoadListener(this);
-		adapter = new ZhuangListAdapter(getContext(), list);
+		adapter = new ZhuangListAdapter(getContext(), list1);
 		setAdapter(adapter);
 	}
 	
@@ -64,27 +64,32 @@ public class GameListView extends BaseListView implements OnLoadListener{
 	
 	private ZhuangListAdapter adapter;
 	
-	private List<ZhuangModel> list = new ArrayList<ZhuangModel>();
+	private List<ZhuangModel> list1 = new ArrayList<ZhuangModel>();
 	
+	private List<Result> results;
 	
+	private int offset;
 
 	@Override
 	public boolean onLoad(int offset, int limit) {
+		this.offset = offset;
 		boolean hasMore = true;
 		request.request(offset, limit);
-		List<Result> list =  request.getResult();
-		if(list.size()<limit){
+		results =  request.getResult();
+		if(results.size()<limit){
 			hasMore = false;
 		}
-		if(offset == 0){
-			this.list.clear();
-		}
-		this.list.addAll(Result.toZhuangModelList(list));
+		
 		return hasMore;
 	}
 
 	@Override
 	public void onLoadSuccess() {
+		if(offset == 0){
+			adapter.reset();
+			this.list1.clear();
+		}
+		this.list1.addAll(Result.toZhuangModelList(results));
 		adapter.notifyDataSetChanged();
 		
 	}

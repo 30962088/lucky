@@ -9,43 +9,39 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.mengle.lucky.network.model.Game;
 
-public class GameSearchRequest extends Request implements IGameGet{
+public class GameHotKeywordRequest extends Request{
 
-	public static class Pamras{
-		protected Integer uid;
+	public static class Param{
+		protected int uid;
 		protected String token;
-		protected String keyword;
-		protected int start;
-		protected int limit;
-		public Pamras(Integer uid, String token, String keyword) {
+		public Param(int uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;
-			this.keyword = keyword;
 		}
 		
 	}
 	
-	private Pamras pamras;
+	private Param param;
 	
-	private List<Result> list = new ArrayList<Result>();
+	private List<String> results = new ArrayList<String>();
 	
-	public GameSearchRequest(Pamras pamras) {
+	public GameHotKeywordRequest(Param param) {
 		super();
-		this.pamras = pamras;
+		this.param = param;
+	}
+	
+	public List<String> getResults() {
+		return results;
 	}
 
 	@Override
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
-			list = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
+			results = new Gson().fromJson(data, new TypeToken<List<String>>(){}.getType());
 		}
-	}
-	
-	public List<Result> getResult(){
-		return list;
+		
 	}
 
 	@Override
@@ -69,20 +65,13 @@ public class GameSearchRequest extends Request implements IGameGet{
 	@Override
 	public String getURL() {
 		// TODO Auto-generated method stub
-		return HOST+"game/search/";
+		return HOST+"game/hotkeyword/";
 	}
 
 	@Override
 	public List<NameValuePair> fillParams() {
 		// TODO Auto-generated method stub
-		return build(pamras);
+		return build(param);
 	}
 
-	@Override
-	public void request(int offset, int limit) {
-		pamras.start = offset;
-		pamras.limit = limit;
-		request();
-		
-	}
 }
