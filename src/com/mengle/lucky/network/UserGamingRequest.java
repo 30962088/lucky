@@ -18,10 +18,12 @@ public class UserGamingRequest extends Request{
 		protected String token;
 		protected int start;
 		protected int limit;
-		public Params(int uid, String token, int start, int limit) {
+		protected int vuid;
+		public Params(int uid, String token,int vuid, int start, int limit) {
 			super();
 			this.uid = uid;
 			this.token = token;
+			this.vuid = vuid;
 			this.start = start;
 			this.limit = limit;
 		}
@@ -67,8 +69,8 @@ public class UserGamingRequest extends Request{
 
 	@Override
 	public String getURL() {
-		// TODO Auto-generated method stub
-		return HOST+"me/game/ings/";
+		
+		return HOST+"user/game/ings/";
 	}
 
 	@Override

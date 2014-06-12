@@ -75,9 +75,12 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 		baseListView.setOnLoadListener(this);
 		listAdapter = new Row2ListAdapter(getActivity(), list);
 		baseListView.setAdapter(listAdapter);
-		
+		user = new Preferences.User(getActivity());
+		baseListView.load(true);
 		
 	}
+	
+	
 	
 	private Preferences.User user;
 	
@@ -85,31 +88,25 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		user = new Preferences.User(getActivity());
-		baseListView.load(true);
+		
 	}
 	
 	
 	
 	private int offset = 0;
 
-
+	private List<GameLite> results;
 
 	public boolean onLoad(int offset, int limit) {
 		boolean hasMore = false;
 		this.offset = offset;
-		UserGameCreatorRequest request = new UserGameCreatorRequest(new UserGameCreatorRequest.Params(uid, user.getToken(), offset, limit));
+		UserGameCreatorRequest request = new UserGameCreatorRequest(new UserGameCreatorRequest.Params(user.getUid(), user.getToken(),uid, offset, limit));
 		request.request();
-		if(offset == 0){
-			list.clear();
-			list.add(new Row2(-1, "结束时间", "竞猜名称"));
-		}
+		
 		if(request.getStatus() == Request.Status.SUCCESS){
-			List<GameLite> list = request.getGameLite();
-			for(GameLite gameLite : list){
-				this.list.add(gameLite.toRow2());
-			}
-			if(list.size() >= limit){
+			results = request.getGameLite();
+			
+			if(results.size() >= limit){
 				hasMore = true;
 			}
 		}
@@ -123,6 +120,13 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 
 
 	public void onLoadSuccess() {
+		if(offset == 0){
+			list.clear();
+			list.add(new Row2(-1, "结束时间", "竞猜名称"));
+		}
+		for(GameLite gameLite : results){
+			this.list.add(gameLite.toRow2());
+		}
 		if(offset == 0&&list.size() == 1){
 			baseListView.setVisibility(View.GONE);
 			if(user.getUid() == uid){

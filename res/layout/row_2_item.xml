@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
-    
-    <TextView 
-        android:id="@+id/row1"
-        android:layout_width="104dp"
-        android:layout_height="45dp"
-        android:text="结束时间"
-        android:textSize="12sp"
-        android:background="#f9e3d6"
-        android:gravity="center"/>
-    
-    <TextView 
-        android:id="@+id/row2"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_weight="1"
-        android:text="竞题名称"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:background="#dbf2fa"/>
+    android:layout_height="wrap_content">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/row1"
+            android:layout_width="104dp"
+            android:layout_height="match_parent"
+            android:background="#f9e3d6"
+            android:gravity="center"
+            android:text="结束时间"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/row2"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#dbf2fa"
+            android:gravity="center"
+            android:text="竞题名称"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</FrameLayout>

@@ -16,12 +16,14 @@ public class UserGameCreatorRequest extends Request{
 	public static class Params{
 		protected int uid;
 		protected String token;
+		protected int vuid;
 		protected int start;
 		protected int limit;
-		public Params(int uid, String token, int start, int limit) {
+		public Params(int uid, String token,int vuid, int start, int limit) {
 			super();
 			this.uid = uid;
 			this.token = token;
+			this.vuid = vuid;
 			this.start = start;
 			this.limit = limit;
 		}
@@ -68,7 +70,7 @@ public class UserGameCreatorRequest extends Request{
 	@Override
 	public String getURL() {
 		// TODO Auto-generated method stub
-		return HOST+"me/game/creates/";
+		return HOST+"user/game/creates/";
 	}
 
 	@Override

@@ -81,6 +81,7 @@ public class ZoneActivity extends FragmentActivity implements
 		tab.getChildAt(0).performClick();
 		
 		viewPager.setAdapter(new ZonePageAdater(getSupportFragmentManager()));
+		viewPager.setOffscreenPageLimit(3);
 
 	}
 
