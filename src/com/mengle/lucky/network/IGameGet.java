@@ -8,6 +8,7 @@ import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
 import com.mengle.lucky.network.Request.Status;
 import com.mengle.lucky.network.model.Game;
 import com.mengle.lucky.network.model.User;
+import com.mengle.lucky.utils.Utils;
 
 public interface IGameGet extends IRequest{
 	public List<Result> getResult();
@@ -41,7 +42,8 @@ public interface IGameGet extends IRequest{
 			// TODO Auto-generated constructor stub
 		}
 		public ZhuangModel toZhuangModel(){
-			ZhuangModel model = new ZhuangModel(id, title, avatar, join_count, stop_time);
+			
+			ZhuangModel model = new ZhuangModel(id, title, avatar, join_count,Utils.format12Hour(stop_time)+" 结束");
 			return model;
 		}
 		

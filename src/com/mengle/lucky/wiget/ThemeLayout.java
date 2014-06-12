@@ -122,7 +122,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	}
 
 	private void init() {
-		
+		setVisibility(View.GONE);
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
 		lostView = findViewById(R.id.lost);
 		submitBtn = findViewById(R.id.submit);
@@ -146,6 +146,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	private QuestionAdapter adapter; 
 	
 	public void setTheme(Theme theme) {
+		setVisibility(View.VISIBLE);
 		gridView.setNumColumns(theme.question.getList().size());
 		adapter = new QuestionAdapter(getContext(), theme.question);
 		titleView.setText(theme.question.getTitle());

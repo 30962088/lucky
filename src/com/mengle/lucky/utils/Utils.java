@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -55,6 +56,20 @@ public class Utils {
 		String[] models = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 		
 		return models[date.getDay()];
+	}
+	
+	public static String format12Hour(String str){
+		SimpleDateFormat format = new SimpleDateFormat("a h:mm",Locale.US);
+		String res = "";
+		try {
+			Date date = parseDate(str);
+			res = format.format(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+		
 	}
 	
 	public static String formatDate(Date date){

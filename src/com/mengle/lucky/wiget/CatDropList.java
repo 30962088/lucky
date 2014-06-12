@@ -1,7 +1,15 @@
 package com.mengle.lucky.wiget;
 
+import java.util.List;
+
 import com.mengle.lucky.R;
+import com.mengle.lucky.network.CampaignsGetRequest;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.CampaignsGetRequest.Result;
+import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.BitmapLoader;
+import com.mengle.lucky.utils.Preferences;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -66,10 +74,30 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		adImg = (ImageView) findViewById(R.id.adimg);
 		findViewById(R.id.outer).setOnClickListener(this);
 		findViewById(R.id.close).setOnClickListener(this);
+		request();
 	}
 	
-	public void setAdimg(String photo){
-		BitmapLoader.displayImage(getContext(), photo, adImg);
+	private void request() {
+		Preferences.User user = new Preferences.User(getContext());
+ 		final CampaignsGetRequest getRequest = new CampaignsGetRequest(
+				new CampaignsGetRequest.Param(user.getUid(), user.getToken()));
+ 		RequestAsync.request(getRequest, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				List<Result> results = getRequest.getResults();
+				if(results != null && results.size()>0){
+					setAdimg(results.get(0));
+				}
+				
+			}
+		});
+		
+	}
+	
+	public void setAdimg(Result result){
+		adImg.setVisibility(View.VISIBLE);
+		BitmapLoader.displayImage(getContext(), result.getImage(), adImg);
 	}
 	
 	public void setAdapter(ListAdapter adapter){
