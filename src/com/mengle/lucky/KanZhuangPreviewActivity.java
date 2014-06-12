@@ -91,7 +91,7 @@ public class KanZhuangPreviewActivity extends Activity implements OnClickListene
 				.getBubblePhotoView(this,model.avatar), new Header(new Count(
 				R.drawable.btn_count_blue, 0), false, false, model
 				.imagePath), new Question(model.title, new Status(false,
-				null), list), Integer.parseInt(model.coin), 0, true));
+				null), list), Integer.parseInt(model.coin), 0, true,""));
 
 		
 	}

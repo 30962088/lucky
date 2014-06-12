@@ -1,11 +1,13 @@
 package com.mengle.lucky.wiget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.DisplayUtils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +59,18 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 		build();
 	}
 	
-	private void build(View view,int k,RadioItem item){
+	private static class Store{
+		private int index;
+		private String value;
+		public Store(int index, String value) {
+			super();
+			this.index = index;
+			this.value = value;
+		}
+		
+	}
+	
+	private void build(View view,int k,int index,RadioItem item){
 		int res = 0;
 		switch (k) {
 		case 0:
@@ -73,7 +86,7 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 		View v = LayoutInflater.from(getContext()).inflate(R.layout.radio_layout, null);
 		RadioButton button = (RadioButton) v.findViewById(R.id.radio);
 		button.setOnClickListener(this);
-		button.setTag(item.value);
+		button.setTag(new Store(index, item.value));
 		button.setText(item.name);
 		((ViewGroup)view.findViewById(res)).addView(v);
 	}
@@ -94,30 +107,45 @@ public class RadioGroupLayout extends FrameLayout implements OnClickListener{
 					view.setLayoutParams(params);
 				}
 			}
-			build(view, j, list.get(i));
+			build(view, j,i, list.get(i));
 			j++;
 		}
 	}
 	
 	private RadioButton selectedView;
 	
+	private List<Integer> valid;
 	
+	public void addValid(int index){
+		if(valid  == null){
+			valid = new ArrayList<Integer>();
+		}
+		valid.add(index);
+	}
 
 	@Override
 	public void onClick(View v) {
+		Store store = (Store) v.getTag();
 		RadioButton button =(RadioButton) v;
-		if(selectedView != null){
-			selectedView.setChecked(false);
+		if(valid == null || valid.indexOf(store.index) != -1){
+			
+			
+			if(selectedView != null){
+				selectedView.setChecked(false);
+			}
+			button.setChecked(true);
+			selectedView = button;
+		}else{
+			button.setChecked(false);
 		}
-		button.setChecked(true);
-		selectedView = button;
+		
 		
 	}
 	
 	public String getValue(){
 		String value = null;
 		if(selectedView != null && selectedView.getTag() != null ){
-			value = selectedView.getTag().toString();
+			value = ((Store)selectedView.getTag()).value;
 		}
 		return value;
 	}

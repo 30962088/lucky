@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <com.mengle.lucky.wiget.ThemeLayout
         android:id="@+id/theme"
-        android:layout_marginTop="46dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.mengle.lucky.wiget.ThemeLayout>
-    
+        android:layout_height="match_parent"
+        android:layout_marginTop="46dp" >
+    </com.mengle.lucky.wiget.ThemeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="63dp"
@@ -29,5 +30,31 @@
                 android:textSize="18sp" />
         </RelativeLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="95dp"
+        android:layout_height="17.5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bg_cai_header"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/dayView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday 27" 
+            android:textColor="#949fab"
+            android:textSize="12sp"/>
+        
+        <TextView
+            android:layout_marginTop="-2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="th" 
+            android:textColor="#949fab"
+            android:textSize="8sp"/>
+        
+    </LinearLayout>
 
 </RelativeLayout>

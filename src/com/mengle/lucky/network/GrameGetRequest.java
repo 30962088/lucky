@@ -3,6 +3,8 @@ package com.mengle.lucky.network;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.text.TextUtils;
 
@@ -28,14 +30,39 @@ public class GrameGetRequest extends Request{
 	
 	
 	
+	
+	
 	private Result result;
 	
 	public static class Result extends Game{
+		public static class Join{
+			private int option_id;
+			private long gold_coin;
+			private int state;
+			private String apply_time;
+			public int getOption_id() {
+				return option_id;
+			}
+			public long getGold_coin() {
+				return gold_coin;
+			}
+			public int getState() {
+				return state;
+			}
+			public String getApply_time() {
+				return apply_time;
+			}
+			
+		}
 		protected int option_id;
-		protected int state;
 		protected String apply_time;
+		protected Join join;
 		public int getOption_id() {
 			return option_id;
+		}
+		
+		public Join getJoin() {
+			return join;
 		}
 		
 		public int getState() {
@@ -59,7 +86,17 @@ public class GrameGetRequest extends Request{
 	@Override
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
-			result = new Gson().fromJson(data, Result.class);
+			try {
+				JSONObject object = new JSONObject(data);
+				if(TextUtils.isEmpty(object.getString("join"))){
+					object.remove("join");
+				}
+				result = new Gson().fromJson(object.toString(), Result.class);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}

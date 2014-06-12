@@ -51,6 +51,12 @@ public class Utils {
 		return str == null?"":str;
 	}
 	
+	public static String getWeekday(Date date){
+		String[] models = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		
+		return models[date.getDay()];
+	}
+	
 	public static String formatDate(Date date){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return format.format(date);

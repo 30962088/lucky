@@ -59,9 +59,11 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		private long endDate;
 
 		private boolean enable;
+		
+		private String endText;
 
 		public Theme(View bubble, Header header, Question question, int coin,
-				long endDate, boolean enable) {
+				long endDate, boolean enable,String endText) {
 			super();
 			this.bubble = bubble;
 			this.header = header;
@@ -69,6 +71,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			this.coin = coin;
 			this.endDate = endDate;
 			this.enable = enable;
+			this.endText = endText;
 		}
 
 	}
@@ -130,6 +133,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		selectCoinBtn = findViewById(R.id.selectCoin);
 		introView = findViewById(R.id.intro);
 		gridView = (GridView) findViewById(R.id.gridview);
+		
 
 		tousuView = findViewById(R.id.tousu);
 		headerImageView = (ImageView) findViewById(R.id.header_img);
@@ -142,6 +146,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	private QuestionAdapter adapter; 
 	
 	public void setTheme(Theme theme) {
+		gridView.setNumColumns(theme.question.getList().size());
 		adapter = new QuestionAdapter(getContext(), theme.question);
 		titleView.setText(theme.question.getTitle());
 		submitBtn.setEnabled(theme.enable);
@@ -158,7 +163,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		
 		
 		if (theme.endDate <= 0) {
-			timerView.setText("今日已结束");
+			timerView.setText(theme.endText);
 		} else {
 			startTimer(theme.endDate);
 			

@@ -1,14 +1,18 @@
 package com.mengle.lucky.fragments;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.mengle.lucky.KanZhuangActivity;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.adapter.QuestionAdapter.QuestionItem;
 import com.mengle.lucky.adapter.QuestionAdapter.Status;
 import com.mengle.lucky.network.CaiRequest;
+import com.mengle.lucky.network.GameBetRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
@@ -30,9 +34,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CaiFragment extends Fragment {
+public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 	private ThemeLayout themeLayout;
 
@@ -44,6 +49,8 @@ public class CaiFragment extends Fragment {
 	}
 
 	private QuestionItem lastItem;
+	
+	private TextView dayView;
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -51,12 +58,26 @@ public class CaiFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 
 		themeLayout = (ThemeLayout) view.findViewById(R.id.theme);
-
+		dayView = (TextView) view.findViewById(R.id.dayView);
+		fillDay();
 		request();
 
 	}
 
+	private void fillDay() {
+		Date date = new Date();
+		String weekday = Utils.getWeekday(date);
+		int day = date.getDate();
+		dayView.setText(weekday+" "+day);
+	}
+	
+	private long endTime1;
+	
+	private Game game;
+
 	private void doSuccess(final Game game) {
+		
+		this.game = game;
 		
 		MainActivity activity =  (MainActivity)getActivity();
 		
@@ -64,48 +85,73 @@ public class CaiFragment extends Fragment {
 		
 		final List<QuestionItem> list = game.toQuestionList();
 
-		themeLayout.setOnBtnClickListener(new OnBtnClickListener() {
-			
-			public void onOKClick() {
-				if(lastItem == null){
-					Utils.tip(getActivity(), "请选择答案。");
-				}else{
-					ResultDialog.Status status;
-					if(lastItem.isAnswer()){
-						status = ResultDialog.Status.SUCCESS;
-					}else{
-						status = ResultDialog.Status.FAIL;
-					}
-					
-					new ResultDialog(getActivity(), new Result(status, game.getGold_coin()));
-					
-				}
-				
-				
-			}
-		});
+		long endTime = 0;
+		try {
+			endTime = Utils.parseDate(game.getStop_time()).getTime()
+					- Utils.parseDate(game.getNow()).getTime();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.endTime1 = endTime;
 		
-		themeLayout.setTheme(new Theme(ThemeLayout
-				.getBubbleCaiView(getActivity()), new Header(new Count(
-				R.drawable.btn_count, game.getJoin_count()), true, false, game
-				.getImage()), new Question(game.getTitle(), new Status(false,
-				null), list), game.getGold_coin(), 0, true));
+		String[] colors = new String[] { "#a0d468", "#4fc0e8", "#e47134",
+				"#e47134", "#e47134", "#e47134", "#e47134", "#e47134",
+				"#e47134", "#e47134" };
+		String[] options = new String[] { "A", "B", "C", "D", "E", "F", "G" };
+		
+		View bubbleView = ThemeLayout
+				.getBubbleCaiView(getActivity());
+		
+		Status status = null;
+		
+		switch (game.getState()) {
+		case 1:
+			if (endTime <= 0) {
+				status = new Status(true, new ArrayList<Integer>() {
+					{
+						add(game.getAnswer());
+					}
+				});
+			} else {
+				status = new Status(false, null);
+			}
+			break;
+		case 0:
+			status = new Status(true, null);
+			break;
+		case 2:
+			status = new Status(true, null);
+			themeLayout.getLostView().setVisibility(View.VISIBLE);
+			break;
+		default:
+			break;
+		}
+		
+		themeLayout.setOnBtnClickListener(this);
+		
+		
+		themeLayout.setTheme(new Theme(bubbleView, new Header(new Count(
+				R.drawable.btn_count, game.getJoin_count()), true, false,
+				game.getImage()), new Question(game.getTitle(), status, list),
+				game.getGold_coin(), endTime, endTime > 0 ? true : false,"今日已结束"));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {
 
 					public void onItemClick(AdapterView<?> parent, View view,
 							int position, long id) {
-						QuestionItem item = list.get(position);
-						if (lastItem != null) {
-							lastItem.setType(QuestionLayout.TYPE_NORMAL);
+						if (endTime1 > 0) {
+							QuestionItem item = list.get(position);
+							if (lastItem != null) {
+								lastItem.setType(QuestionLayout.TYPE_NORMAL);
+							}
+
+							item.setType(QuestionLayout.TYPE_MOST);
+
+							themeLayout.getAdapter().notifyDataSetChanged();
+
+							lastItem = item;
 						}
-
-						item.setType(QuestionLayout.TYPE_MOST);
-
-						themeLayout.getAdapter().notifyDataSetChanged();
-
-						lastItem = item;
 
 					}
 				});
@@ -127,6 +173,21 @@ public class CaiFragment extends Fragment {
 			});
 		}
 
+	}
+
+	@Override
+	public void onOKClick() {
+		if (lastItem == null) {
+			Utils.tip(getActivity(), "请选择答案。");
+			return;
+		}
+		Preferences.User user = new Preferences.User(getActivity());
+
+		GameBetRequest betRequest = new GameBetRequest(
+				new GameBetRequest.Param(user.getUid(), user.getToken(),
+						game.getId(), lastItem.getId(), game.getGold_coin()));
+		RequestAsync.request(betRequest, null);
+		
 	}
 
 }

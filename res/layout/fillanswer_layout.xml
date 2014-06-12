@@ -136,13 +136,14 @@
                         android:textColor="#fff"
                         android:textSize="18sp" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/titleview"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_radius_white"
+                        android:gravity="center_vertical"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp" />
                 </LinearLayout>
@@ -174,25 +175,6 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
-
-                            <ImageView
-                                android:id="@+id/add_pic"
-                                android:layout_width="55dp"
-                                android:layout_height="55dp"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/icon_add_pic" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginTop="14dp"
-                            android:background="#e3e4e8" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="9dp" >
 
@@ -215,7 +197,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp" >
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center" >
 
                             <TextView
                                 android:layout_width="32dp"
@@ -226,13 +209,14 @@
                                 android:textColor="#fff"
                                 android:textSize="15sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/question1"
                                 android:layout_width="0dp"
                                 android:layout_height="32dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_radius_gray_border"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp" />
                         </LinearLayout>
@@ -240,7 +224,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp" >
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center" >
 
                             <TextView
                                 android:layout_width="32dp"
@@ -251,13 +236,14 @@
                                 android:textColor="#fff"
                                 android:textSize="15sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/question2"
                                 android:layout_width="0dp"
                                 android:layout_height="32dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_radius_gray_border"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp" />
                         </LinearLayout>
@@ -265,7 +251,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp" >
+                            android:layout_marginBottom="12dp"
+                            android:gravity="center" >
 
                             <TextView
                                 android:layout_width="32dp"
@@ -276,211 +263,16 @@
                                 android:textColor="#fff"
                                 android:textSize="15sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/question3"
                                 android:layout_width="0dp"
                                 android:layout_height="32dp"
                                 android:layout_marginLeft="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/bg_radius_gray_border"
+                                android:gravity="center_vertical"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#e3e4e8" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="9dp"
-                            android:layout_marginTop="13dp" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="选择命题所属分类"
-                                android:textColor="#434a54"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="0dp"
-                                android:text="（正确的分类有利于命题的关注度）"
-                                android:textColor="#b8bac0"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <com.mengle.lucky.wiget.RadioGroupLayout
-                            android:id="@+id/radio1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
-                        </com.mengle.lucky.wiget.RadioGroupLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginBottom="14dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#e3e4e8" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="赔率"
-                            android:textColor="#434a54"
-                            android:textSize="12sp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="基数="
-                                android:textColor="#434a54"
-                                android:textSize="12sp" />
-
-                            <EditText
-                                android:id="@+id/jishu"
-                                android:layout_width="78dp"
-                                android:layout_height="32dp"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/bg_radius_gray_border"
-                                android:gravity="center_vertical"
-                                android:hint="请输入..."
-                                android:inputType="number"
-                                android:paddingLeft="10dp"
-                                android:textSize="12sp" />
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/icon_star" />
-                        </LinearLayout>
-
-                        <com.mengle.lucky.wiget.RadioGroupLayout
-                            android:id="@+id/radio2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp" >
-                        </com.mengle.lucky.wiget.RadioGroupLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginTop="14dp"
-                            android:background="#e3e4e8" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="9dp"
-                            android:layout_marginTop="13dp" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="竞猜结束时间"
-                                android:textColor="#434a54"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="0dp"
-                                android:text="（竞猜成功发布后开始倒计时）"
-                                android:textColor="#b8bac0"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center" >
-
-                            <EditText
-                                android:id="@+id/hour"
-                                android:layout_width="63dp"
-                                android:layout_height="32dp"
-                                android:background="@drawable/bg_radius_gray_border"
-                                android:gravity="center"
-                                android:hint="请输入..."
-                                android:inputType="number"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:layout_marginLeft="5dp"
-                                android:background="@drawable/bg_radius_q_green"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="小时"
-                                android:textColor="#fff"
-                                android:textSize="12sp" />
-
-                            <EditText
-                                android:id="@+id/minute"
-                                android:layout_width="63dp"
-                                android:layout_height="32dp"
-                                android:layout_marginLeft="15dp"
-                                android:background="@drawable/bg_radius_gray_border"
-                                android:gravity="center"
-                                android:hint="请输入..."
-                                android:inputType="number"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:layout_marginLeft="5dp"
-                                android:background="@drawable/bg_radius_q_green"
-                                android:gravity="center"
-                                android:paddingLeft="5dp"
-                                android:paddingRight="5dp"
-                                android:text="分钟"
-                                android:textColor="#fff"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginTop="15dp"
-                            android:background="#e3e4e8" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="60dp"
-                            android:gravity="center_vertical" >
-
-                            <CheckBox
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:button="@drawable/checkbox_selector_gray"
-                                android:text="阅读并同意遵守游戏规则。"
-                                android:textColor="#a4a9ae"
-                                android:textSize="15sp" />
-
-                            <TextView
-                                android:id="@+id/preview"
-                                android:layout_width="68dp"
-                                android:layout_height="31dp"
-                                android:background="@drawable/bg_radius_blue"
-                                android:gravity="center"
-                                android:text="预览"
-                                android:textColor="#fff"
-                                android:textSize="15sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -513,7 +305,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="请您在公布答案或在游戏倒计时完毕后24小时内公告"
+                            android:text="您选择的答案是"
                             android:textColor="#434a54"
                             android:textSize="12sp" />
 

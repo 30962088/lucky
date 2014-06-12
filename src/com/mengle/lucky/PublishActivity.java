@@ -102,6 +102,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.publish_layout);
+		findViewById(R.id.leftnav).setOnClickListener(this);
 		reasonText = (EditText) findViewById(R.id.reasonView);
 		totalCoinView = (TextView) findViewById(R.id.totalCoin);
 		nickView = (TextView) findViewById(R.id.nickname);
@@ -222,6 +223,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.preview:
 			onPreview();
+			break;
+		case R.id.leftnav:
+			finish();
+			break;
 		default:
 			break;
 		}
@@ -269,7 +274,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			String[] contents = new String[]{A,B,C};
 			for(int i = 0;i<contents.length;i++){
 				String content = contents[i];
-				if(content == null){
+				if(content == null || content.equals("")){
 					break;
 				}
 				int isanwser = 0;

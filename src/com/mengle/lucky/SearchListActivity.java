@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 public class SearchListActivity extends BaseActivity{
@@ -34,6 +35,14 @@ public class SearchListActivity extends BaseActivity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchlist_layout);
+		findViewById(R.id.btn_back).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				
+			}
+		});
 		listView = (GameListView) findViewById(R.id.listview);
 		keyword = getIntent().getStringExtra("keyword");
 		Preferences.User user = new Preferences.User(this);

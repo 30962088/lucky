@@ -100,6 +100,17 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 						options[game.getAnswer()]);
 			} else {
 				bubbleView = ThemeLayout.getBubbleNoDaanView(this);
+				bubbleView.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						FillAnswerActivity.open(KanZhuangActivity.this, 
+								new FillAnswerActivity.Param(game.getId(), game.getTitle(),(ArrayList<Game.Option>)game.getOptions()));
+						
+						
+						
+					}
+				});
 			}
 		} else {
 			bubbleView = ThemeLayout.getBubblePhotoView(this, game.getCreator()
@@ -131,8 +142,19 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			break;
 		}
 		themeLayout.setOnBtnClickListener(this);
-		/*
-		 * themeLayout.setOnBtnClickListener(new OnBtnClickListener() {
+		
+		if(game.getJoin() != null && game.getJoin().getState() == 1){
+			ResultDialog.Status stat = null;
+			if(game.getJoin().getOption_id() == game.getWin_option()){
+				stat = ResultDialog.Status.SUCCESS;
+			}else{
+				stat = ResultDialog.Status.FAIL;
+			}
+			new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(stat,game.getGold_coin()));
+		}
+		
+		
+		 /* themeLayout.setOnBtnClickListener(new OnBtnClickListener() {
 		 * 
 		 * public void onOKClick() { if (lastItem == null) {
 		 * Utils.tip(KanZhuangActivity.this, "请选择答案。"); } else {
@@ -149,7 +171,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		themeLayout.setTheme(new Theme(bubbleView, new Header(new Count(
 				R.drawable.btn_count_blue, game.getJoin_count()), false, true,
 				game.getImage()), new Question(game.getTitle(), status, list),
-				game.getGold_coin(), endTime, endTime > 0 ? true : false));
+				game.getGold_coin(), endTime, endTime > 0 ? true : false,"竞猜已结束"));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {

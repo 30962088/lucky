@@ -1,5 +1,6 @@
 package com.mengle.lucky.network.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class Game {
 		
 	}
 	
-	public static class Option{
+	public static class Option implements Serializable{
 		private int id;
 		private String content;
 		private int select_count;
@@ -121,6 +122,8 @@ public class Game {
 	protected List<Option> opts;
 	
 	protected int praise;
+	
+	protected int state;
 
 	public int getId() {
 		return id;
@@ -204,6 +207,10 @@ public class Game {
 			}
 		}
 		return res;
+	}
+	
+	public int getState() {
+		return state;
 	}
 	
 	
