@@ -1,6 +1,10 @@
 package com.mengle.lucky.utils;
 
 import com.mengle.lucky.R;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,8 +18,11 @@ public class Preferences {
 		
 		private SharedPreferences preferences;
 
+		private Context context;
+		
 		public User(Context context) {
 			preferences = context.getSharedPreferences(NAME, 0);
+			this.context = context;
 		}
 		
 		public void setToken(String val){
@@ -69,6 +76,17 @@ public class Preferences {
 		
 		public void setBuildProvince(boolean val){
 			preferences.edit().putBoolean("isBuildProvince", val).commit();
+		}
+		
+		public void logout(){
+			preferences.edit().remove("uid").remove("token").commit();
+			UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
+			
+			for(SHARE_MEDIA media:new SHARE_MEDIA[]{SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.RENREN,SHARE_MEDIA.TENCENT}){
+				mController.deleteOauth(context, media, null);
+			}
+			
+			
 		}
 		
 	}

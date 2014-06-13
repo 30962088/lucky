@@ -8,10 +8,12 @@ import java.util.Map;
 import com.j256.ormlite.dao.EagerForeignCollection;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.Request.Status;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.SNSBindRequest;
 import com.mengle.lucky.network.SNSUnBindRequest;
 import com.mengle.lucky.network.UserEditRequest;
+import com.mengle.lucky.network.UserLogoutRequest;
 import com.mengle.lucky.network.UserEditRequest.Params;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
@@ -23,6 +25,8 @@ import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.mengle.lucky.wiget.ConfirmDialog;
+import com.mengle.lucky.wiget.ConfirmDialog.OnConfirmClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.RequestType;
@@ -93,7 +97,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.user_setting_layout);
-		
+		findViewById(R.id.btn_logout).setOnClickListener(this);
 		try {
 			Province.build(this);
 		} catch (Exception e1) {
@@ -380,12 +384,48 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		case R.id.icon_back:
 			finish();
 			break;
+		case R.id.btn_logout:
+			logout();
+			break;
 		default:
 			break;
 		}
 
 	}
 	
+	private void logout() {
+		final Preferences.User user = new Preferences.User(this);
+		ConfirmDialog.open(this, "您确认要退出登录吗？", new OnConfirmClick() {
+			
+			@Override
+			public void onConfirm() {
+				UserLogoutRequest logoutRequest = new UserLogoutRequest(
+						new UserLogoutRequest.Param(user.getUid(), user.getToken()));
+				
+				RequestAsync.request(logoutRequest, new Async() {
+					
+					@Override
+					public void onPostExecute(Request request) {
+						if(request.getStatus() == Status.SUCCESS){
+							user.logout();
+							MainActivity.open(UserSettingActivity.this);
+							
+						}
+						
+					}
+				});
+				
+			}
+			
+			@Override
+			public void onCancel() {
+				// TODO Auto-generated method stub
+				
+			}
+		}, null);
+		
+	}
+
 	private void onCityChange() throws SQLException {
 		Province province = (Province) provinceView.getTag();
 		if(province == null){

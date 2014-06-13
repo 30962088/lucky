@@ -167,7 +167,13 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 			
 			public void onPostExecute(Request request) {
 				if(request.getStatus() == Request.Status.SUCCESS){
-					onResume();
+					if(request.getStatus() == Request.Status.SUCCESS){
+						if(getActivity() instanceof MainActivity){
+							((MainActivity)getActivity()).login();
+						}else{
+							onResume();
+						}
+					}
 				}
 				
 			}

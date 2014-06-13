@@ -3,6 +3,7 @@ package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.CommentListAdapter;
 import com.mengle.lucky.adapter.CommentModel;
@@ -220,7 +221,11 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 			
 			public void onPostExecute(Request request) {
 				if(request.getStatus() == Request.Status.SUCCESS){
-					onResume();
+					if(getActivity() instanceof MainActivity){
+						((MainActivity)getActivity()).login();
+					}else{
+						onResume();
+					}
 				}
 				
 			}

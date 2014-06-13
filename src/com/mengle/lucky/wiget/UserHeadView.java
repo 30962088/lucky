@@ -136,6 +136,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	private UserHeadData userHeadData;
 
 	private void init() {
+		setVisibility(View.GONE);
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
 		iconHead = (ImageView) findViewById(R.id.icon_head);
 		iconHead.setOnClickListener(this);
@@ -160,6 +161,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	}
 
 	public void setData(UserHeadData data) {
+		setVisibility(View.VISIBLE);
 		this.userHeadData = data;
 		Preferences.User user = new Preferences.User(getContext());
 		BitmapLoader.displayImage(getContext(), data.head, iconHead);

@@ -40,8 +40,9 @@ public class StageFragment extends Fragment{
 		if(getActivity() instanceof MainActivity){
 			((MainActivity)getActivity()).getSlidingMenu().addIgnoredView(viewPager);
 		}
-		
 	}
+	
+
 	
 	
 }

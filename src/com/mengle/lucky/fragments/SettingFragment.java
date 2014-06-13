@@ -57,6 +57,10 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	}
 	
 	private void pushManager(){
+		if(!new Preferences.User(getActivity()).isLogin()){
+			AlertDialog.open(getActivity(), "推送通知登录后才能设置", root);
+			return;
+		}
 		boolean letter = true;
 		boolean notice = true;
 		if(user != null){

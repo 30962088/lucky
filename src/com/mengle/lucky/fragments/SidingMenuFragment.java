@@ -1,5 +1,7 @@
 package com.mengle.lucky.fragments;
 
+import java.util.List;
+
 import com.mengle.lucky.R;
 
 import android.os.Bundle;
@@ -20,6 +22,8 @@ public class SidingMenuFragment extends Fragment implements OnClickListener,OnPa
 	private View tab1;
 
 	private View tab2;
+	
+	private Fragment[] fragments;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +38,8 @@ public class SidingMenuFragment extends Fragment implements OnClickListener,OnPa
 		super.onViewCreated(view, savedInstanceState);
 
 		viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-		viewPager.setAdapter(new ScreenSlidePagerAdapter(getFragmentManager()));
+		fragments = new Fragment[]{new NavFragment(),new SettingFragment()};
+		viewPager.setAdapter(new ScreenSlidePagerAdapter(getFragmentManager(),fragments));
 		viewPager.setOnPageChangeListener(this);
 		tab1 = view.findViewById(R.id.tab1);
 		tab2 = view.findViewById(R.id.tab2);
@@ -43,6 +48,19 @@ public class SidingMenuFragment extends Fragment implements OnClickListener,OnPa
 		view.findViewById(R.id.tab1setting).setOnClickListener(this);
 		view.findViewById(R.id.tab2setting).setOnClickListener(this);
 		switchNav();
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		for(Fragment fragment:fragments){
+			if(fragment.isVisible()){
+				fragment.onResume();
+			}
+			
+		}
+		
 	}
 	
 	
@@ -88,21 +106,19 @@ public class SidingMenuFragment extends Fragment implements OnClickListener,OnPa
 	}
 	
 	
+	
     private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     	
-    	
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+    	private Fragment[] fragments;
+        public ScreenSlidePagerAdapter(FragmentManager fm,Fragment[] fragments) {
             super(fm);
+            this.fragments = fragments;
         }
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-            	return new NavFragment();
-            }else if(position == 1){
-            	return new SettingFragment();
-            }
-            return null;
+          
+            return fragments[position];
         }
 
         @Override
