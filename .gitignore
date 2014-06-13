@@ -4,5 +4,6 @@ target
 .settings
 .classpath
 .project
+.svn
 deps/AndroidSDK/doc
 deps/AndroidSDKComponent/doc

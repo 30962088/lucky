@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import com.baidu.frontia.FrontiaApplication;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.utils.Dirctionary;
@@ -29,7 +30,7 @@ import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-public class App extends Application{
+public class App extends FrontiaApplication{
 
 	
 	private static App instance;
