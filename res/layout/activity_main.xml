@@ -42,6 +42,12 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/icon_search1" />
             
+            <View 
+                android:id="@+id/right_empty"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"/>
+            
             
         </FrameLayout>
     </RelativeLayout>

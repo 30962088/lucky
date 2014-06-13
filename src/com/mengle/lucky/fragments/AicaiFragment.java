@@ -13,12 +13,15 @@ import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.UserRank;
 import com.mengle.lucky.network.UserRankMe;
 import com.mengle.lucky.network.UserRank.Result;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
+import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.BaseListView;
 import com.mengle.lucky.wiget.BaseListView.OnLoadListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,19 +76,30 @@ public class AicaiFragment extends Fragment implements OnLoadListener,OnItemClic
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		final UserRankMe rankMe = new UserRankMe(new UserRankMe.Params(user.getUid(), user.getToken()));
-		RequestAsync.request(rankMe, new Async() {
-			
-			@Override
-			public void onPostExecute(Request request) {
-				String rank = "排名太低，未入排行，加油！";
-				if(rankMe.getRank() > 0){
-					rank = ""+rankMe.getRank();
-				}
-				rankView.setText(rank);
+		if(!user.isLogin()){
+			rankView.setText("未登录，无法查看我的排名");
+			rankView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+		}else{
+			final UserRankMe rankMe = new UserRankMe(new UserRankMe.Params(user.getUid(), user.getToken()));
+			RequestAsync.request(rankMe, new Async() {
 				
-			}
-		});
+				@Override
+				public void onPostExecute(Request request) {
+					String rank = "排名太低，未入排行，加油！";
+					int size = 24;
+					if(rankMe.getRank() > 0){
+						rank = ""+rankMe.getRank();
+						
+					}else{
+						size = 12;
+					}
+					rankView.setTextSize(TypedValue.COMPLEX_UNIT_SP,size);
+					rankView.setText(rank);
+					
+				}
+			});
+		}
+		
 	}
 
 	private List<Result> results;
@@ -118,6 +132,10 @@ public class AicaiFragment extends Fragment implements OnLoadListener,OnItemClic
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		if(!user.isLogin()){
+			AlertDialog.open(getActivity(), "您目前不能查看其他用户\n请登录后重试", null);
+			return;
+		}
 		position -= 2;
 		if(position >=0){
 			Aicai aicai = list.get(position);

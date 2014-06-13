@@ -27,6 +27,8 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	
 	private View rightSearch;
 	
+	private View rightEmpty;
+	
 	private ViewGroup rightContainer;
 	
 	public static MainActivity getInstance() {
@@ -48,6 +50,7 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		rightComment = findViewById(R.id.right_comment);
 		rightComment.setOnClickListener(this);
 		rightSearch = findViewById(R.id.right_search);
+		rightEmpty = findViewById(R.id.right_empty);
 		rightSearch.setOnClickListener(this);
 		initSlidingMenu();
 		
@@ -59,6 +62,10 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 	
 	public View getRightSearch() {
 		return rightSearch;
+	}
+	
+	public View getRightEmpty() {
+		return rightEmpty;
 	}
 
 	private void checkFirstLogin() {
@@ -121,8 +128,6 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 				.replace(R.id.content_frame, fragment).commit();
 		getSlidingMenu().showContent();
 		
-		
-		
 	}
 
 	public void onClick(View v) {
@@ -130,7 +135,9 @@ public class MainActivity extends SlidingFragmentActivity implements OnClickList
 		case R.id.right_search:
 			SearchActivity.open(this);
 			break;
-
+		case R.id.right_comment:
+			showSecondaryMenu();
+			break;
 		default:
 			break;
 		}

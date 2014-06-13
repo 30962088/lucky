@@ -9,6 +9,7 @@ import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
+import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.JiyunIntroDialog;
 
 import android.os.Bundle;
@@ -25,7 +26,16 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 		return new JiyunIndexFragment();
 	}
 	
+	private Preferences.User user;
+	
 	private TextView chanceView;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		user = new Preferences.User(getActivity());
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +57,12 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		Preferences.User user = new Preferences.User(getActivity());
+		
+		if(!user.isLogin()){
+			chanceView.setText(""+0);
+			AlertDialog.open(getActivity(), "您目前无法进入集运宝\n请登录后重试", null);
+			return;
+		}
 		final GameLibraryDayChanceRequest chanceRequest = new GameLibraryDayChanceRequest(new GameLibraryDayChanceRequest.Params(user.getUid(), user.getToken()));
 		RequestAsync.request(chanceRequest, new Async() {
 			
@@ -66,6 +81,10 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 			JiyunIntroDialog.open(getActivity());
 			break;
 		case R.id.btn_play:
+			if(!user.isLogin()){
+				AlertDialog.open(getActivity(), "您目前不能进入集运宝答题\n请登录后重试", null);
+				return;
+			}
 			int chance = 0;
 			try{
 				chance = Integer.parseInt(chanceView.getText().toString());

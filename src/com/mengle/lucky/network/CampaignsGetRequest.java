@@ -13,9 +13,9 @@ import android.text.TextUtils;
 public class CampaignsGetRequest extends Request{
 
 	public static class Param{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
-		public Param(int uid, String token) {
+		public Param(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;

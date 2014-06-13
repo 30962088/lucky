@@ -39,10 +39,10 @@ public class Game {
 	 */
 	
 	public static class Creator{
-		private int uid;
+		private Integer uid;
 		private String nickname;
 		private String avatar;
-		public int getUid() {
+		public Integer getUid() {
 			return uid;
 		}
 		public String getNickname() {

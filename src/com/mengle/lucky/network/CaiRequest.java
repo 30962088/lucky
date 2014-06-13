@@ -10,9 +10,9 @@ import com.mengle.lucky.network.model.Game;
 public class CaiRequest extends Request{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
-		public Params(int uid, String token) {
+		public Params(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;

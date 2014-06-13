@@ -48,7 +48,7 @@ public interface IGameGet extends IRequest{
 		}
 		
 		public Stage toStage(){
-			return new Stage(title, image, stop_time, join_count);
+			return new Stage(id,title, image, Utils.format12Hour(stop_time)+" 结束", join_count);
 		}
 		
 		public static List<Stage> toStageList(List<Result> list){

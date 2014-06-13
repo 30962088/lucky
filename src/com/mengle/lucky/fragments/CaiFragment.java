@@ -159,29 +159,33 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 	private void request() {
 		Preferences.User user = new Preferences.User(getActivity());
-		if (user.isLogin()) {
-			final CaiRequest caiRequest = new CaiRequest(new CaiRequest.Params(
-					user.getUid(), user.getToken()));
-			RequestAsync.request(caiRequest, new Async() {
+		
+		final CaiRequest caiRequest = new CaiRequest(new CaiRequest.Params(
+				user.getUid(), user.getToken()));
+		RequestAsync.request(caiRequest, new Async() {
 
-				public void onPostExecute(Request request) {
-					if (caiRequest.getStatus() == Request.Status.SUCCESS) {
-						doSuccess(caiRequest.getGame());
-					}
-
+			public void onPostExecute(Request request) {
+				if (caiRequest.getStatus() == Request.Status.SUCCESS) {
+					doSuccess(caiRequest.getGame());
 				}
-			});
-		}
+
+			}
+		});
+		
 
 	}
 
 	@Override
 	public void onOKClick() {
+		Preferences.User user = new Preferences.User(getActivity());
+		if(!user.isLogin()){
+			Utils.tip(getActivity(), "由于您没有登录所以无法完成下注");
+			return;
+		}
 		if (lastItem == null) {
 			Utils.tip(getActivity(), "请选择答案。");
 			return;
 		}
-		Preferences.User user = new Preferences.User(getActivity());
 
 		GameBetRequest betRequest = new GameBetRequest(
 				new GameBetRequest.Param(user.getUid(), user.getToken(),

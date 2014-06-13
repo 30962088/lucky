@@ -13,9 +13,9 @@ import com.google.gson.reflect.TypeToken;
 public class GameHotKeywordRequest extends Request{
 
 	public static class Param{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
-		public Param(int uid, String token) {
+		public Param(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;

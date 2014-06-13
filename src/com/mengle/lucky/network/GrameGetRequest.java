@@ -16,10 +16,10 @@ import com.mengle.lucky.network.model.Game;
 public class GrameGetRequest extends Request{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int game_id;
-		public Params(int uid, String token, int game_id) {
+		public Params(Integer uid, String token, int game_id) {
 			super();
 			this.uid = uid;
 			this.token = token;
@@ -88,7 +88,8 @@ public class GrameGetRequest extends Request{
 		if(!TextUtils.isEmpty(data)){
 			try {
 				JSONObject object = new JSONObject(data);
-				if(TextUtils.isEmpty(object.getString("join"))){
+				
+				if(object.has("join") && TextUtils.isEmpty(object.getString("join"))){
 					object.remove("join");
 				}
 				result = new Gson().fromJson(object.toString(), Result.class);

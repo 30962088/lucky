@@ -15,11 +15,11 @@ import com.mengle.lucky.network.IGameGet.Result;
 public class UserRank extends Request{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int start;
 		protected int limit;
-		public Params(int uid, String token, int start, int limit) {
+		public Params(Integer uid, String token, int start, int limit) {
 			super();
 			this.uid = uid;
 			this.token = token;

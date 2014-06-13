@@ -147,11 +147,11 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 		case R.id.aicai:
 			mainActivity.switchContent(new AicaiFragment());
 
-			mainActivity.switchRight(new CommentFragment());
+//			mainActivity.switchRight(new CommentFragment());
 			
-			mainActivity.switchRightIcon(mainActivity.getRightComment());
+			mainActivity.switchRightIcon(mainActivity.getRightEmpty());
 			
-			mainActivity.getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
+			mainActivity.getSlidingMenu().setMode(SlidingMenu.LEFT);
 			
 			break;
 		default:

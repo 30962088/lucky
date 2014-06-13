@@ -20,6 +20,8 @@ import com.mengle.lucky.network.IGameGet.Result;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Preferences.User;
+import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.GameListView;
 import com.mengle.lucky.wiget.CommonHeaderView;
 
@@ -145,6 +147,11 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.icon_bottom:
+			Preferences.User user = new Preferences.User(getActivity());
+			if(!user.isLogin()){
+				AlertDialog.open(getActivity(), "您目前不能发布题目\n请登录后重试", null);
+				return;
+			}
 			PublishActivity.open(getActivity());
 			break;
 

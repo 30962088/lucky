@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class StageAdapter extends FragmentPagerAdapter {
 
 	public static class Stage {
+		private int game_id;
 		private String title;
 		private String photo;
 		private String endTime;
@@ -18,12 +19,16 @@ public class StageAdapter extends FragmentPagerAdapter {
 
 		
 
-		public Stage(String title, String photo, String endTime, int person) {
+		public Stage(int game_id,String title, String photo, String endTime, int person) {
 			super();
+			this.game_id = game_id;
 			this.title = title;
 			this.photo = photo;
 			this.endTime = endTime;
 			this.person = person;
+		}
+		public int getGame_id() {
+			return game_id;
 		}
 		
 		public int getPerson() {
@@ -60,6 +65,6 @@ public class StageAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int position) {
 		Stage stage = list.get(position);
 
-		return StageItemFragment.newInstance(stage.title,stage.photo, stage.endTime,stage.person);
+		return StageItemFragment.newInstance(stage.game_id, stage.title,stage.photo, stage.endTime,stage.person);
 	}
 }

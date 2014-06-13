@@ -15,14 +15,16 @@
         android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_margin="10dp">
+        android:layout_margin="30dp">
         
         <TextView 
             android:id="@+id/msg"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:textColor="#606366"
             android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:textSize="15sp"/>
         
         <View 

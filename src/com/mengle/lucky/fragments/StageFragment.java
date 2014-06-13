@@ -37,15 +37,11 @@ public class StageFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-		init();
-	}
-	
-	private void init(){
 		if(getActivity() instanceof MainActivity){
-			((MainActivity)getActivity()).getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+			((MainActivity)getActivity()).getSlidingMenu().addIgnoredView(viewPager);
 		}
-	
 		
 	}
+	
 	
 }
