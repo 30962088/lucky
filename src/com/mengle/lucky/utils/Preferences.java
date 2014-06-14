@@ -12,6 +12,7 @@ import android.content.res.Resources;
 
 public class Preferences {
 
+	
 	public static class User{
 		
 		private static final String NAME = "User";
@@ -99,6 +100,16 @@ public class Preferences {
 		public Push(Context context) {
 			preferences = context.getSharedPreferences(NAME, 0);
 		}
+		
+		public boolean isLogout() {
+			
+			return preferences.getBoolean("logout", false);
+		}
+
+		public void setLogout(boolean logout) {
+			
+			preferences.edit().putBoolean("logout", logout).commit();
+		}
 
 		public boolean isResult() {
 			
@@ -126,6 +137,22 @@ public class Preferences {
 		public void setMsg(boolean msg) {
 			
 			preferences.edit().putBoolean("msg", msg).commit();
+		}
+		
+		public void setUserId(String userId){
+			preferences.edit().putString("userId", userId).commit();
+		}
+		
+		public String getUserId(){
+			return preferences.getString("userId", null);
+		}
+		
+		public void setChannelId(String channelId){
+			preferences.edit().putString("channelId", channelId).commit();
+		}
+		
+		public String getChanelId(){
+			return preferences.getString("channelId", null);
 		}
 
 	}

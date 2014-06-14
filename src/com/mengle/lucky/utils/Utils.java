@@ -11,10 +11,14 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -25,6 +29,7 @@ import android.net.Uri;
 
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,19 +52,36 @@ import android.view.animation.Transformation;
  * 
  */
 public class Utils {
-	
-	public static String getString(String str){
-		return str == null?"":str;
+
+	public static String getString(String str) {
+		return str == null ? "" : str;
 	}
-	
-	public static String getWeekday(Date date){
-		String[] models = {"Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-		
+
+	public static boolean isMyAppRunning(Context context) {
+		ActivityManager am = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+		ComponentName componentInfo = taskInfo.get(0).topActivity;
+		Log.d("",
+				"CURRENT Activity ::"
+						+ taskInfo.get(0).topActivity.getClassName()
+						+ "   Package Name :  "
+						+ componentInfo.getPackageName());
+		if(TextUtils.equals(componentInfo.getPackageName(),context.getPackageName())){
+			return true;
+		}
+		return false;
+	}
+
+	public static String getWeekday(Date date) {
+		String[] models = { "Sunday", "Monday", "Tuesday", "Wednesday",
+				"Thursday", "Friday", "Saturday" };
+
 		return models[date.getDay()];
 	}
-	
-	public static String format12Hour(String str){
-		SimpleDateFormat format = new SimpleDateFormat("a h:mm",Locale.US);
+
+	public static String format12Hour(String str) {
+		SimpleDateFormat format = new SimpleDateFormat("a h:mm", Locale.US);
 		String res = "";
 		try {
 			Date date = parseDate(str);
@@ -69,30 +91,32 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return res;
-		
+
 	}
-	
-	public static String formatDate(Date date){
+
+	public static String formatDate(Date date) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return format.format(date);
 	}
-	
-	public static Date parseDate(String date) throws ParseException{
+
+	public static Date parseDate(String date) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return format.parse(date);
 	}
-	
-	public static String formatDate(long date){
+
+	public static String formatDate(long date) {
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 		return format.format(new Date(date));
 	}
-	
+
 	public static String getRealPathFromURI(Context context, Uri contentUri) {
 
 		// can post image
 		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = context.getContentResolver().query(contentUri, proj, // Which columns to
-														// return
+		Cursor cursor = context.getContentResolver().query(contentUri, proj, // Which
+																				// columns
+																				// to
+				// return
 				null, // WHERE clause; which rows to return (all rows)
 				null, // WHERE clause selection arguments (none)
 				null); // Order-by clause (ascending by name)
@@ -102,7 +126,7 @@ public class Utils {
 
 		return cursor.getString(column_index);
 	}
-	
+
 	private static ImageLoader imageLoader = null;
 
 	public static int dpToPx(Context context, int dp) {

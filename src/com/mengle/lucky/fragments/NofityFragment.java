@@ -86,7 +86,7 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 	}
 	
 	private void request() throws SQLException{
-		final Dao<Notice, Integer> dao = new DataBaseHelper(getActivity()).getNoticeDao();
+		
 		Preferences.User user = new Preferences.User(getActivity());
 		final NoticeGetRequest noticeGetRequest = new NoticeGetRequest(new NoticeGetRequest.Params(user.getUid(), user.getToken()));
 		RequestAsync.request(noticeGetRequest, new Async() {
@@ -94,12 +94,6 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 			public void onPostExecute(Request request) {
 				for(Notice notice : noticeGetRequest.getNotices()){
 					list.add(0, notice.toModel());
-					try {
-						dao.create(notice);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
 				checkNew();
 				adapter.notifyDataSetChanged();

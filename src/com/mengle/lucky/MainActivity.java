@@ -12,15 +12,20 @@ import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
 import com.mengle.lucky.fragments.ZhuangFragment;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.WigetUtils;
+import com.mengle.lucky.utils.Preferences.Push;
+import com.mengle.lucky.wiget.AlertDialog;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -31,13 +36,25 @@ import android.widget.Toast;
 
 public class MainActivity extends SlidingFragmentActivity implements
 		OnClickListener {
+	
+	
 
-	public static void open(Context context) {
+	public static void open(Context context,String action) {
 		Intent intent = new Intent(context, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
+		if(!TextUtils.isEmpty(action)){
+			intent.setAction(action);
+		}
+		
 		context.startActivity(intent);
 	}
+	
+	public static void open(Context context){
+		open(context,null);
+	}
+	
+	
 
 	public static MainActivity instance;
 
@@ -72,6 +89,26 @@ public class MainActivity extends SlidingFragmentActivity implements
 		rightSearch.setOnClickListener(this);
 		initSlidingMenu();
 		startPush();
+		
+	}
+	
+	
+
+	private void doPushLogout() {
+		Preferences.Push push = new Push(this);
+		if(push.isLogout()){
+			Utils.tip(this, "您已被踢出");
+			push.setLogout(false);
+		}
+		
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		doPushLogout();
+		
 	}
 
 	private void startPush() {
@@ -86,7 +123,7 @@ public class MainActivity extends SlidingFragmentActivity implements
         // Push: 设置自定义的通知样式，具体API介绍见用户手册，如果想使用系统默认的可以不加这段代码
         // 请在通知推送界面中，高级设置->通知栏样式->自定义样式，选中并且填写值：1，
         // 与下方代码中 PushManager.setNotificationBuilder(this, 1, cBuilder)中的第二个参数对应
-        Resources resource = getResources();
+       /* Resources resource = getResources();
         String pkgName = this.getPackageName();
         CustomPushNotificationBuilder cBuilder = new CustomPushNotificationBuilder(
                 getApplicationContext(), resource.getIdentifier(
@@ -94,13 +131,10 @@ public class MainActivity extends SlidingFragmentActivity implements
                 resource.getIdentifier("notification_icon", "id", pkgName),
                 resource.getIdentifier("notification_title", "id", pkgName),
                 resource.getIdentifier("notification_text", "id", pkgName));
-        cBuilder.setNotificationFlags(Notification.FLAG_AUTO_CANCEL);
-        cBuilder.setNotificationDefaults(Notification.DEFAULT_SOUND
-                | Notification.DEFAULT_VIBRATE);
-        cBuilder.setStatusbarIcon(this.getApplicationInfo().icon);
-        cBuilder.setLayoutDrawable(resource.getIdentifier(
-                "simple_notification_icon", "drawable", pkgName));
-        PushManager.setNotificationBuilder(this, 1, cBuilder);
+        
+       
+        
+        PushManager.setNotificationBuilder(this, 1, cBuilder);*/
 		
 	}
 

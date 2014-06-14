@@ -1,5 +1,6 @@
 package com.mengle.lucky.network;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.dao.Dao;
 import com.mengle.lucky.App;
+import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.model.GameLite;
 import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.utils.Preferences;
@@ -18,9 +21,9 @@ import com.mengle.lucky.utils.Preferences.User;
 public class NoticeGetRequest extends Request{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
-		public Params(int uid, String token) {
+		public Params(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;
@@ -41,7 +44,17 @@ public class NoticeGetRequest extends Request{
 
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
+			
 			notices = new Gson().fromJson(data, new TypeToken<List<Notice>>(){}.getType());
+			for(Notice notice : notices){
+				try {
+					final Dao<Notice, Integer> dao = new DataBaseHelper(App.getInstance()).getNoticeDao();
+					dao.create(notice);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			String[] ids = new String[notices.size()];
 			for(int i = 0;i<ids.length;i++){
 				ids[i] = ""+notices.get(i).getId();

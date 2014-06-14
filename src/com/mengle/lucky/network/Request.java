@@ -45,7 +45,7 @@ public abstract class Request implements Response,IRequest{
 		
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		
-		for(Field field : FieldUtils.getAllFields(obj.getClass())){
+		for(Field field : obj.getClass().getDeclaredFields()){
 			try {
 				
 				Object value = field.get(obj);

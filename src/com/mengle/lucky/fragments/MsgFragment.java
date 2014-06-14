@@ -104,12 +104,7 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 			public void onPostExecute(Request request) {
 				for(Msg msg : noticeGetRequest.getMsgList()){
 					list.add(0, msg.toModel());
-					try {
-						dao.create(msg);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 				}
 				adapter.notifyDataSetChanged();
 				checkNew();

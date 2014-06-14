@@ -17,6 +17,7 @@ import com.mengle.lucky.App;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.model.User;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Preferences.Push;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -48,8 +49,10 @@ public class Login extends Request {
 	}
 
 	public static class Params {
+		
+		protected String user_id;
 
-		protected String channel_id = "99";// 云推送的渠道Id
+		protected String channel_id;// 云推送的渠道Id
 
 		protected String os = "android";// 用户当前登录的操作系统
 
@@ -68,14 +71,16 @@ public class Login extends Request {
 		protected String expires_in;// 用户认证过后SNS平台分配的token的有效时间(暂时未用)
 
 		public Params() {
-			// TODO Auto-generated constructor stub
+			Push push = new Push(App.getInstance());
+			user_id = push.getUserId();
+			channel_id = push.getChanelId();
 		}
 
 		
 		
 		
 
-
+		
 		
 
 
