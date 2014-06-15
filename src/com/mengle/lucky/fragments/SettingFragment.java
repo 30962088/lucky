@@ -12,12 +12,19 @@ import com.mengle.lucky.utils.Preferences.Network;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.ConfirmDialog;
+import com.mengle.lucky.wiget.IntroDialog;
 import com.mengle.lucky.wiget.ConfirmDialog.OnConfirmClick;
 import com.mengle.lucky.wiget.NetworkDialog;
 import com.mengle.lucky.wiget.NetworkDialog.OnNetworkClick;
 import com.mengle.lucky.wiget.PushDialog;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +42,8 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	
 	private TextView cacheSizeView;
 	
+	private TextView versionView;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -47,13 +56,26 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
 		root = view;
+		versionView = (TextView) view.findViewById(R.id.version);
 		cacheSizeView = (TextView) view.findViewById(R.id.cache_size);
 		view.findViewById(R.id.checkNewVersion).setOnClickListener(this);
 		view.findViewById(R.id.pushManager).setOnClickListener(this);
 		view.findViewById(R.id.clearCache).setOnClickListener(this);
+		view.findViewById(R.id.btn_intro).setOnClickListener(this);
 		view.findViewById(R.id.changeNetwork).setOnClickListener(this);
 		networkType = (TextView) view.findViewById(R.id.networkType);
 		networkType.setText(new Preferences.Network(getActivity()).getName());
+		
+		
+		
+		try {
+			PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0);
+			versionView.setText(pInfo.versionName);
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void pushManager(){
@@ -71,7 +93,20 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	}
 	
 	private void checkNewVersion(){
-		AlertDialog.open(getActivity(), "当前是最新版本",root);
+		UmengUpdateAgent.setUpdateAutoPopup(false);
+		UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+			
+			@Override
+			public void onUpdateReturned(int updateStatus, UpdateResponse response) {
+				if(updateStatus == UpdateStatus.No){
+					AlertDialog.open(getActivity(), "当前是最新版本",root);
+				}else if(updateStatus == UpdateStatus.Yes){
+					UmengUpdateAgent.showUpdateDialog(getActivity(), response);
+				}
+				
+			}
+		});
+		UmengUpdateAgent.update(getActivity());		
 	}
 	
 	private void clearCache(){
@@ -155,7 +190,6 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		case R.id.checkNewVersion:
 			checkNewVersion();
 			break;
-		
 		case R.id.pushManager:
 			pushManager();
 			break;
@@ -164,6 +198,9 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			break;
 		case R.id.changeNetwork:
 			changeNetwork();
+			break;
+		case R.id.btn_intro:
+			IntroDialog.open(getActivity(), "使用帮助","1.基本介绍", root);
 			break;
 		default:
 			break;

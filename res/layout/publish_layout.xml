@@ -462,15 +462,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:gravity="center_vertical" >
-
+							
                             <CheckBox
+                                android:id="@+id/btn_read"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:button="@drawable/checkbox_selector_gray"
-                                android:text="阅读并同意遵守游戏规则。"
                                 android:textColor="#a4a9ae"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:text="阅读并同意遵守" />
+                            
+                            <TextView 
+                                android:id="@+id/text_read"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#a4a9ae"
+                                android:textSize="15sp"/>
 
                             <TextView
                                 android:id="@+id/preview"

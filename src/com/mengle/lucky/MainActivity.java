@@ -16,6 +16,7 @@ import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.Preferences.Push;
 import com.mengle.lucky.wiget.AlertDialog;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -79,6 +80,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		UmengUpdateAgent.update(this);
 		checkFirstLogin();
 		setContentView(R.layout.activity_main);
 		rightContainer = (ViewGroup) findViewById(R.id.right_container);

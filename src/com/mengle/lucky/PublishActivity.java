@@ -22,16 +22,24 @@ import com.mengle.lucky.network.UserMe.Callback;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.IntroDialog;
+import com.mengle.lucky.wiget.MyClickSpan;
 import com.mengle.lucky.wiget.RadioGroupLayout;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -73,6 +81,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	
 	private EditText reasonText;
 	
+	private CheckBox btnRead;
+	
+	private TextView textRead;
+	
 	private void openGallery(){
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
@@ -103,6 +115,21 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.publish_layout);
 		findViewById(R.id.leftnav).setOnClickListener(this);
+		btnRead = (CheckBox) findViewById(R.id.btn_read);
+		textRead = (TextView) findViewById(R.id.text_read);
+		
+		ClickableSpan  textClickable = new MyClickSpan(Color.parseColor("#5dc9e6"),new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				IntroDialog.open(PublishActivity.this, "好运7之霸王条款", "条款", null);
+			}
+		});
+		SpannableString spanableInfo = new SpannableString("游戏规则。");
+		spanableInfo.setSpan(textClickable,0, 4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		textRead.setText(spanableInfo);
+		textRead.setClickable(true);
+		textRead.setMovementMethod(LinkMovementMethod.getInstance());
 		reasonText = (EditText) findViewById(R.id.reasonView);
 		totalCoinView = (TextView) findViewById(R.id.totalCoin);
 		nickView = (TextView) findViewById(R.id.nickname);
