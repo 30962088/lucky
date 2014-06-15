@@ -2,10 +2,13 @@ package com.mengle.lucky.fragments;
 
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.ShitiActivity;
 import com.mengle.lucky.network.GameLibraryDayChanceRequest;
+import com.mengle.lucky.network.GameLibraryDayChanceRequest.Callback;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.Chance;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
@@ -63,15 +66,16 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 			AlertDialog.open(getActivity(), "您目前无法进入集运宝\n请登录后重试", null);
 			return;
 		}
-		final GameLibraryDayChanceRequest chanceRequest = new GameLibraryDayChanceRequest(new GameLibraryDayChanceRequest.Params(user.getUid(), user.getToken()));
-		RequestAsync.request(chanceRequest, new Async() {
-			
+		Chance.getChance(getActivity(), new Callback(){
+
 			@Override
-			public void onPostExecute(Request request) {
-				chanceView.setText(""+chanceRequest.getChange());
+			public void onChanceCount(int count) {
+				chanceView.setText(""+count);
 				
 			}
+			
 		});
+		
 	}
 
 	@Override
@@ -95,7 +99,7 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 				Utils.tip(getActivity(), "游戏次数不足");
 				return;
 			}
-			((MainActivity)getActivity()).switchContent(ShitiFragment.newInstance(chance));
+			ShitiActivity.open(getActivity());
 			break;
 		default:
 			break;

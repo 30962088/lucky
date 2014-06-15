@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mengle.lucky.adapter.PhotoListAdapter.Photo;
+import com.mengle.lucky.network.model.Chance;
 import com.mengle.lucky.network.model.City;
 import com.mengle.lucky.network.model.Msg;
 import com.mengle.lucky.network.model.MsgMe;
@@ -39,6 +40,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 			TableUtils.createTableIfNotExists(connectionSource, Notice.class);
 			TableUtils.createTableIfNotExists(connectionSource, Msg.class);
 			TableUtils.createTableIfNotExists(connectionSource, MsgMe.class);
+			TableUtils.createTableIfNotExists(connectionSource, Chance.class);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -59,6 +61,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
 			TableUtils.dropTable(connectionSource, Notice.class, true);
 			TableUtils.dropTable(connectionSource, Msg.class, true);
 			TableUtils.dropTable(connectionSource, MsgMe.class, true);
+			TableUtils.dropTable(connectionSource, Chance.class, true);
 			onCreate(database, connectionSource);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -119,6 +122,15 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper{
         	msgMeDao = DaoManager.createDao(getConnectionSource(), MsgMe.class);
         }
         return msgMeDao;
+    }
+	
+	private Dao<Chance, String> chanceDao;
+	
+	public Dao<Chance, String> getChanceDao() throws SQLException {
+        if (chanceDao == null) {
+        	chanceDao = DaoManager.createDao(getConnectionSource(), Chance.class);
+        }
+        return chanceDao;
     }
 	
 	

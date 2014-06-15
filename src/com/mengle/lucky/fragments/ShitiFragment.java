@@ -44,9 +44,8 @@ import android.widget.TextView;
 public class ShitiFragment extends Fragment implements OnItemClickListener,OnClickListener,AnimationListener{
 
 	
-	public static ShitiFragment newInstance(int count){
+	public static ShitiFragment newInstance(){
 		ShitiFragment fragment = new ShitiFragment();
-		fragment.count = count;
 		return fragment;
 	}
 	
@@ -171,7 +170,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 			
 			@Override
 			public void onPostExecute(Request request) {
-				shitiOverView.setModel(submitRequest.getResult().toModel(count));
+				shitiOverView.setModel(submitRequest.getResult().toModel());
 				
 				
 			}
@@ -234,6 +233,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 			if(position-1 == list.getC()){
 				startAnimation();
 			}
+			new Preferences.User(getActivity()).setLastShitiId(list.getId());
 			list.setIndex(position-1);
 			adapter.notifyDataSetChanged();
 		}

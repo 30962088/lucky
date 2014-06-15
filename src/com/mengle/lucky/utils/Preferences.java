@@ -79,6 +79,7 @@ public class Preferences {
 			preferences.edit().putBoolean("isBuildProvince", val).commit();
 		}
 		
+
 		public void logout(){
 			preferences.edit().remove("uid").remove("token").commit();
 			UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
@@ -86,9 +87,8 @@ public class Preferences {
 			for(SHARE_MEDIA media:new SHARE_MEDIA[]{SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.RENREN,SHARE_MEDIA.TENCENT}){
 				mController.deleteOauth(context, media, null);
 			}
-			
-			
 		}
+		
 		
 	}
 	

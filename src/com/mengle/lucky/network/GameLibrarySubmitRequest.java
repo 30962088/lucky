@@ -62,8 +62,8 @@ public class GameLibrarySubmitRequest extends Request{
 		public int getStar() {
 			return star;
 		}
-		public  Model toModel(int count){
-			return new Model(count, win_coin, gold_coin-win_coin, star);
+		public  Model toModel(){
+			return new Model( win_coin, gold_coin-win_coin, star);
 		}
 	}
 	

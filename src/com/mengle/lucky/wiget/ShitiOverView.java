@@ -2,7 +2,10 @@ package com.mengle.lucky.wiget;
 
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
+import com.mengle.lucky.ShitiActivity;
 import com.mengle.lucky.fragments.ShitiFragment;
+import com.mengle.lucky.network.GameLibraryDayChanceRequest.Callback;
+import com.mengle.lucky.network.model.Chance;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -16,13 +19,12 @@ import android.view.View.OnClickListener;
 public class ShitiOverView extends FrameLayout implements OnClickListener{
 
 	public static class Model{
-		private int count;
+
 		private int addCoin;
 		private int currentCoin;
 		private int star;
-		public Model(int count, int addCoin, int currentCoin,int star) {
+		public Model(int addCoin, int currentCoin,int star) {
 			super();
-			this.count = count;
 			this.addCoin = addCoin;
 			this.currentCoin = currentCoin;
 			this.star = star;
@@ -83,15 +85,24 @@ public class ShitiOverView extends FrameLayout implements OnClickListener{
 		currentView.setText(""+model.currentCoin);
 		addcount.setText("+"+model.addCoin);
 		totalView.setText("总金额："+(model.addCoin+model.currentCoin));
-		model.count--;
-		if(model.count <= 0){
-			btnOver.setVisibility(View.VISIBLE);
-			btnAgain.setVisibility(View.GONE);
-		}else{
-			btnOver.setVisibility(View.GONE);
-			btnAgain.setVisibility(View.VISIBLE);
-			btnAgain.setText("再来一次("+model.count+")");
-		}
+		Chance.getChance(getContext(), new Callback() {
+			
+			@Override
+			public void onChanceCount(int count) {
+				count--;
+				if(count <= 0){
+					btnOver.setVisibility(View.VISIBLE);
+					btnAgain.setVisibility(View.GONE);
+				}else{
+					btnOver.setVisibility(View.GONE);
+					btnAgain.setVisibility(View.VISIBLE);
+					btnAgain.setText("再来一次("+count+")");
+				}
+				Chance.updateChance(count);
+				
+			}
+		});
+		
 	}
 
 	@Override
@@ -103,7 +114,7 @@ public class ShitiOverView extends FrameLayout implements OnClickListener{
 			
 		case R.id.again:
 			
-			((MainActivity)getContext()).switchContent(ShitiFragment.newInstance(model.count));
+			((ShitiActivity)getContext()).switchContent(ShitiFragment.newInstance());
 			
 			break;
 

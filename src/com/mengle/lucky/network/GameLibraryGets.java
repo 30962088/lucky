@@ -101,7 +101,7 @@ public class GameLibraryGets extends Request{
 		super();
 		this.params = params;
 		user = new Preferences.User(context);
-//		this.params.last = user.getLastShitiId();
+		this.params.last = user.getLastShitiId();
 		this.params.last = 0;
 	}
 
@@ -109,8 +109,8 @@ public class GameLibraryGets extends Request{
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
 			results = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
-			Result result = results.get(results.size()-1);
-			user.setLastShitiId(result.id);
+			/*Result result = results.get(results.size()-1);
+			user.setLastShitiId(result.id);*/
 		}
 		
 	}

@@ -1,11 +1,22 @@
 package com.mengle.lucky.network;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import com.mengle.lucky.network.model.Chance;
+
+import android.content.Context;
+
 public class GameLibraryDayChanceRequest extends Request{
 
+	public static interface Callback{
+		public void onChanceCount(int count);
+	}
+	
+	
+	
 	public static class Params{
 		protected int uid;
 		protected String token;
