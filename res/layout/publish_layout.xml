@@ -6,8 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" 
-        android:layout_marginTop="46dp">
+        android:layout_marginTop="46dp"
+        android:orientation="vertical" >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -462,23 +462,29 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:gravity="center_vertical" >
-							
-                            <CheckBox
-                                android:id="@+id/btn_read"
+
+                            <LinearLayout
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:button="@drawable/checkbox_selector_gray"
-                                android:textColor="#a4a9ae"
-                                android:textSize="15sp"
-                                android:text="阅读并同意遵守" />
-                            
-                            <TextView 
-                                android:id="@+id/text_read"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="#a4a9ae"
-                                android:textSize="15sp"/>
+                                android:layout_height="match_parent"
+                                android:layout_weight="1" 
+                                android:gravity="center_vertical">
+
+                                <CheckBox
+                                    android:id="@+id/btn_read"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:button="@drawable/checkbox_selector_gray"
+                                    android:text="阅读并同意遵守"
+                                    android:textColor="#a4a9ae"
+                                    android:textSize="15sp" />
+
+                                <TextView
+                                    android:id="@+id/text_read"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#a4a9ae"
+                                    android:textSize="15sp" />
+                            </LinearLayout>
 
                             <TextView
                                 android:id="@+id/preview"
@@ -585,10 +591,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_orange_publish" />
     </LinearLayout>
-    
+
     <com.mengle.lucky.wiget.CommonHeaderView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="46dp"
@@ -608,10 +615,7 @@
                 android:text="坐庄"
                 android:textColor="#fff"
                 android:textSize="18sp" />
-    
-            
         </RelativeLayout>
-        
     </com.mengle.lucky.wiget.CommonHeaderView>
 
 </RelativeLayout>

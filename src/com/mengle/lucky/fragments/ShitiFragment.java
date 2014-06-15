@@ -4,6 +4,7 @@ package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.ShitiListAdapter;
@@ -19,9 +20,22 @@ import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.AlertDialog;
+import com.mengle.lucky.wiget.LoadingPopup;
+import com.mengle.lucky.wiget.ShareDialog;
+import com.mengle.lucky.wiget.ShareDialog.Callback;
 import com.mengle.lucky.wiget.ShitiOverView;
 import com.mengle.lucky.wiget.ShitiOverView.Model;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.media.UMImage;
 
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -58,8 +72,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	private View parentView;
 	
 	private ShitiOverView shitiOverView;
-	
-	private int count;
+
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,10 +103,14 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	
 	private View add_anim;
 	
+	private View rootView;
+	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		this.rootView = view;
+		view.findViewById(R.id.btn_share).setOnClickListener(this);
 		shitiOverView = (ShitiOverView) view.findViewById(R.id.shitiover);
 		add_anim = view.findViewById(R.id.add_anim);
 		btnOK = view.findViewById(R.id.btn_ok);
@@ -269,9 +286,73 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 		case R.id.btn_ok:
 			submit();
 			break;
+		case R.id.btn_share:
+			onShare();
 		default:
 			break;
 		}
+		
+	}
+
+	private void doShare(SHARE_MEDIA media){
+		final UMSocialService mController =Utils.getUMSocialService(getActivity());
+		View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
+		Bitmap bitmap = Utils.convertViewToBitmap(view);
+		mController.setShareContent("谁能帮忙猜出这题？我家房子就是你的");
+		mController.setShareImage(new UMImage(getActivity(), bitmap));
+		
+		mController.directShare(getActivity(),media,new SnsPostListener() {
+			
+			@Override
+			public void onStart() {
+				
+				
+			}
+			
+			@Override
+			public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+				LoadingPopup.hide(getActivity());
+				
+			}
+		});
+	}
+	
+	private void onShare() {
+		ShareDialog.open(getActivity(), "集运宝分享", new ShareDialog.Callback() {
+			
+			@Override
+			public void onClick(final SHARE_MEDIA media,final String name) {
+				final UMSocialService mController =Utils.getUMSocialService(getActivity());
+				if(media == SHARE_MEDIA.WEIXIN || media ==SHARE_MEDIA.WEIXIN_CIRCLE){
+					doShare(media);
+					return;
+				}
+				
+				LoadingPopup.show(getActivity());
+				mController.checkTokenExpired(getActivity(), new SHARE_MEDIA[]{media}, new UMDataListener() {
+
+					@Override
+					public void onComplete(int arg0, Map<String, Object> arg1) {
+						String key = arg1.keySet().toArray()[0].toString();
+						if((Boolean)arg1.get(key)  == false){
+							AlertDialog.open(getActivity(), "你的"+name+"账号还没有与本机绑定，请绑定后再分享", null);
+							LoadingPopup.hide(getActivity());
+						}else{
+							doShare(media);
+						}
+						
+						
+					}
+
+					@Override
+					public void onStart() {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
+			}
+		}, null);
 		
 	}
 

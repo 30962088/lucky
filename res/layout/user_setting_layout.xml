@@ -119,7 +119,7 @@
                         android:layout_height="20dp"
                         android:layout_marginLeft="8dp"
                         android:button="@drawable/checkbox_selector_gray"
-                        android:paddingLeft="23dp"
+                        android:paddingLeft="5dp"
                         android:text="男"
                         android:textColor="#29353f"
                         android:textSize="15sp" />
@@ -129,7 +129,7 @@
                         android:layout_width="50dp"
                         android:layout_height="20dp"
                         android:button="@drawable/checkbox_selector_gray"
-                        android:paddingLeft="23dp"
+                        android:paddingLeft="5dp"
                         android:text="女"
                         android:textColor="#29353f"
                         android:textSize="15sp" />
@@ -386,7 +386,8 @@
                 android:id="@+id/update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_orange_ok1" />
+                android:background="@drawable/btn_orange_ok1"
+                android:padding="0dp" />
         </LinearLayout>
     </ScrollView>
 

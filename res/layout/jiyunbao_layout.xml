@@ -53,6 +53,7 @@
         android:background="#e47134" >
 
         <View
+            android:id="@+id/btn_share"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_alignParentRight="true"

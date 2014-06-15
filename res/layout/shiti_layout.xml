@@ -138,16 +138,16 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="-43dp"
             android:background="@drawable/bg_cai" />
-		
-        <ImageView 
-            android:visibility="invisible"
+
+        <ImageView
             android:id="@+id/add_anim"
             android:layout_width="180dp"
-            android:layout_centerInParent="true"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:scaleType="center"
-            android:src="@drawable/icon_add1"/>
-        
+            android:src="@drawable/icon_add1"
+            android:visibility="invisible" />
+
         <RelativeLayout
             android:id="@+id/icon_bottom"
             android:layout_width="match_parent"
@@ -155,24 +155,31 @@
             android:layout_alignParentBottom="true"
             android:background="#e47134" >
 
-            <View
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+            <RelativeLayout
+                android:id="@+id/btn_share"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/btn_share" />
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center">
+
+                <View
+                    android:layout_width="23dp"
+                    android:layout_height="23dp"
+                    android:background="@drawable/btn_share" />
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-    
-    <com.mengle.lucky.wiget.ShitiOverView
-        android:visibility="gone"
-        android:id="@+id/shitiover"
-        android:layout_marginTop="46dp"
-        android:layout_marginBottom="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.mengle.lucky.wiget.ShitiOverView>
 
-    
+    <com.mengle.lucky.wiget.ShitiOverView
+        android:id="@+id/shitiover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="46dp"
+        android:visibility="gone" >
+    </com.mengle.lucky.wiget.ShitiOverView>
 
 </RelativeLayout>

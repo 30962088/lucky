@@ -102,7 +102,7 @@ public class GameLibraryGets extends Request{
 		this.params = params;
 		user = new Preferences.User(context);
 		this.params.last = user.getLastShitiId();
-		this.params.last = 0;
+//		this.params.last = 0;
 	}
 
 	@Override

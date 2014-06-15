@@ -32,6 +32,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
@@ -42,6 +43,10 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.socialize.controller.RequestType;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMWXHandler;
 
 import android.net.NetworkInfo;
 import android.view.animation.Transformation;
@@ -57,6 +62,32 @@ public class Utils {
 		return str == null ? "" : str;
 	}
 
+	public static Bitmap convertViewToBitmap(View view) {
+		
+		view.buildDrawingCache();
+		Bitmap bitmap = view.getDrawingCache();
+
+		return bitmap;
+	}
+	
+	public static UMSocialService getUMSocialService(Context context){
+		UMSocialService mController =UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
+		String appID = "wx1897ea1cb217a00e";
+		// 微信图文分享必须设置一个url 
+		String contentUrl = "http://www.umeng.com/social";
+		// 添加微信平台，参数1为当前Activity, 参数2为用户申请的AppID, 参数3为点击分享内容跳转到的目标url
+		UMWXHandler wxHandler = mController.getConfig().supportWXPlatform(context,appID, contentUrl);
+		//设置分享标题
+		wxHandler.setWXTitle("友盟社会化组件很不错");
+		
+		// 支持微信朋友圈
+		UMWXHandler circleHandler = mController.getConfig().supportWXCirclePlatform(context,appID, contentUrl) ;
+		circleHandler.setCircleTitle("友盟社会化组件还不错...");
+		return mController;
+	}
+	
+	
+
 	public static boolean isMyAppRunning(Context context) {
 		ActivityManager am = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
@@ -67,7 +98,8 @@ public class Utils {
 						+ taskInfo.get(0).topActivity.getClassName()
 						+ "   Package Name :  "
 						+ componentInfo.getPackageName());
-		if(TextUtils.equals(componentInfo.getPackageName(),context.getPackageName())){
+		if (TextUtils.equals(componentInfo.getPackageName(),
+				context.getPackageName())) {
 			return true;
 		}
 		return false;
@@ -79,9 +111,10 @@ public class Utils {
 
 		return models[date.getDay()];
 	}
-	
+
 	public static String formatDay12Hour(String str) {
-		SimpleDateFormat format = new SimpleDateFormat("MM/dd a h:mm", Locale.US);
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd a h:mm",
+				Locale.US);
 		String res = "";
 		try {
 			Date date = parseDate(str);
