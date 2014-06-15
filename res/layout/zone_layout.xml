@@ -103,15 +103,30 @@
                 android:textColor="#fff"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/rightNav"
+            <FrameLayout
+                android:id="@+id/right_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="个人设置"
-                android:textColor="#fff" />
+                android:layout_alignParentRight="true" >
+
+                <ImageView
+                    android:id="@+id/right_comment"
+                    android:layout_width="43dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/btn_comment"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/rightNav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="个人设置"
+                    android:textColor="#fff" />
+                
+            </FrameLayout>
         </RelativeLayout>
     </com.mengle.lucky.wiget.CommonHeaderView>
 

@@ -82,7 +82,13 @@ public class ZoneActivity extends FragmentActivity implements
 		
 		viewPager.setAdapter(new ZonePageAdater(getSupportFragmentManager()));
 		viewPager.setOffscreenPageLimit(3);
-
+		
+		if(uid==new Preferences.User(this).getUid()){
+			WigetUtils.switchVisible((ViewGroup)findViewById(R.id.right_container),R.id.rightNav );
+		}else{
+			WigetUtils.switchVisible((ViewGroup)findViewById(R.id.right_container),R.id.right_comment );
+		}
+		findViewById(R.id.right_comment).setOnClickListener(this);
 	}
 
 	private void login() {
@@ -168,6 +174,9 @@ public class ZoneActivity extends FragmentActivity implements
 			break;
 		case R.id.leftnav:
 			finish();
+			break;
+		case R.id.right_comment:
+			ChatActivity.open(this, uid);
 			break;
 		default:
 			break;

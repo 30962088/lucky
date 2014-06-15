@@ -5,6 +5,7 @@ package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.Row2ListAdapter;
 import com.mengle.lucky.adapter.Row2ListAdapter.Row2;
@@ -15,12 +16,18 @@ import com.mengle.lucky.network.UserGamingRequest.Params;
 import com.mengle.lucky.network.model.GameLite;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.wiget.BaseListView;
+import com.mengle.lucky.wiget.MyClickSpan;
 import com.mengle.lucky.wiget.BaseListView.OnLoadListener;
 
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -133,7 +140,21 @@ public class UserGameEndFragment extends Fragment implements OnLoadListener,OnCl
 		if(offset == 0&&list.size() == 1){
 			baseListView.setVisibility(View.GONE);
 			if(user.getUid() == uid){
-				emptytip.setText("您目前没有参与任何竞猜，快去看看有没有您感兴趣的猜题吧！");
+				ClickableSpan  textClickable = new MyClickSpan(Color.parseColor("#5dc9e6"),new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						MainActivity.getInstance().setSwitchFragment(ZhuangFragment.newInstance(0));
+						getActivity().finish();
+						
+						
+					}
+				});
+				SpannableString spanableInfo = new SpannableString("您目前没有参与任何竞猜，快去看看有没有您感兴趣的猜题吧！");
+				spanableInfo.setSpan(textClickable,20, 26,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+				emptytip.setText(spanableInfo);
+				emptytip.setClickable(true);
+				emptytip.setMovementMethod(LinkMovementMethod.getInstance());
 				emptytip.setEnabled(true);
 			}else{
 				emptytip.setText("他目前没有参与任何竞猜！");

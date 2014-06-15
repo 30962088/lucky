@@ -58,6 +58,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 	
 
 	public static MainActivity instance;
+	
+	private Fragment switchFragment;
 
 	private View rightComment;
 
@@ -110,6 +112,10 @@ public class MainActivity extends SlidingFragmentActivity implements
 		// TODO Auto-generated method stub
 		super.onResume();
 		doPushLogout();
+		if(switchFragment != null){
+			switchContent(switchFragment);
+			switchFragment = null;
+		}
 		
 	}
 
@@ -247,6 +253,10 @@ public class MainActivity extends SlidingFragmentActivity implements
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void setSwitchFragment(Fragment switchFragment) {
+		this.switchFragment = switchFragment;
 	}
 
 }
