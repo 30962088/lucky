@@ -50,12 +50,19 @@ public class Row2ListAdapter extends BaseAdapter{
 	
 	private List<Row2> list;
 	
-	
+	private boolean one = false;
 	
 	public Row2ListAdapter(Context context, List<Row2> list) {
 		super();
 		this.context = context;
 		this.list = list;
+	}
+	
+	public Row2ListAdapter(Context context, List<Row2> list,boolean one) {
+		super();
+		this.context = context;
+		this.list = list;
+		this.one = one;
 	}
 
 	public int getCount() {
@@ -78,6 +85,10 @@ public class Row2ListAdapter extends BaseAdapter{
 		final Row2 row2 = list.get(position);
 		if(convertView == null){
 			convertView = LayoutInflater.from(context).inflate(R.layout.row_2_item, null);
+			if(one){
+				convertView.findViewById(R.id.row1).setVisibility(View.GONE);
+			}
+			
 			holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
 		}else{

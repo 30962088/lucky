@@ -73,7 +73,7 @@ public class UserGameEndFragment extends Fragment implements OnLoadListener,OnCl
 		emptytip.setOnClickListener(this);
 		baseListView = (BaseListView) view.findViewById(R.id.listview);
 		baseListView.setOnLoadListener(this);
-		listAdapter = new Row2ListAdapter(getActivity(), list);
+		listAdapter = new Row2ListAdapter(getActivity(), list,true);
 		baseListView.setAdapter(listAdapter);
 		user = new Preferences.User(getActivity());
 		baseListView.load(true);

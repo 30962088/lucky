@@ -115,7 +115,7 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 //		list.add(new Photo(defaultImg, type));
 		list.addAll(Photo.findPhotosByType(context, type));
 		list.add(new Photo( "drawable://" + resId,type));
-		photoList =  new PhotoList(list);
+		photoList =  new PhotoList(list,type);
 		
 		
 		photoList.setIndex(0);

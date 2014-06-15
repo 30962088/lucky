@@ -33,7 +33,7 @@ public abstract class Request implements Response,IRequest{
 
 	
 	
-	public static String HOST = "http://114.215.104.75/";
+	public static String HOST = "http://api.joypaw.com/";
 	
 
 	

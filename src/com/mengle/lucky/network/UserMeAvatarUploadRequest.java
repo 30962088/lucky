@@ -13,12 +13,20 @@ public class UserMeAvatarUploadRequest extends Request{
 		private int uid;
 		private String token;
 		private File file;
+		private String avatar_url;
 		public Param(int uid, String token, File file) {
 			super();
 			this.uid = uid;
 			this.token = token;
 			this.file = file;
 		}
+		public Param(int uid, String token, String avatar_url) {
+			super();
+			this.uid = uid;
+			this.token = token;
+			this.avatar_url = avatar_url;
+		}
+		
 		
 	}
 	
@@ -63,6 +71,9 @@ public class UserMeAvatarUploadRequest extends Request{
 	
 	@Override
 	protected List<BinaryBody> fillFiles() {
+		if(param.file == null){
+			return null;
+		}
 		ArrayList<BinaryBody> bodies = new ArrayList<Request.BinaryBody>();
 		bodies.add(new BinaryBody("avatar.jpg", param.file, "image/jpeg", "avatar"));
 		return bodies;
@@ -73,6 +84,9 @@ public class UserMeAvatarUploadRequest extends Request{
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("uid", ""+param.uid));
 		pairs.add(new BasicNameValuePair("token", ""+param.token));
+		if(param.avatar_url != null){
+			pairs.add(new BasicNameValuePair("avatar_url", ""+param.avatar_url));
+		}
 		return pairs;
 	}
 

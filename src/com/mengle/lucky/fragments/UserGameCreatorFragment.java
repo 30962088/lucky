@@ -122,10 +122,21 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 	public void onLoadSuccess() {
 		if(offset == 0){
 			list.clear();
-			list.add(new Row2(-1, "结束时间", "竞猜名称"));
+			if(user.getUid() == uid){
+				list.add(new Row2(-1, "结束时间/状态", "竞猜名称"));
+			}else{
+				list.add(new Row2(-1, "结束时间", "竞猜名称"));
+			}
+			
 		}
 		for(GameLite gameLite : results){
-			this.list.add(gameLite.toRow2());
+			if(user.getUid() == uid){
+				
+				this.list.add(gameLite.toRow222());
+			}else{
+				this.list.add(gameLite.toRow2());
+			}
+			
 		}
 		if(offset == 0&&list.size() == 1){
 			baseListView.setVisibility(View.GONE);

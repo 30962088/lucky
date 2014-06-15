@@ -259,43 +259,50 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 
 	public void onResult(Type type, final String uri) {
 		Preferences.User user = new Preferences.User(getContext());
-		File file = new File(Utils.getRealPathFromURI(getContext(), Uri.parse(uri)));
+		UserMeAvatarUploadRequest.Param param1;
+		UserMeHeadUploadRequest.Param param2;
+		if(uri.startsWith("http")){
+			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), uri);
+			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), uri);
+		}else{
+			File file = new File(Utils.getRealPathFromURI(getContext(), Uri.parse(uri)));
+			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), file);
+			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), file);
+		}
+		
 		if (type == Type.AVATAR) {
-			
-			
-			if(file.exists()){
-				UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), file));
-				RequestAsync.request(uploadRequest, new Async() {
-					
-					@Override
-					public void onPostExecute(Request request) {
-						if(request.getStatus() == Status.SUCCESS){
-							userHeadData.photo = uri;
-							BitmapLoader.displayImage(getContext(), uri, photoView);
-						}
-						
-						
+			UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(param1);
+			RequestAsync.request(uploadRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					if(request.getStatus() == Status.SUCCESS){
+						userHeadData.photo = uri;
+						BitmapLoader.displayImage(getContext(), uri, photoView);
 					}
-				});
-			}
+					
+					
+				}
+			});
+			
 			
 			
 		} else {
-			if(file.exists()){
-				UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), file));
-				RequestAsync.request(uploadRequest, new Async() {
-					
-					@Override
-					public void onPostExecute(Request request) {
-						if(request.getStatus() == Status.SUCCESS){
-							userHeadData.head = uri;
-							BitmapLoader.displayImage(getContext(), uri, iconHead);
-						}
-						
-						
+			
+			UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(param2);
+			RequestAsync.request(uploadRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					if(request.getStatus() == Status.SUCCESS){
+						userHeadData.head = uri;
+						BitmapLoader.displayImage(getContext(), uri, iconHead);
 					}
-				});
-			}
+					
+					
+				}
+			});
+			
 			
 		}
 

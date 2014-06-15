@@ -15,7 +15,10 @@ import com.mengle.lucky.utils.BitmapLoader;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -56,10 +59,26 @@ public class PhotoListAdapter extends BaseAdapter {
 			return photo;
 		}
 		
+		private static List<Photo> getDefaultPhotos(int type){
+			String folder = "";
+			if(type==TYPE_AVATAR){
+				folder = "avatar";
+			}else{
+				folder="head";
+			}
+			List<Photo> photos = new ArrayList<PhotoListAdapter.Photo>();
+			for(int i = 1;i<=4;i++){
+				photos.add(new Photo("http://res.joypaw.com/"+folder+"/default/"+i+".jpg", type));
+			}
+			return photos;
+		}
+		
 		public static List<Photo> findPhotosByType(Context context,int type) throws SQLException{
 			List<Photo> list = new ArrayList<Photo>();
 			DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
+			list.addAll(getDefaultPhotos(type));
 			list.addAll(dataBaseHelper.getPhotoDao().queryBuilder().where().eq("type", type).query());
+			
 			return list;
 		}
 
@@ -68,10 +87,12 @@ public class PhotoListAdapter extends BaseAdapter {
 	public static class PhotoList {
 		private List<Photo> list;
 		private int index;
+		private int type;
 
-		public PhotoList(List<Photo> list) {
+		public PhotoList(List<Photo> list,int type) {
 			super();
 			this.list = list;
+			this.type = type;
 		}
 
 		public void setIndex(int index) {
@@ -116,14 +137,31 @@ public class PhotoListAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		Photo photo = list.list.get(position);
 		if (convertView == null) {
-			convertView = LayoutInflater.from(context).inflate(
-					R.layout.photo_item, null);
+			if(list.type==Photo.TYPE_AVATAR){
+				convertView = LayoutInflater.from(context).inflate(
+						R.layout.photo_item, null);
+			}else{
+				convertView = LayoutInflater.from(context).inflate(
+						R.layout.photo_item1, null);
+			}
+			final View v = convertView;
+			convertView.post(new Runnable() {
+				
+				@Override
+				public void run() {
+					v.setLayoutParams(new AbsListView.LayoutParams(v.getWidth(), v.getWidth()*9/16));
+					
+				}
+			});
 			holder = new ViewHolder(convertView);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
+		
+		
+		
+		
 		BitmapLoader.displayImage(context, photo.photo, holder.imageView);
 
 		if (list.index == position) {

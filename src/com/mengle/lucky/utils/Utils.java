@@ -79,6 +79,20 @@ public class Utils {
 
 		return models[date.getDay()];
 	}
+	
+	public static String formatDay12Hour(String str) {
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd a h:mm", Locale.US);
+		String res = "";
+		try {
+			Date date = parseDate(str);
+			res = format.format(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+
+	}
 
 	public static String format12Hour(String str) {
 		SimpleDateFormat format = new SimpleDateFormat("a h:mm", Locale.US);
