@@ -76,6 +76,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".GuideActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
         <activity android:name=".KanZhuangPreviewActivity" >
         </activity>
         <activity android:name=".FillAnswerActivity" >
