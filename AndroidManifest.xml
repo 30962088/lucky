@@ -98,6 +98,12 @@
         <activity android:name=".ShitiActivity" android:screenOrientation="portrait">
         </activity>
         
+        <activity android:name=".AwardActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
             android:configChanges="orientation|keyboard"
