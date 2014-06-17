@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable.Callback;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -37,6 +38,18 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 	private View starView;
 
 	private View goodluckyView;
+	
+	private View finalView;
+	
+	private View sectionView;
+	
+	private Animation goodluckyAnimation;
+	
+	private CustomAnimationDrawableNew a1;
+	
+	private Animation sevenAnimation;
+	
+	private Animation starAnimation;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,26 +78,44 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 		starView = view.findViewById(R.id.star);
 
 		goodluckyView = view.findViewById(R.id.goodlucky);
+		
+		finalView = view.findViewById(R.id.launch_final);
 
-	}
-
-	@Override
-	public void setBlur(boolean blur) {
-		if (blur) {
-			topView.setVisibility(View.INVISIBLE);
-			bottomView.setVisibility(View.VISIBLE);
-		} else {
-			topView.setVisibility(View.VISIBLE);
-			bottomView.setVisibility(View.INVISIBLE);
-		}
-	}
-
-	public void startAnim() {
-		// startAnim1();
-		topView.setVisibility(View.VISIBLE);
-		animView.setVisibility(View.VISIBLE);
-
-		CustomAnimationDrawableNew a1 = new CustomAnimationDrawableNew(
+		sectionView = view.findViewById(R.id.section);
+		
+		view.findViewById(R.id.btn_enter).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				getActivity().finish();
+				
+			}
+		});
+		
+		goodluckyAnimation = AnimationUtils.loadAnimation(
+				getActivity(), R.anim.goodlucky);
+		goodluckyAnimation.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				startAnim4();
+				
+			}
+		});
+		
+		a1 = new CustomAnimationDrawableNew(
 				(AnimationDrawable) getResources().getDrawable(
 						R.drawable.anim_guide)) {
 			@Override
@@ -96,14 +127,9 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 		};
 
 		animView.setImageDrawable(a1);
-		a1.setOneShot(true);
-		a1.start();
-	}
-
-
-	private void startAnim1() {
-
-		Animation sevenAnimation = AnimationUtils.loadAnimation(getActivity(),
+		
+		
+		sevenAnimation = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.seven);
 		sevenAnimation.setFillAfter(true);
 		sevenAnimation.setAnimationListener(new AnimationListener() {
@@ -126,13 +152,8 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 
 			}
 		});
-		sevenView.setVisibility(View.VISIBLE);
-		sevenView.startAnimation(sevenAnimation);
-
-	}
-
-	private void startAnim2() {
-		Animation starAnimation = AnimationUtils.loadAnimation(getActivity(),
+		
+		starAnimation = AnimationUtils.loadAnimation(getActivity(),
 				R.anim.star);
 		starAnimation.setAnimationListener(new AnimationListener() {
 
@@ -155,17 +176,60 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 			}
 		});
 		starAnimation.setFillAfter(true);
+		
+	}
+
+	@Override
+	public void setBlur(boolean blur) {
+		if (blur) {
+			topView.setVisibility(View.INVISIBLE);
+			bottomView.setVisibility(View.VISIBLE);
+		} else {
+			topView.setVisibility(View.VISIBLE);
+			bottomView.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	public void startAnim() {
+		// startAnim1();
+		topView.setVisibility(View.VISIBLE);
+		animView.setVisibility(View.VISIBLE);
+
+		
+		a1.setOneShot(true);
+		a1.start();
+	}
+
+
+	private void startAnim1() {
+
+		
+		sevenView.setVisibility(View.VISIBLE);
+		sevenView.startAnimation(sevenAnimation);
+
+	}
+
+	private void startAnim2() {
+		
 		starView.setVisibility(View.VISIBLE);
 		starView.startAnimation(starAnimation);
 
 	}
 
 	private void startAnim3() {
-		Animation goodluckyAnimation = AnimationUtils.loadAnimation(
-				getActivity(), R.anim.goodlucky);
+		
 		// goodluckyAnimation.setFillAfter(true);
 		goodluckyView.setVisibility(View.VISIBLE);
+		
 		goodluckyView.startAnimation(goodluckyAnimation);
+	}
+	
+	private void startAnim4(){
+		sectionView.setVisibility(View.GONE);
+		finalView.setVisibility(View.VISIBLE);
+		
+		finalView.startAnimation(AnimationUtils.loadAnimation(
+				getActivity(), R.anim.launch_final));
 	}
 
 	@Override
@@ -184,6 +248,12 @@ public class LaunchItemEndFragment extends BlurFragment implements Callback {
 	public void unscheduleDrawable(Drawable who, Runnable what) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void release() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

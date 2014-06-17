@@ -25,7 +25,7 @@ public class Preferences {
 			preferences = context.getSharedPreferences(NAME, 0);
 			this.context = context;
 		}
-		
+	
 		public void setToken(String val){
 			preferences.edit().putString("token", val).commit();
 		}

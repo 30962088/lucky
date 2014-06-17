@@ -8,4 +8,6 @@ public abstract class BlurFragment extends Fragment{
 	
 	public abstract void setBlur(boolean blur);
 
+	public abstract void release();
+	
 }

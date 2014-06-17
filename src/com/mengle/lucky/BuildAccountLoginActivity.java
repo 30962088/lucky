@@ -73,7 +73,13 @@ public class BuildAccountLoginActivity extends Activity implements
 		}
 
 	}
-
+	
+	
+	@Override
+	public void finish() {
+		super.finish();
+		MainActivity.open(this);
+	}
 
 
 

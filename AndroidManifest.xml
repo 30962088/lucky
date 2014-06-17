@@ -9,83 +9,93 @@
         android:targetSdkVersion="18" />
 
     <application
+        android:largeHeap="true"
         android:name="com.mengle.lucky.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.mengle.lucky.MainActivity"
-            android:configChanges="keyboard|keyboardHidden"
-            android:label="@string/app_name" >
+        
+        <activity 
+            android:name=".LaunchAcitivty" android:screenOrientation="portrait">
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
-        <activity android:name=".SearchListActivity" >
+        
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity" >
+        <activity android:name=".SearchListActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".PublishActivity" >
+        <activity android:name=".SearchActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChatActivity" >
+        <activity android:name=".PublishActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".ZoneActivity" >
+        <activity android:name=".ChatActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserSettingActivity" >
+        <activity android:name=".ZoneActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotifyCenterActivity" >
+        <activity android:name=".UserSettingActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".NotifyDetailActivity" >
-        </activity>
-        <activity android:name=".BuildAccountLoginActivity" >
+        <activity android:name=".NotifyCenterActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserListActivity" >
+        <activity android:name=".NotifyDetailActivity" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".BuildAccountLoginActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".KanZhuangActivity" >
+        <activity android:name=".UserListActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".GuideActivity" >
+        <activity android:name=".KanZhuangActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".KanZhuangPreviewActivity" >
+        <activity android:name=".GuideActivity" android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
-        <activity android:name=".FillAnswerActivity" >
+        <activity android:name=".KanZhuangPreviewActivity" android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ShitiActivity" >
+        <activity android:name=".FillAnswerActivity" android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".ShitiActivity" android:screenOrientation="portrait">
         </activity>
         
         <activity

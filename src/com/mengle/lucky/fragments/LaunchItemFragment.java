@@ -3,6 +3,8 @@ package com.mengle.lucky.fragments;
 
 import com.mengle.lucky.R;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -73,6 +75,13 @@ public class LaunchItemFragment extends BlurFragment{
 			topView.setVisibility(View.VISIBLE);
 			bottomView.setVisibility(View.INVISIBLE);
 		}
+	}
+
+	@Override
+	public void release() {
+		/*((BitmapDrawable)topView.getDrawable()).getBitmap().recycle();
+		((BitmapDrawable)bottomView.getDrawable()).getBitmap().recycle();*/
+		
 	}
 	
 	

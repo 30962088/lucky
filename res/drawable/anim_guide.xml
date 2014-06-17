@@ -1,29 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@drawable/launch_change_1" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_2" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_3" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_4" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_5" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_6" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_7" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_8" android:duration="400" />
-     <!-- <item android:drawable="@drawable/launch_change_9" android:duration="200" /> -->
-    <item android:drawable="@drawable/launch_change_10" android:duration="200" />
-    <item android:drawable="@drawable/launch_change_11" android:duration="200" />
-    <item android:drawable="@drawable/launch_circle_0" android:duration="200" />
-   <!--  <item android:drawable="@drawable/launch_circle_1" android:duration="100" /> -->
-    <item android:drawable="@drawable/launch_circle_2" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_3" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_4" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_5" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_6" android:duration="200" />
-      <!--  <item android:drawable="@drawable/launch_circle_7" android:duration="100" /> -->
-    <item android:drawable="@drawable/launch_circle_8" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_9" android:duration="200" />
- 	<!--<item android:drawable="@drawable/launch_circle_10" android:duration="100" />-->
-   <item android:drawable="@drawable/launch_circle_11" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_12" android:duration="100" />
-    <item android:drawable="@drawable/launch_circle_13" android:duration="100" />
+
+    <item
+        android:drawable="@drawable/launch_change_1"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_2"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_3"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_4"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_5"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_6"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_7"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_8"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_9"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_10"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_change_11"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_circle_0"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/launch_circle_1"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_2"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_3"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_4"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_5"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_6"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_7"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_8"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_9"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_10"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_11"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_12"
+        android:duration="100"/>
+    <item
+        android:drawable="@drawable/launch_circle_13"
+        android:duration="100"/>
 
 </animation-list>

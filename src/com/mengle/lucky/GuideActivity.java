@@ -7,6 +7,7 @@ import com.mengle.lucky.fragments.LaunchItemFragment.Item;
 import com.mengle.lucky.wiget.CustomViewPager;
 import com.mengle.lucky.wiget.TabPageIndicator;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,9 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 	
 	private CustomViewPager viewPager;
 	
-	private ImageView indexView;
+	private View[] indexViews;
+	
+	private View lastView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,9 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.guide_layout);
 		viewPager = (CustomViewPager) findViewById(R.id.viewpager);
-		indexView = (ImageView) findViewById(R.id.index_view);
-		indexView.setVisibility(View.GONE);
+		indexViews = new View[]{findViewById(R.id.index_a_view),findViewById(R.id.index_b_view),findViewById(R.id.index_c_view)};
+		lastView = indexViews[0];
+//		indexView.setVisibility(View.GONE);
 		viewPager.setAdapter(new MyPageAdapter());
 		viewPager.setOffscreenPageLimit(5);
 		viewPager.setOnPageChangeListener(this);
@@ -41,14 +45,7 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		new Handler(getMainLooper()).postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				((LaunchItemEndFragment)fragments[0]).startAnim();
-				
-			}
-		}, 2000);
+		
 		
 	}
 	
@@ -60,7 +57,11 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 			new Item(R.drawable.launch_04, R.drawable.launch_top_04)
 	};
 	
-	private  BlurFragment[] fragments = new BlurFragment[]{LaunchItemEndFragment.newInstance(items[3]),LaunchItemFragment.newInstance(items[0]),LaunchItemFragment.newInstance(items[1]),LaunchItemFragment.newInstance(items[2])};
+	private  BlurFragment[] fragments = new BlurFragment[]{
+			LaunchItemFragment.newInstance(items[0]),
+			LaunchItemFragment.newInstance(items[1]),
+			LaunchItemFragment.newInstance(items[2]),
+			LaunchItemEndFragment.newInstance(items[3])};
 	
 	private class MyPageAdapter extends FragmentPagerAdapter{
 
@@ -80,7 +81,7 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			return 1;
+			return fragments.length;
 		}
 	}
 	
@@ -89,25 +90,39 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 			fragment.setBlur(blur);
 		}
 	}
+	
+	@Override
+	public void finish() {
+		super.finish();
+		BuildAccountLoginActivity.open(this);
+	}
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {
 		switch (arg0) {
-		/*case 1:
+		case 1:
 			setBlur(true);
 			break;
 		case 0:
 			setBlur(false);
+			if(viewPager.getCurrentItem() == 3){
+				viewPager.setPagingEnabled(false);
+				for(View view : indexViews){
+					view.setVisibility(View.INVISIBLE);
+				}
+				
+				((LaunchItemEndFragment)fragments[3]).startAnim();
+			}
 			break;
 		default:
-			break;*/
+			break;
 		}
 		
 	}
 
 	@Override
 	public void onPageScrolled(int arg0, float arg1, int arg2) {
-		
+		System.out.println("scrolled:"+arg0+","+arg1+","+arg2);
 		
 	}
 
@@ -120,14 +135,16 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 	@Override
 	public void onPageSelected(int arg0) {
 		if(arg0<=2){
-			indexView.setImageResource(indexs[arg0]);
+			if(lastView != null){
+				lastView.setVisibility(View.INVISIBLE);
+			}
+			indexViews[arg0].setVisibility(View.VISIBLE);
+			lastView = indexViews[arg0]; 
 		}else{
-			viewPager.setPagingEnabled(false);
-			indexView.setVisibility(View.GONE);
-			((LaunchItemEndFragment)fragments[arg0]).startAnim();
+			
+			
 		}
 		
 	}
-	
 
 }

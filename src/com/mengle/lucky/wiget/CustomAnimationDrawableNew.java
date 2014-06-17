@@ -32,7 +32,12 @@ public abstract class CustomAnimationDrawableNew extends AnimationDrawable {
 				for (int i = 0; i < getNumberOfFrames()-2; i++){
 				    Drawable frame = getFrame(i);
 				    if (frame instanceof BitmapDrawable) {
-				        ((BitmapDrawable)frame).getBitmap().recycle();
+				    	try{
+				    		((BitmapDrawable)frame).getBitmap().recycle();
+				    	}catch(Exception e){
+				    		
+				    	}
+				        
 				    }
 				    frame.setCallback(null);
 				}

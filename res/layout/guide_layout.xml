@@ -2,20 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-     <com.mengle.lucky.wiget.CustomViewPager
+
+    <com.mengle.lucky.wiget.CustomViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
     </com.mengle.lucky.wiget.CustomViewPager>
-    
-    <ImageView 
-        android:id="@+id/index_view"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/launch_a"/>
-    
-    
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/index_a_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/launch_a" />
+
+        <ImageView
+            android:id="@+id/index_b_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/launch_b"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/index_c_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/launch_c"
+            android:visibility="invisible" />
+    </FrameLayout>
 
 </RelativeLayout>
