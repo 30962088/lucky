@@ -39,10 +39,16 @@ public class AwardAnimView extends RelativeLayout{
 		
 	}
 	
+	public static interface Callback{
+		public void onsuccess();
+	}
+	
 	
 	private View[] countViews;
 	
 	private int current = 0;
+	
+	private Callback callback;
 	
 	public void setAward(int award){
 		countViews = new View[award];
@@ -54,6 +60,10 @@ public class AwardAnimView extends RelativeLayout{
 			addView(countView, new LayoutParams(DisplayUtils.Dp2Px(getContext(), 80), DisplayUtils.Dp2Px(getContext(), 110)));
 			countViews[i-1] = countView;
 		}
+	}
+	
+	public void setCallback(Callback callback) {
+		this.callback = callback;
 	}
 	
 	public Bitmap textAsBitmap(String text) {
@@ -106,6 +116,10 @@ public class AwardAnimView extends RelativeLayout{
 					view.setVisibility(View.INVISIBLE);
 					current++;
 					start();
+				}else{
+					if(callback != null){
+						callback.onsuccess();
+					}
 				}
 				
 				

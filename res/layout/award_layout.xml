@@ -8,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <TextView 
+        <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
             android:text="每日送金币"
             android:textColor="#fff"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
-        
+            android:textSize="18sp" />
+
         <ImageView
             android:id="@+id/btn_enter"
             android:layout_width="169dp"
@@ -26,18 +26,32 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="70dp"
             android:src="@drawable/btn_cai_in" />
+
         
+
         <com.mengle.lucky.wiget.AwardAnimView
             android:id="@+id/animView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             android:layout_below="@id/text"
-             android:gravity="center"
-             android:layout_above="@+id/btn_enter">
-            
+            android:layout_above="@+id/btn_enter"
+            android:layout_below="@id/text"
+            android:gravity="center" 
+            android:layout_centerHorizontal="true">
         </com.mengle.lucky.wiget.AwardAnimView>
         
         
+        <ImageView
+            android:id="@+id/flower"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_enter"
+            android:layout_below="@id/text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/bg_popup_flower" />
         
     </RelativeLayout>
 

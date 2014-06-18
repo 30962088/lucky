@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.mengle.lucky.KanZhuangActivity;
+
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
@@ -16,13 +16,16 @@ import com.mengle.lucky.network.GameBetRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.UserDayAwardRequest;
+import com.mengle.lucky.network.model.Award;
 import com.mengle.lucky.network.model.Game;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.AwardPopup;
 import com.mengle.lucky.wiget.PeronCountView.Count;
-import com.mengle.lucky.wiget.ResultDialog.Result;
+
 import com.mengle.lucky.wiget.QuestionLayout;
-import com.mengle.lucky.wiget.ResultDialog;
+
 import com.mengle.lucky.wiget.ThemeLayout;
 import com.mengle.lucky.wiget.ThemeLayout.OnBtnClickListener;
 import com.mengle.lucky.wiget.ThemeLayout.Theme;
@@ -69,6 +72,28 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		String weekday = Utils.getWeekday(date);
 		int day = date.getDate();
 		dayView.setText(weekday+" "+day);
+	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Preferences.User user = new Preferences.User(getActivity());
+		if(user.isLogin()&&!Award.isAward()){
+			final UserDayAwardRequest awardRequest = new UserDayAwardRequest(new UserDayAwardRequest.Param(user.getUid(), user.getToken()));
+			RequestAsync.request(awardRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					int award = awardRequest.getResult().getAward_gold_coin();
+					if(award>0){
+						AwardPopup.open(getActivity(), award);
+						Award.setAward(award);
+					}
+					
+				}
+			});
+		}
 	}
 	
 	private long endTime1;
@@ -159,7 +184,6 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 	private void request() {
 		Preferences.User user = new Preferences.User(getActivity());
-		
 		final CaiRequest caiRequest = new CaiRequest(new CaiRequest.Params(
 				user.getUid(), user.getToken()));
 		RequestAsync.request(caiRequest, new Async() {
@@ -174,6 +198,8 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		
 
 	}
+	
+	
 
 	@Override
 	public void onOKClick() {
