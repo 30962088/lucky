@@ -1,7 +1,9 @@
 package com.mengle.lucky.network;
 
 
-import android.os.AsyncTask;
+import com.mengle.lucky.App;
+
+import android.os.Handler;
 
 public class RequestAsync {
 
@@ -10,7 +12,21 @@ public class RequestAsync {
 	}
 	
 	public static void request(final IRequest request,final Async async){
-		new AsyncTask<Void, Void, Request>() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				request.request();
+				if(async != null){
+					new Handler(App.getInstance().getMainLooper()).post(new Runnable() {
+						public void run() {
+							async.onPostExecute((Request) request);
+						}
+					});
+				}
+			}
+		}).start();
+		/*new AsyncTask<Void, Void, Request>() {
 
 			@Override
 			protected Request doInBackground(Void... params) {
@@ -28,7 +44,7 @@ public class RequestAsync {
 			
 			
 		}.execute();
-		
+*/		
 	}
 	
 }

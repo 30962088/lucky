@@ -6,8 +6,11 @@ import java.util.TimerTask;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
+import com.mengle.lucky.network.GameComplainRequest;
+import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
+import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.wiget.PeronCountView.Count;
 import com.mengle.lucky.wiget.ResultDialog.Result;
 import com.mengle.lucky.wiget.ResultDialog.Status;
@@ -48,6 +51,8 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			
 		}
 
+		private Integer id;
+		
 		private View bubble;
 
 		private Header header;
@@ -62,9 +67,10 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		
 		private String endText;
 
-		public Theme(View bubble, Header header, Question question, int coin,
+		public Theme(Integer id,View bubble, Header header, Question question, int coin,
 				long endDate, boolean enable,String endText) {
 			super();
+			this.id = id;
 			this.bubble = bubble;
 			this.header = header;
 			this.question = question;
@@ -136,6 +142,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		
 
 		tousuView = findViewById(R.id.tousu);
+		tousuView.setOnClickListener(this);
 		headerImageView = (ImageView) findViewById(R.id.header_img);
 		bubbleView = (ViewGroup) findViewById(R.id.bubble);
 		coinView = (TextView) findViewById(R.id.coin);
@@ -145,7 +152,10 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 	private QuestionAdapter adapter; 
 	
+	private Theme theme;
+	
 	public void setTheme(Theme theme) {
+		this.theme = theme;
 		setVisibility(View.VISIBLE);
 		gridView.setNumColumns(theme.question.getList().size());
 		adapter = new QuestionAdapter(getContext(), theme.question);
@@ -269,7 +279,12 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			}
 			
 			break;
-
+		case R.id.tousu:
+			Preferences.User user = new Preferences.User(getContext());
+			GameComplainRequest complainRequest = new GameComplainRequest(new 
+					GameComplainRequest.Param(user.getUid(), user.getToken(), theme.id));
+			RequestAsync.request(complainRequest, null);
+			break;
 		default:
 			break;
 		}

@@ -155,7 +155,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		themeLayout.setOnBtnClickListener(this);
 		
 		
-		themeLayout.setTheme(new Theme(bubbleView, new Header(new Count(
+		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(new Count(
 				R.drawable.btn_count, game.getJoin_count()), true, false,
 				game.getImage()), new Question(game.getTitle(), status, list),
 				game.getGold_coin(), endTime, endTime > 0 ? true : false,"今日已结束"));

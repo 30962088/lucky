@@ -168,7 +168,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		 * } } });
 		 */
 
-		themeLayout.setTheme(new Theme(bubbleView, new Header(new Count(
+		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(new Count(
 				R.drawable.btn_count_blue, game.getJoin_count()), false, true,
 				game.getImage()), new Question(game.getTitle(), status, list),
 				game.getGold_coin(), endTime, endTime > 0 ? true : false,"竞猜已结束"));

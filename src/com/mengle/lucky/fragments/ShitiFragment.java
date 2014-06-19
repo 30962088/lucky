@@ -140,7 +140,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 	
 	private void request(){
 		Preferences.User user = new Preferences.User(getActivity());
-		final GameLibraryGets gets = new GameLibraryGets(getActivity(), new GameLibraryGets.Params(user.getUid(), user.getToken(), 1));
+		final GameLibraryGets gets = new GameLibraryGets(getActivity(), new GameLibraryGets.Params(user.getUid(), user.getToken(), 20));
 		RequestAsync.request(gets, new Async() {
 			
 			@Override

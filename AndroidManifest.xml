@@ -98,6 +98,9 @@
         <activity android:name=".ShitiActivity" android:screenOrientation="portrait">
         </activity>
         
+        <activity android:name=".WebViewActivity" android:screenOrientation="portrait">
+        </activity>
+        
         <activity android:name=".AwardActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

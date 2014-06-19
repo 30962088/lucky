@@ -87,7 +87,7 @@ public class KanZhuangPreviewActivity extends Activity implements OnClickListene
 		
 		
 		
-		themeLayout.setTheme(new Theme(ThemeLayout
+		themeLayout.setTheme(new Theme(null, ThemeLayout
 				.getBubblePhotoView(this,model.avatar), new Header(new Count(
 				R.drawable.btn_count_blue, 0), false, false, model
 				.imagePath), new Question(model.title, new Status(false,

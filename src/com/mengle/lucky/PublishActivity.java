@@ -122,7 +122,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public void onClick(View v) {
-				IntroDialog.open(PublishActivity.this, "好运7之霸王条款", "条款", null);
+				IntroDialog.open(PublishActivity.this, "好运7之霸王条款", getResources().getString(R.string.zhuang_intro), null);
 			}
 		});
 		SpannableString spanableInfo = new SpannableString("游戏规则。");

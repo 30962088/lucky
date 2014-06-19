@@ -200,7 +200,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 			changeNetwork();
 			break;
 		case R.id.btn_intro:
-			IntroDialog.open(getActivity(), "使用帮助","1.基本介绍", root);
+			IntroDialog.open(getActivity(), "使用帮助",getResources().getString(R.string.app_intro), root);
 			break;
 		default:
 			break;

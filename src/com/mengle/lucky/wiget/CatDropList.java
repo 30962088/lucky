@@ -3,6 +3,7 @@ package com.mengle.lucky.wiget;
 import java.util.List;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.WebViewActivity;
 import com.mengle.lucky.network.CampaignsGetRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -95,8 +97,16 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		
 	}
 	
-	public void setAdimg(Result result){
+	public void setAdimg(final Result result){
 		adImg.setVisibility(View.VISIBLE);
+		adImg.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				WebViewActivity.open(getContext(), result.getUrl());
+				
+			}
+		});
 		BitmapLoader.displayImage(getContext(), result.getImage(), adImg);
 	}
 	
