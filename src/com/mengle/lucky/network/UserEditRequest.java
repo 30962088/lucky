@@ -13,12 +13,12 @@ public class UserEditRequest extends Request{
 		protected int uid;
 		protected String token;
 		protected String nickname;
-		protected int gender;
+		protected Integer gender;
 		protected int province=-1;
 		protected int city = -1;
 		protected String qq;
 		protected String mobile;
-		public Params(int uid, String token, String nickname, int gender,
+		public Params(int uid, String token, String nickname, Integer gender,
 				int province, int city, String qq, String mobile) {
 			super();
 			this.uid = uid;

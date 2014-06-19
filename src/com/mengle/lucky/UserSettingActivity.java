@@ -41,15 +41,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+
 import android.widget.TextView;
 
 public class UserSettingActivity extends Activity implements OnClickListener,
-		Callback {
+		Callback,TextWatcher {
 
 	public static void open(Context context) {
 		context.startActivity(new Intent(context, UserSettingActivity.class));
@@ -91,6 +95,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	private TextView cityView;
 	
 	private UMSocialService mController;
+	
+	private TextView percentView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +114,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		mController  = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
 		
 		dataBaseHelper = new DataBaseHelper(this);
-		
+		percentView = (TextView) findViewById(R.id.percent);
 		
 		provinceView = (TextView) findViewById(R.id.province);
 		provinceView.setOnClickListener(this);
@@ -119,10 +125,14 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 		findViewById(R.id.icon_back).setOnClickListener(this);
 		nicknameView = (EditText) findViewById(R.id.nickname);
+		nicknameView.addTextChangedListener(this);
 		maleCheckbox = (CheckBox) findViewById(R.id.male);
+		
 		femaleCheckbox = (CheckBox) findViewById(R.id.female);
 		qqView = (EditText) findViewById(R.id.qq);
+		qqView.addTextChangedListener(this);
 		phoneView = (EditText) findViewById(R.id.phone);
+		phoneView.addTextChangedListener(this);
 
 		snsWeiboView = findViewById(R.id.sns_weibo);
 		snsWeiboView.setOnClickListener(this);
@@ -166,10 +176,11 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		});
 	}
 
-	private int gender;
+	private Integer gender;
 
 	private void switchGender(int gender) {
 		this.gender = gender;
+		change();
 		if (gender == 0) {
 			femaleCheckbox.setChecked(true);
 			maleCheckbox.setChecked(false);
@@ -179,9 +190,30 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		}
 	}
 	
+	private void change(){
+		int percent = 0;
+		if(gender != null){
+			percent += 20;
+		}
+		if(provinceView.getTag() != null && cityView.getTag() != null){
+			percent += 20;
+		}
+		if(!TextUtils.isEmpty(nicknameView.getText().toString())){
+			percent += 20;
+		}
+		if(!TextUtils.isEmpty(qqView.getText().toString())){
+			percent += 20;
+		}
+		if(!TextUtils.isEmpty(phoneView.getText().toString())){
+			percent += 20;
+		}
+		percentView.setText(""+percent+"%");
+	}
+	
 	private void fillCity(int id) throws SQLException{
 		City city = dataBaseHelper.getCityDao().queryForId(id);
 		String str = "请选择市";
+		change();
 		if(city != null){
 			str = city.getName();
 			cityView.setTag(city);
@@ -192,6 +224,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	private void fillProvince(int id) throws SQLException{
 		Province province = dataBaseHelper.getProvinceDao().queryForId(id);
 		String str = "请选择省";
+		change();
 		if(province != null){
 			str = province.getName();
 			provinceView.setTag(province);
@@ -220,7 +253,9 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
 				}
+				change();
 
 			}
 		});
@@ -474,10 +509,21 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		
 	}
 
-	private void openDialog(String title,String[] array,DialogInterface.OnClickListener clickListener){
+	private void openDialog(String title,String[] array,final DialogInterface.OnClickListener clickListener){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    builder.setTitle(title)
-	           .setItems(array,clickListener);
+	           .setItems(array,new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					
+					if(clickListener != null){
+						clickListener.onClick(dialog, which);
+					}
+					change();
+					
+				}
+			});
 	    builder.create().show();
 	}
 
@@ -486,5 +532,25 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		fillSns();
 
 	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		change();
+		
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
