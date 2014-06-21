@@ -20,6 +20,7 @@ import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.model.Game;
+import com.mengle.lucky.network.model.Game.Creator;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.QuestionLayout;
@@ -113,8 +114,16 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 				});
 			}
 		} else {
-			bubbleView = ThemeLayout.getBubblePhotoView(this, game.getCreator()
-					.get(0).getAvatar());
+			final Creator creator =  game.getCreator().get(0);
+			bubbleView = ThemeLayout.getBubblePhotoView(this, creator.getAvatar());
+			bubbleView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					ZoneActivity.open(KanZhuangActivity.this, creator.getUid());
+					
+				}
+			});
 		}
 
 		Status status = null;

@@ -43,6 +43,7 @@ public class BuildAccountLoginActivity extends Activity implements
 		findViewById(R.id.qq).setOnClickListener(this);
 		findViewById(R.id.weibo).setOnClickListener(this);
 		findViewById(R.id.tencent).setOnClickListener(this);
+		findViewById(R.id.cancel).setOnClickListener(this);
 	}
 
 	
@@ -53,6 +54,9 @@ public class BuildAccountLoginActivity extends Activity implements
 	public void onClick(View v) {
 		
 		switch (v.getId()) {
+		case R.id.cancel:
+			finish();
+			break;
 		case R.id.qq:
 			oauthUtils.qqOauth();
 			break;
