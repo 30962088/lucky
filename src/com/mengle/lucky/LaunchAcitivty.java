@@ -1,5 +1,7 @@
 package com.mengle.lucky;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.mengle.lucky.utils.Preferences;
 
 import android.app.Activity;
@@ -12,6 +14,7 @@ public class LaunchAcitivty extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		startPush();
 		Preferences.User user = new Preferences.User(this);
 		Intent intent = null;
 		if(user.isFirstLogin()){
@@ -22,6 +25,15 @@ public class LaunchAcitivty extends Activity{
 		}
 		startActivity(intent);
 		finish();
+		
+	}
+	
+
+	private void startPush() {
+		
+        PushManager.startWork(getApplicationContext(),
+                PushConstants.LOGIN_TYPE_API_KEY,
+                com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
 		
 	}
 

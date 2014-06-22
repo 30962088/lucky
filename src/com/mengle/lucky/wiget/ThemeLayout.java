@@ -31,12 +31,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ThemeLayout extends FrameLayout implements OnClickListener{
+public class ThemeLayout extends FrameLayout implements OnClickListener {
 
-	public static interface OnBtnClickListener{
+	public static interface OnBtnClickListener {
 		public void onOKClick();
 	}
-	
+
 	public static class Theme {
 
 		public static class Header {
@@ -44,6 +44,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			private boolean intro;
 			private boolean tousu;
 			private String photo;
+
 			public Header(Count count, boolean intro, boolean tousu,
 					String photo) {
 				super();
@@ -52,11 +53,11 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 				this.tousu = tousu;
 				this.photo = photo;
 			}
-			
+
 		}
 
 		private Integer id;
-		
+
 		private View bubble;
 
 		private Header header;
@@ -68,14 +69,13 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		private long endDate;
 
 		private boolean enable;
-		
-		private String endText;
-		
-		private int odd;
-		
 
-		public Theme(Integer id,View bubble, Header header, Question question, int coin,int odd,
-				long endDate, boolean enable,String endText) {
+		private String endText;
+
+		private int odd;
+
+		public Theme(Integer id, View bubble, Header header, Question question,
+				int coin, int odd, long endDate, boolean enable, String endText) {
 			super();
 			this.id = id;
 			this.bubble = bubble;
@@ -124,40 +124,32 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	private TextView coinView;
 
 	private TextView timerView;
-	
+
 	private TextView titleView;
-	
+
 	private OnBtnClickListener onBtnClickListener;
-	
+
 	private View lostView;
-	
+
 	private int totalCoin;
-	
+
 	public void setOnBtnClickListener(OnBtnClickListener onBtnClickListener) {
 		this.onBtnClickListener = onBtnClickListener;
 	}
 
 	private void init() {
-		UserMe.get(getContext(), new Callback() {
-			
-			@Override
-			public void onsuccess(UserResult userResult) {
-				totalCoin = userResult.getGold_coin();
-				
-			}
-		});
+
 		setVisibility(View.GONE);
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
 		lostView = findViewById(R.id.lost);
 		submitBtn = findViewById(R.id.submit);
 		titleView = (TextView) findViewById(R.id.title);
-		
+
 		submitBtn.setOnClickListener(this);
 		peronCountView = (PeronCountView) findViewById(R.id.personCountView);
 		selectCoinBtn = findViewById(R.id.selectCoin);
 		introView = findViewById(R.id.intro);
 		gridView = (GridView) findViewById(R.id.gridview);
-		
 
 		tousuView = findViewById(R.id.tousu);
 		tousuView.setOnClickListener(this);
@@ -168,12 +160,23 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 
 	}
 
-	private QuestionAdapter adapter; 
-	
+	private QuestionAdapter adapter;
+
 	private Theme theme;
-	
+
 	public void setTheme(final Theme theme) {
 		this.theme = theme;
+		if(new Preferences.User(getContext()).isLogin()){
+			UserMe.get(getContext(), new Callback() {
+
+				@Override
+				public void onsuccess(UserResult userResult) {
+					totalCoin = userResult.getGold_coin();
+
+				}
+			});
+		}
+		
 		setVisibility(View.VISIBLE);
 		gridView.setNumColumns(theme.question.getList().size());
 		adapter = new QuestionAdapter(getContext(), theme.question);
@@ -187,111 +190,108 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		tousuView.setVisibility(theme.header.tousu ? View.VISIBLE : View.GONE);
 		gridView.setAdapter(adapter);
 		peronCountView.setCount(theme.header.count);
-		coinView.setText(""+theme.coin);
+		coinView.setText("" + theme.coin);
 		coinView.setTag(theme.coin);
 		selectCoinBtn.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				int coin = (Integer) coinView.getTag();
-				if(coin == theme.coin){
+				if (coin == theme.coin) {
 					coin = theme.coin * theme.odd;
-				}else{
+				} else {
 					coin = theme.coin;
 				}
-				if(coin>totalCoin){
+				if (coin > totalCoin) {
 					Utils.tip(getContext(), "您拥有的金币已不足下注");
 					return;
 				}
-				coinView.setText(""+coin);
+				coinView.setText("" + coin);
 				coinView.setTag(coin);
-				
+
 			}
 		});
-		
-		
-		
+
 		if (theme.endDate <= 0) {
 			timerView.setText(theme.endText);
 		} else {
 			startTimer(theme.endDate);
-			
-			
+
 		}
 	}
-	
-	public int getCoin(){
-		return (Integer)coinView.getTag();
+
+	public int getCoin() {
+		return (Integer) coinView.getTag();
 	}
-	
+
 	public GridView getGridView() {
 		return gridView;
 	}
-	
+
 	public QuestionAdapter getAdapter() {
 		return adapter;
 	}
-	
-	private static String format2(long m){
-		m = m/60;
-		int second = (int) (m/60);
-		m = m%60;
+
+	private static String format2(long m) {
+		m = m / 60;
+		int second = (int) (m / 60);
+		m = m % 60;
 		String secondText = "";
 		String mText = "";
-		if(second < 10){
-			secondText = "0"+second;
-		}else{
-			secondText = ""+second;
+		if (second < 10) {
+			secondText = "0" + second;
+		} else {
+			secondText = "" + second;
 		}
-		
-		if(m<10){
-			mText = "0"+m;
-		}else{
-			mText = ""+m;
+
+		if (m < 10) {
+			mText = "0" + m;
+		} else {
+			mText = "" + m;
 		}
-		return secondText+":"+mText;
-		
-		
+		return secondText + ":" + mText;
+
 	}
-	
-	private static String format(long m){
-		int second = (int) (m/60);
-		m = m%60;
+
+	private static String format(long m) {
+		int second = (int) (m / 60);
+		m = m % 60;
 		String secondText = "";
 		String mText = "";
-		if(second < 10){
-			secondText = "0"+second;
-		}else{
-			secondText = ""+second;
+		if (second < 10) {
+			secondText = "0" + second;
+		} else {
+			secondText = "" + second;
 		}
-		
-		if(m<10){
-			mText = "0"+m;
-		}else{
-			mText = ""+m;
+
+		if (m < 10) {
+			mText = "0" + m;
+		} else {
+			mText = "" + m;
 		}
-		return secondText+":"+mText;
-		
-		
+		return secondText + ":" + mText;
+
 	}
 
 	private void startTimer(long total) {
 		new CountDownTimer(total, 1000) {
 
-		     public void onTick(long millisUntilFinished) {
-		         timerView.setText(format2(millisUntilFinished/1000));
-		     }
+			public void onTick(long millisUntilFinished) {
+				timerView.setText(format2(millisUntilFinished / 1000));
+			}
 
-		     public void onFinish() {
-		    	 timerView.setText("00:00");
-		     }
-		  }.start();
+			public void onFinish() {
+				timerView.setText("00:00");
+			}
+		}.start();
 	}
 
 	public static View getBubbleCaiView(Context context) {
-		View view = LayoutInflater.from(context).inflate(R.layout.bubble_cai_view,
-				null);
-		view.setLayoutParams(new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 71),DisplayUtils.Dp2Px(context, 66))));
+		View view = LayoutInflater.from(context).inflate(
+				R.layout.bubble_cai_view, null);
+		view.setLayoutParams(new ViewGroup.LayoutParams(
+				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 71),
+						DisplayUtils.Dp2Px(context, 66))));
 		return view;
 
 	}
@@ -299,14 +299,15 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	public static View getBubbleNoDaanView(Context context) {
 		View view = LayoutInflater.from(context).inflate(
 				R.layout.bubble_nodaan_view, null);
-		view.setLayoutParams(new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),DisplayUtils.Dp2Px(context, 61))));
+		view.setLayoutParams(new ViewGroup.LayoutParams(
+				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
+						DisplayUtils.Dp2Px(context, 61))));
 		return view;
 
 	}
 
 	public static View getBubbleDaanView(Context context, int color, String name) {
-		
-		
+
 		View view = LayoutInflater.from(context).inflate(
 				R.layout.bubble_daan_view, null);
 		BubbleAnswerView answerView = (BubbleAnswerView) view
@@ -314,7 +315,9 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		answerView.setColor(color);
 		TextView contentView = (TextView) view.findViewById(R.id.content);
 		contentView.setText(name);
-		view.setLayoutParams(new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),DisplayUtils.Dp2Px(context, 61))));
+		view.setLayoutParams(new ViewGroup.LayoutParams(
+				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
+						DisplayUtils.Dp2Px(context, 61))));
 		return view;
 
 	}
@@ -324,12 +327,13 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 				R.layout.bubble_photo_view, null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.photo);
 		BitmapLoader.displayImage(context, photo, imageView);
-		view.setLayoutParams(new ViewGroup.LayoutParams(new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),DisplayUtils.Dp2Px(context, 61))));
+		view.setLayoutParams(new ViewGroup.LayoutParams(
+				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
+						DisplayUtils.Dp2Px(context, 61))));
 		return view;
 
 	}
-	
-	
+
 	public View getLostView() {
 		return lostView;
 	}
@@ -337,22 +341,23 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.submit:
-		
-			if(onBtnClickListener != null){
+
+			if (onBtnClickListener != null) {
 				onBtnClickListener.onOKClick();
 			}
-			
+
 			break;
 		case R.id.tousu:
 			Preferences.User user = new Preferences.User(getContext());
-			GameComplainRequest complainRequest = new GameComplainRequest(new 
-					GameComplainRequest.Param(user.getUid(), user.getToken(), theme.id));
+			GameComplainRequest complainRequest = new GameComplainRequest(
+					new GameComplainRequest.Param(user.getUid(),
+							user.getToken(), theme.id));
 			RequestAsync.request(complainRequest, null);
 			break;
 		default:
 			break;
 		}
-		
+
 	}
 
 }

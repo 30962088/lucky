@@ -115,6 +115,7 @@ public class AicaiListAdapter extends BaseAdapter{
 		
 		holder.nickView.setText(aicai.nick);
 		
+		System.out.println( aicai.avatar);
 		BitmapLoader.displayImage(context, aicai.avatar, holder.avatarView);
 		
 		holder.coinView.setText(""+aicai.coin);

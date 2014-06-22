@@ -13,6 +13,7 @@ import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.UserHeadView;
 
 import android.os.Bundle;
@@ -163,6 +164,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 	@Override
 	public void onSuccess(Params params) {
 		final Login login = new Login(getActivity(), params);
+		LoadingPopup.show(getActivity());
 		RequestAsync.request(login, new Async() {
 			
 			public void onPostExecute(Request request) {

@@ -8,6 +8,7 @@ import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.mengle.lucky.wiget.LoadingPopup;
 
 
 
@@ -92,6 +93,7 @@ public class BuildAccountLoginActivity extends Activity implements
 	@Override
 	public void onSuccess(Params params) {
 		final Login login = new Login(context, params);
+		LoadingPopup.show(this);
 		RequestAsync.request(login, new Async() {
 			
 			public void onPostExecute(Request request) {

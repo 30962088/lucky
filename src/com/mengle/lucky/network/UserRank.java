@@ -43,7 +43,7 @@ public class UserRank extends Request{
 		}
 		
 		public Aicai toAicai(){
-			return new Aicai(uid, nickname, nickname, gold_coin);
+			return new Aicai(uid, nickname, avatar, gold_coin);
 		}
 		public static List<Aicai> toAicaiList(List<Result> list){
 			List<Aicai> aicais = new ArrayList<Aicai>();

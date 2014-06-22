@@ -7,6 +7,7 @@ import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.CacheManager;
+import com.mengle.lucky.utils.CacheManager.OnClearCacheListner;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Preferences.Network;
 import com.mengle.lucky.utils.Preferences.User;
@@ -113,7 +114,14 @@ public class SettingFragment extends Fragment implements OnClickListener{
 		ConfirmDialog.open(getActivity(), "会清除所有缓存", new OnConfirmClick() {
 			
 			public void onConfirm() {
-				System.out.println("confirm");
+				CacheManager.clearCache(getActivity(), new OnClearCacheListner() {
+					
+					@Override
+					public void onclearSuccess() {
+						getCacheSize();
+						
+					}
+				});
 				
 			}
 			

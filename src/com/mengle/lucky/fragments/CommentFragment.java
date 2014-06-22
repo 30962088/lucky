@@ -21,6 +21,7 @@ import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.wiget.BaseListView;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.BaseListView.OnLoadListener;
 
 import android.app.Activity;
@@ -217,6 +218,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	@Override
 	public void onSuccess(Params params) {
 		final Login login = new Login(getActivity(), params);
+		LoadingPopup.show(getActivity());
 		RequestAsync.request(login, new Async() {
 			
 			public void onPostExecute(Request request) {
