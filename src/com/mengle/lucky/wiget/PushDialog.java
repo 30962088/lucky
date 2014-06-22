@@ -35,6 +35,10 @@ public class PushDialog implements OnClickListener{
 	
 	private boolean msg;
 	
+	private static Boolean sletter;
+	
+	private static Boolean smsg;
+	
 	private PushDialog(Context context,View parent,boolean letter,boolean msg) {
 		this.context = context;
 		this.parent = parent;
@@ -86,13 +90,19 @@ public class PushDialog implements OnClickListener{
 		Push push = new Push(context);
 		View msg = view.findViewById(R.id.msg);
 		msg.setOnClickListener(this);
-		msg.setSelected(this.letter);
+		if(sletter == null){
+			sletter = this.letter;
+		}
+		msg.setSelected(sletter);
 		View result = view.findViewById(R.id.result);
 		result.setSelected(push.isResult());
 		result.setOnClickListener(this);
 		View announcement = view.findViewById(R.id.announcement);
 		announcement.setOnClickListener(this);
-		announcement.setSelected(this.msg);
+		if(smsg == null){
+			smsg = this.msg;
+		}
+		announcement.setSelected(smsg);
 	}
 	
 	private void changeLetter(boolean val){
@@ -120,11 +130,13 @@ public class PushDialog implements OnClickListener{
 			break;
 		case R.id.msg:
 			v.setSelected(!v.isSelected());
+			sletter = v.isSelected();
 			changeLetter(v.isSelected());
 //			push.setMsg(v.isSelected());
 			break;
 		case R.id.announcement:
 			v.setSelected(!v.isSelected());
+			smsg = v.isSelected();
 			changeMsg(v.isSelected());
 //			push.setAnnouncement(v.isSelected());
 			break;

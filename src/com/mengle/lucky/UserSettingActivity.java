@@ -26,6 +26,7 @@ import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
 import com.mengle.lucky.wiget.ConfirmDialog;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.ConfirmDialog.OnConfirmClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -325,6 +326,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			city = ((City)cityView.getTag()).getId();
 		}
 		
+		LoadingPopup.show(this);
+		
 		UserEditRequest editRequest = new UserEditRequest(new Params(
 				user.getUid(), user.getToken(), nicknameView.getText()
 						.toString(), gender, province, city, qqView.getText()
@@ -434,6 +437,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			
 			@Override
 			public void onConfirm() {
+				LoadingPopup.show(UserSettingActivity.this);
 				UserLogoutRequest logoutRequest = new UserLogoutRequest(
 						new UserLogoutRequest.Param(user.getUid(), user.getToken()));
 				

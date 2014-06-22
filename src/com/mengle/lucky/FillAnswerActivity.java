@@ -18,6 +18,7 @@ import com.mengle.lucky.network.model.Game.Option;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.RadioGroupLayout;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
 
@@ -134,6 +135,7 @@ public class FillAnswerActivity extends Activity implements OnClickListener{
 			return;
 		}
 		Preferences.User user = new Preferences.User(this);
+		LoadingPopup.show(this);
 		GameFillAnswerRequest answerRequest = new GameFillAnswerRequest(
 				new GameFillAnswerRequest.Param(user.getUid(), user.getToken(), param.game_id, param.opts.get(ArrayUtils.indexOf(numbers, answer)).getId(), reason));
 		RequestAsync.request(answerRequest, new Async() {
@@ -141,6 +143,7 @@ public class FillAnswerActivity extends Activity implements OnClickListener{
 			@Override
 			public void onPostExecute(Request request) {
 				if(request.getStatus() == Status.SUCCESS){
+					LoadingPopup.hide(FillAnswerActivity.this);
 					finish();
 				}
 				

@@ -23,6 +23,7 @@ import com.mengle.lucky.network.model.Game;
 import com.mengle.lucky.network.model.Game.Creator;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.QuestionLayout;
 import com.mengle.lucky.wiget.ResultDialog;
 import com.mengle.lucky.wiget.ThemeLayout;
@@ -180,7 +181,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(new Count(
 				R.drawable.btn_count_blue, game.getJoin_count()), false, true,
 				game.getImage()), new Question(game.getTitle(), status, list),
-				game.getGold_coin(), endTime, endTime > 0 ? true : false,"竞猜已结束"));
+				game.getGold_coin(), game.getOdds(), endTime, endTime > 0 ? true : false,"竞猜已结束"));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {
@@ -281,11 +282,19 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			return;
 		}
 		
+		LoadingPopup.show(this);
 
 		GameBetRequest betRequest = new GameBetRequest(
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
-						game_id, lastItem.getId(), game.getGold_coin()));
-		RequestAsync.request(betRequest, null);
+						game_id, lastItem.getId(), themeLayout.getCoin()));
+		RequestAsync.request(betRequest, new Async() {
+			
+			@Override
+			public void onPostExecute(Request request) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 }

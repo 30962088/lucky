@@ -8,9 +8,13 @@ import com.mengle.lucky.adapter.QuestionAdapter;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.network.GameComplainRequest;
 import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.UserMe;
+import com.mengle.lucky.network.IUserGet.UserResult;
+import com.mengle.lucky.network.UserMe.Callback;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.PeronCountView.Count;
 import com.mengle.lucky.wiget.ResultDialog.Result;
 import com.mengle.lucky.wiget.ResultDialog.Status;
@@ -66,8 +70,11 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		private boolean enable;
 		
 		private String endText;
+		
+		private int odd;
+		
 
-		public Theme(Integer id,View bubble, Header header, Question question, int coin,
+		public Theme(Integer id,View bubble, Header header, Question question, int coin,int odd,
 				long endDate, boolean enable,String endText) {
 			super();
 			this.id = id;
@@ -75,6 +82,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 			this.header = header;
 			this.question = question;
 			this.coin = coin;
+			this.odd = odd;
 			this.endDate = endDate;
 			this.enable = enable;
 			this.endText = endText;
@@ -123,11 +131,21 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	
 	private View lostView;
 	
+	private int totalCoin;
+	
 	public void setOnBtnClickListener(OnBtnClickListener onBtnClickListener) {
 		this.onBtnClickListener = onBtnClickListener;
 	}
 
 	private void init() {
+		UserMe.get(getContext(), new Callback() {
+			
+			@Override
+			public void onsuccess(UserResult userResult) {
+				totalCoin = userResult.getGold_coin();
+				
+			}
+		});
 		setVisibility(View.GONE);
 		LayoutInflater.from(getContext()).inflate(R.layout.theme_layout, this);
 		lostView = findViewById(R.id.lost);
@@ -154,7 +172,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 	
 	private Theme theme;
 	
-	public void setTheme(Theme theme) {
+	public void setTheme(final Theme theme) {
 		this.theme = theme;
 		setVisibility(View.VISIBLE);
 		gridView.setNumColumns(theme.question.getList().size());
@@ -170,6 +188,26 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		gridView.setAdapter(adapter);
 		peronCountView.setCount(theme.header.count);
 		coinView.setText(""+theme.coin);
+		coinView.setTag(theme.coin);
+		selectCoinBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				int coin = (Integer) coinView.getTag();
+				if(coin == theme.coin){
+					coin = theme.coin * theme.odd;
+				}else{
+					coin = theme.coin;
+				}
+				if(coin>totalCoin){
+					Utils.tip(getContext(), "您拥有的金币已不足下注");
+					return;
+				}
+				coinView.setText(""+coin);
+				coinView.setTag(coin);
+				
+			}
+		});
 		
 		
 		
@@ -182,12 +220,38 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		}
 	}
 	
+	public int getCoin(){
+		return (Integer)coinView.getTag();
+	}
+	
 	public GridView getGridView() {
 		return gridView;
 	}
 	
 	public QuestionAdapter getAdapter() {
 		return adapter;
+	}
+	
+	private static String format2(long m){
+		m = m/60;
+		int second = (int) (m/60);
+		m = m%60;
+		String secondText = "";
+		String mText = "";
+		if(second < 10){
+			secondText = "0"+second;
+		}else{
+			secondText = ""+second;
+		}
+		
+		if(m<10){
+			mText = "0"+m;
+		}else{
+			mText = ""+m;
+		}
+		return secondText+":"+mText;
+		
+		
 	}
 	
 	private static String format(long m){
@@ -215,7 +279,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener{
 		new CountDownTimer(total, 1000) {
 
 		     public void onTick(long millisUntilFinished) {
-		         timerView.setText(format(millisUntilFinished/1000));
+		         timerView.setText(format2(millisUntilFinished/1000));
 		     }
 
 		     public void onFinish() {

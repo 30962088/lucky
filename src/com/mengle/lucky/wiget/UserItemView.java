@@ -105,13 +105,21 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 	
 	private Model model;
 	
-	public void setModel(Model model) {
+	public void setModel(final Model model) {
 		this.model = model;
 		textRow1.setText(getResources().getString(R.string.user_item_row1, model.nickname,model.level));
 		textRow2.setText(getResources().getString(R.string.user_item_row2, model.win,model.lose,model.lost));
 		textCoin.setText(""+model.coin);
 		BitmapLoader.displayImage(getContext(), model.avatar, avatar);
 		btnStar.setChecked(model.focused);
+		avatar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ZoneActivity.open(getContext(), model.uid);
+				
+			}
+		});
 	}
 	
 	public void setExpanedListener(ExpanedListener expanedListener) {

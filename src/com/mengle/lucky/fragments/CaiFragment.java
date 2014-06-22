@@ -22,6 +22,7 @@ import com.mengle.lucky.network.model.Game;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.AwardPopup;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.PeronCountView.Count;
 
 import com.mengle.lucky.wiget.QuestionLayout;
@@ -158,7 +159,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(new Count(
 				R.drawable.btn_count, game.getJoin_count()), true, false,
 				game.getImage()), new Question(game.getTitle(), status, list),
-				game.getGold_coin(), endTime, endTime > 0 ? true : false,"今日已结束"));
+				game.getGold_coin(),game.getOdds(), endTime, endTime > 0 ? true : false,"今日已结束"));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {
@@ -213,6 +214,8 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 			return;
 		}
 
+		LoadingPopup.show(getActivity());
+		
 		GameBetRequest betRequest = new GameBetRequest(
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
 						game.getId(), lastItem.getId(), game.getGold_coin()));

@@ -6,7 +6,10 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
+import com.mengle.lucky.network.model.Game;
 
 public class GameCreateRequest extends Request{
 
@@ -63,6 +66,8 @@ public class GameCreateRequest extends Request{
 	
 	private File image;
 	
+	private Game game;
+	
 	
 	
 	public GameCreateRequest(Param param, File image) {
@@ -73,8 +78,14 @@ public class GameCreateRequest extends Request{
 
 	@Override
 	public void onSuccess(String data) {
-		// TODO Auto-generated method stub
+		if(!TextUtils.isEmpty(data)){
+			game = new Gson().fromJson(data, Game.class);
+			
+		}
 		
+	}
+	public Game getGame() {
+		return game;
 	}
 
 	@Override

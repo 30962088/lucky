@@ -23,6 +23,7 @@ import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.IntroDialog;
+import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.MyClickSpan;
 import com.mengle.lucky.wiget.RadioGroupLayout;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
@@ -129,6 +130,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		spanableInfo.setSpan(textClickable,0, 4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		textRead.setText(spanableInfo);
 		textRead.setClickable(true);
+		btnRead.setChecked(true);
 		textRead.setMovementMethod(LinkMovementMethod.getInstance());
 		reasonText = (EditText) findViewById(R.id.reasonView);
 		totalCoinView = (TextView) findViewById(R.id.totalCoin);
@@ -297,6 +299,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String reason = reasonText.getText().toString();
 		String answer = radioGroupLayout3.getValue();
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
+			if(!btnRead.isChecked()){
+				Utils.tip(this, "您还没有同意游戏规则");
+				return;
+			}
 			List<Opt> opts = new ArrayList<GameCreateRequest.Param.Opt>();
 			String[] contents = new String[]{A,B,C};
 			for(int i = 0;i<contents.length;i++){
@@ -313,16 +319,23 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 				}
 				opts.add(new Opt(content, isanwser));
 			}
+			
 			Preferences.User user = new Preferences.User(this);
-			GameCreateRequest createRequest = new GameCreateRequest(new GameCreateRequest.
+			final GameCreateRequest createRequest = new GameCreateRequest(new GameCreateRequest.
 					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), 
 			new File(imagePath));
+			LoadingPopup.show(this);
 			RequestAsync.request(createRequest, new Async() {
 				
 				@Override
 				public void onPostExecute(Request request) {
 					if(request.getStatus() == Status.SUCCESS){
 						Utils.tip(PublishActivity.this, "创建成功");
+						LoadingPopup.hide(PublishActivity.this);
+						if(createRequest.getGame() != null){
+							KanZhuangActivity.open(PublishActivity.this, createRequest.getGame().getId());
+						}
+						
 					}
 					
 				}

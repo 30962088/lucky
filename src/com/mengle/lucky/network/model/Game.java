@@ -109,7 +109,7 @@ public class Game {
 	
 	protected int gold_coin;
 	
-	protected String odds;
+	protected int odds;
 	
 	protected int win_option;
 	
@@ -161,7 +161,7 @@ public class Game {
 		return gold_coin;
 	}
 
-	public String getOdds() {
+	public int getOdds() {
 		return odds;
 	}
 

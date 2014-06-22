@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import com.mengle.lucky.App;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.wiget.LoadingPopup;
 
 
 
@@ -131,7 +132,11 @@ public abstract class Request implements Response,IRequest{
 			
 			HttpResponse response = httpclient.execute(httpost);
 			HttpEntity entity = response.getEntity();
+			
+			
+			
 			int status_code = response.getStatusLine().getStatusCode();
+			LoadingPopup.hide(App.getInstance());
 			if(status_code == 200){
 				
 				try {
