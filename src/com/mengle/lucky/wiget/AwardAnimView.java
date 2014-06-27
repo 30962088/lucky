@@ -72,6 +72,7 @@ public class AwardAnimView extends RelativeLayout{
 	    Paint paint = new Paint();
 	    paint.setTextSize(pixel);
 	    paint.setColor(Color.WHITE);
+	    paint.setAntiAlias(true);
 	    paint.setTextAlign(Paint.Align.LEFT);
 	    int width = (int) (paint.measureText(text) + 0.5f); // round
 	    float baseline = (int) (-paint.ascent() + 0.5f); // ascent() is negative

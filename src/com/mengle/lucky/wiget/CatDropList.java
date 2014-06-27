@@ -59,6 +59,9 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		this.onStateChange = onStateChange;
 	}
 	private void init(){
+		if(isInEditMode()){
+			return;
+		}
 		LayoutInflater.from(getContext()).inflate(R.layout.cat_layout, this);
 		setVisibility(View.GONE);
 		listContainer = findViewById(R.id.listContainer);
@@ -76,6 +79,7 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		adImg = (ImageView) findViewById(R.id.adimg);
 		findViewById(R.id.outer).setOnClickListener(this);
 		findViewById(R.id.close).setOnClickListener(this);
+		
 		request();
 	}
 	

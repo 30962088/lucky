@@ -7,11 +7,15 @@ import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.UserListActivity;
 import com.mengle.lucky.ZoneActivity;
+import com.mengle.lucky.network.MsgGetRequest;
+import com.mengle.lucky.network.NoticeGetRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.UserMeAvatarUploadRequest;
 import com.mengle.lucky.network.Request.Status;
 import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.model.Msg;
+import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.network.UserMeFollow;
 import com.mengle.lucky.network.UserMeHeadUploadRequest;
 import com.mengle.lucky.network.UserMeUnFollow;
@@ -306,6 +310,52 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			
 		}
 
+	}
+	
+	
+	private int requestCount = 0;
+	
+	private void showNewMsg(){
+		long count = Msg.getNewCount(getContext())+Notice.getNewCount(getContext());
+		if(count > 0){
+			newIconView.setVisibility(View.VISIBLE);
+		}else{
+			newIconView.setVisibility(View.GONE);
+		}
+	}
+	
+	public void checkNewMsg(){
+		requestCount = 0;
+		Preferences.User user = new Preferences.User(getContext());
+		if(userHeadData != null && user.getUid() == userHeadData.uid){
+			NoticeGetRequest noticeGetRequest = new NoticeGetRequest(new NoticeGetRequest.Params(user.getUid(), user.getToken()));
+			MsgGetRequest msgGetRequest = new MsgGetRequest(new MsgGetRequest.Params(user.getUid(), user.getToken()));
+			
+			RequestAsync.request(noticeGetRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					requestCount ++;
+					if(requestCount == 2){
+						showNewMsg();
+					}
+					
+				}
+			});
+			
+			RequestAsync.request(msgGetRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					requestCount ++;
+					if(requestCount == 2){
+						showNewMsg();
+					}
+					
+				}
+			});
+			
+		}
 	}
 
 }

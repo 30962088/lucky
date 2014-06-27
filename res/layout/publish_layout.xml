@@ -27,8 +27,7 @@
                         android:id="@+id/bg_top"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/test_img_1" />
+                        android:scaleType="centerCrop" />
 
                     <View
                         android:id="@+id/bg_top2"

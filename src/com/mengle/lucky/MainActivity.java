@@ -1,8 +1,5 @@
 package com.mengle.lucky;
 
-import com.baidu.android.pushservice.CustomPushNotificationBuilder;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -92,7 +89,6 @@ public class MainActivity extends SlidingFragmentActivity implements
 		rightEmpty = findViewById(R.id.right_empty);
 		rightSearch.setOnClickListener(this);
 		initSlidingMenu();
-		
 		
 	}
 	

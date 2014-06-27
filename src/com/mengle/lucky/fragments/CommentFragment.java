@@ -3,6 +3,9 @@ package com.mengle.lucky.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.CommentListAdapter;
@@ -44,7 +47,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView.OnEditorActionListener;
 
-public class CommentFragment extends Fragment implements OnClickListener,Callback,OnLoadListener,OnItemClickListener,OnEditorActionListener{
+public class CommentFragment extends Fragment implements OnClickListener,Callback,OnLoadListener,OnItemClickListener,OnEditorActionListener,OnCloseListener{
 
 	public static CommentFragment newInstance(int gameId,int praise){
 		CommentFragment fragment = new CommentFragment();
@@ -110,6 +113,10 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		adapter = new CommentListAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
 		listView.getRefreshableView().setOnItemClickListener(this);
+		if(getActivity() instanceof SlidingFragmentActivity){
+			SlidingMenu sm = ((SlidingFragmentActivity)getActivity()).getSlidingMenu();
+			sm.setOnCloseListener(this);
+		}
 		/*listView.setAdapter(new CommentListAdapter(getActivity(), new ArrayList<CommentModel>(){{
 			add(new CommentModel("http://tp3.sinaimg.cn/1795737590/180/0/1", "威廉萌", "02-07 10:20", new ArrayList<CommentModel.Reply>(){{
 				add(new Reply(null, null, "哇哈哈"));
@@ -205,9 +212,13 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	private void hideReply(){
 		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 	    if (inputMethodManager != null) {
-	    	replyTextView.requestFocus();
+	    	
 	    	replylayout.setVisibility(View.GONE);
-	    	inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	    	View focusView = getActivity().getCurrentFocus();
+	    	if(focusView!=null){
+	    		inputMethodManager.hideSoftInputFromWindow(focusView.getWindowToken(), 0);;
+	    	}
+	    	
 	    }
 	    
 	}
@@ -317,6 +328,12 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
             return true;
         }
 		return false;
+	}
+
+	@Override
+	public void onClose() {
+		hideReply();
+		
 	}
 	
 }

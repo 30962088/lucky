@@ -7,10 +7,13 @@ import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.network.GameComplainRequest;
+import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.IUserGet.UserResult;
 import com.mengle.lucky.network.UserMe.Callback;
+import com.mengle.lucky.network.model.Tousu;
 import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
@@ -163,6 +166,8 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 	private QuestionAdapter adapter;
 
 	private Theme theme;
+	
+	private int currentOdd = 1;
 
 	public void setTheme(final Theme theme) {
 		this.theme = theme;
@@ -197,11 +202,13 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 			@Override
 			public void onClick(View v) {
 				int coin = (Integer) coinView.getTag();
-				if (coin == theme.coin) {
-					coin = theme.coin * theme.odd;
-				} else {
-					coin = theme.coin;
+				if (currentOdd == theme.odd){
+					currentOdd = 0;
 				}
+				currentOdd ++;
+				
+				coin = theme.coin * currentOdd;
+				
 				if (coin > totalCoin) {
 					Utils.tip(getContext(), "您拥有的金币已不足下注");
 					return;
@@ -348,11 +355,22 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 
 			break;
 		case R.id.tousu:
-			Preferences.User user = new Preferences.User(getContext());
+			final Preferences.User user = new Preferences.User(getContext());
+			if(Tousu.getTousu(user.getUid(), theme.id)){
+				Utils.tip(getContext(), "您已投诉过该竞猜请勿重复投诉");
+				return;
+			}
 			GameComplainRequest complainRequest = new GameComplainRequest(
 					new GameComplainRequest.Param(user.getUid(),
 							user.getToken(), theme.id));
-			RequestAsync.request(complainRequest, null);
+			RequestAsync.request(complainRequest, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					new Tousu(user.getUid(), theme.id, true).save();
+					
+				}
+			});
 			break;
 		default:
 			break;

@@ -63,7 +63,7 @@ public class GameLibrarySubmitRequest extends Request{
 			return star;
 		}
 		public  Model toModel(){
-			return new Model( win_coin, gold_coin-win_coin, star);
+			return new Model( win_coin, gold_coin-reward_coin, star);
 		}
 	}
 	

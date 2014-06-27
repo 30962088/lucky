@@ -35,9 +35,9 @@ public class PushDialog implements OnClickListener{
 	
 	private boolean msg;
 	
-	private static Boolean sletter;
+	public static Boolean sletter;
 	
-	private static Boolean smsg;
+	public static Boolean smsg;
 	
 	private PushDialog(Context context,View parent,boolean letter,boolean msg) {
 		this.context = context;

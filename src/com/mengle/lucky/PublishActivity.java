@@ -86,6 +86,8 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView textRead;
 	
+	private ImageView headView;
+	
 	private void openGallery(){
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
@@ -116,6 +118,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.publish_layout);
 		findViewById(R.id.leftnav).setOnClickListener(this);
+		headView = (ImageView) findViewById(R.id.bg_top);
 		btnRead = (CheckBox) findViewById(R.id.btn_read);
 		textRead = (TextView) findViewById(R.id.text_read);
 		
@@ -176,6 +179,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 				totalCoinView.setText(""+userResult.getGold_coin());
 				nickView.setText(userResult.getNickname());
 				avatarView.setTag(userResult.getAvatar());
+				BitmapLoader.displayImage(PublishActivity.this, userResult.getHead(), headView);
 				BitmapLoader.displayImage(PublishActivity.this, userResult.getAvatar(), avatarView);
 				
 			}
@@ -333,7 +337,9 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 						Utils.tip(PublishActivity.this, "创建成功");
 						LoadingPopup.hide(PublishActivity.this);
 						if(createRequest.getGame() != null){
-							KanZhuangActivity.open(PublishActivity.this, createRequest.getGame().getId());
+							Intent intent = new Intent(PublishActivity.this, MainActivity.class);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+							startActivity(intent);
 						}
 						
 					}

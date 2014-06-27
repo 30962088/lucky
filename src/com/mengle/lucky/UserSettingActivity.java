@@ -27,6 +27,7 @@ import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
 import com.mengle.lucky.wiget.ConfirmDialog;
 import com.mengle.lucky.wiget.LoadingPopup;
+import com.mengle.lucky.wiget.PushDialog;
 import com.mengle.lucky.wiget.ConfirmDialog.OnConfirmClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -447,6 +448,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 					public void onPostExecute(Request request) {
 						if(request.getStatus() == Status.SUCCESS){
 							user.logout();
+							PushDialog.sletter = null;
+							PushDialog.smsg = null;
 							MainActivity.open(UserSettingActivity.this);
 							
 						}

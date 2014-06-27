@@ -80,6 +80,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 			public void onPostExecute(Request request) {
 				if (userMe.getStatus() == Request.Status.SUCCESS) {
 					headView.setData(userMe.getUserResult().toUserHeadData());
+					headView.checkNewMsg();
 				}
 
 			}
