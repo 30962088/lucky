@@ -38,6 +38,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class UserHeadView extends FrameLayout implements OnClickListener,
@@ -138,6 +139,10 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	private ImageView iconHead;
 
 	private UserHeadData userHeadData;
+	
+	private TextView fansText;
+	
+	private TextView focusText;
 
 	private void init() {
 		setVisibility(View.GONE);
@@ -148,6 +153,18 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		btnFocusView.setOnClickListener(this);
 		newIconView = findViewById(R.id.icon_new);
 		photoView = (ImageView) findViewById(R.id.photo);
+		if(getContext() instanceof ZoneActivity){
+			int padding = DisplayUtils.Dp2Px(getContext(), 5);
+			int size = DisplayUtils.Dp2Px(getContext(), 65);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
+			params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			params.topMargin = DisplayUtils.Dp2Px(getContext(), 21);
+			photoView.setLayoutParams(params);
+			photoView.setPadding(padding, padding, padding, padding);
+			
+		}
+		fansText = (TextView) findViewById(R.id.fans_text);
+		focusText = (TextView) findViewById(R.id.focus_text);
 		nickView = (TextView) findViewById(R.id.nickname);
 		femaleView = findViewById(R.id.icon_female);
 		maleView = findViewById(R.id.icon_male);
@@ -173,7 +190,16 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			photoView.setEnabled(true);
 			btnMsgView.setVisibility(View.VISIBLE);
 			btnFocusView.setVisibility(View.GONE);
+			fansText.setText("关注我的用户");
+			focusText.setText("我关注的用户");
 		} else {
+			if(data.sex == Sex.FEMALE){
+				fansText.setText("关注她的用户");
+				focusText.setText("她关注的用户");
+			}else{
+				fansText.setText("关注他的用户");
+				focusText.setText("他关注的用户");
+			}
 			photoView.setEnabled(false);
 			btnMsgView.setVisibility(View.GONE);
 			btnFocusView.setChecked(data.isFallow());
@@ -202,11 +228,11 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		Preferences.User user = new Preferences.User(getContext());
 		switch (v.getId()) {
 		case R.id.btn_toFollower:
-			UserListActivity.open(getContext(), userHeadData.uid,
+			UserListActivity.open(getContext(), userHeadData.uid,fansText.getText().toString(),
 					UserListActivity.Type.FOLLERS);
 			break;
 		case R.id.btn_toFollowing:
-			UserListActivity.open(getContext(), userHeadData.uid,
+			UserListActivity.open(getContext(), userHeadData.uid,focusText.getText().toString(),
 					UserListActivity.Type.FOLLOWS);
 			break;
 		case R.id.btn_focus:
@@ -252,7 +278,9 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 
 			@Override
 			public void onPostExecute(Request request) {
-				// TODO Auto-generated method stub
+				if(getContext() instanceof ZoneActivity){
+					((ZoneActivity)getContext()).onResume();
+				}
 
 			}
 		});

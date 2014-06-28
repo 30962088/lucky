@@ -142,7 +142,7 @@ public class ZoneActivity extends FragmentActivity implements
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 

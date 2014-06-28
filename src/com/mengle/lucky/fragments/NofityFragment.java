@@ -44,6 +44,7 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		listView = new PullToRefreshListView(getActivity());
+		listView.getRefreshableView().setDivider(null);
 		listView.setOnRefreshListener(this);
 		return listView;
 	}

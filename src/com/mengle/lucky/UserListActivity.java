@@ -32,16 +32,19 @@ public class UserListActivity extends Activity implements OnLoadListener,OnClick
 		FOLLOWS,FOLLERS
 	}
 	
-	public static void open(Context context,int fuid,Type type){
+	public static void open(Context context,int fuid,String title,Type type){
 		Intent intent = new Intent(context, UserListActivity.class);
 		intent.putExtra("type", type);
 		intent.putExtra("fuid",fuid);
+		intent.putExtra("title",title);
 		context.startActivity(intent);
 	}
 	
 	private int fuid;
 	
 	private Type type;
+	
+	private String title;
 	
 	private BaseListView listView;
 	
@@ -64,28 +67,14 @@ public class UserListActivity extends Activity implements OnLoadListener,OnClick
 		listView.setOnLoadListener(this);
 		adapter = new UserListAdapter(this, list);
 		listView.setAdapter(adapter);
+		title = getIntent().getStringExtra("title");
 		setTitle();
 	}
 	
 	
 	
 	private void setTitle(){
-		Preferences.User user = new Preferences.User(this);
-	
-		if(user.getUid() == fuid){
-			if(type == Type.FOLLERS){
-				titleView.setText("关注我的用户");
-			}else{
-				titleView.setText("我关注的用户");
-			}
-			
-		}else{
-			if(type == Type.FOLLERS){
-				titleView.setText("关注TA的用户");
-			}else{
-				titleView.setText("TA关注的用户");
-			}
-		}
+		titleView.setText(title);
 	}
 	
 	

@@ -54,6 +54,7 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 		listView = new PullToRefreshListView(getActivity());
 		listView.setOnItemClickListener(this);
 		listView.setOnRefreshListener(this);
+		listView.getRefreshableView().setDivider(null);
 		return listView;
 	}
 	

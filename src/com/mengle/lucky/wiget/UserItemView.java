@@ -135,7 +135,7 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 		Preferences.User user = new Preferences.User(getContext());
 //		btnStar.setChecked(btnStar.isChecked());
 		Request request = null;
-		if(btnStar.isChecked()){
+		if(!btnStar.isChecked()){
 			request = new UserMeFollow(new UserMeFollow.Params(user.getUid(), user.getToken(), model.uid));
 		}else{
 			request = new UserMeUnFollow(new UserMeUnFollow.Params(user.getUid(), user.getToken(), model.uid));
