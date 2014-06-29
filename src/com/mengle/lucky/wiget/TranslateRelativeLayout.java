@@ -11,6 +11,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 
@@ -47,10 +48,11 @@ public class TranslateRelativeLayout extends RelativeLayout {
 	private boolean expand = false;
 
 	@SuppressLint("NewApi")
-	public void setExpand(boolean expand,long during){
+	public void setExpand(final boolean expand,long during){
 		
 		if(during == 0 || this.expand != expand){
 			Animation translateAnimation;
+			
 			if(expand){
 				translateAnimation = new AnimationMargin(this, max);
 			}else{
@@ -58,6 +60,7 @@ public class TranslateRelativeLayout extends RelativeLayout {
 			}
 			translateAnimation.setDuration(during);
 			translateAnimation.setFillAfter(true);
+			
 			startAnimation(translateAnimation);
 			this.expand = expand;
 			if(expanedListener != null){
@@ -79,6 +82,14 @@ public class TranslateRelativeLayout extends RelativeLayout {
 	}
 	
 	
+	private OnClickListener onClickListener;
+	
+	@Override
+	public void setOnClickListener(OnClickListener onClickListener) {
+		this.onClickListener = onClickListener;
+	}
+	
+	
 	
 	
 	@SuppressLint("NewApi")
@@ -94,7 +105,10 @@ public class TranslateRelativeLayout extends RelativeLayout {
 	
 		case MotionEvent.ACTION_UP:
 			if(Math.abs(event.getX(0)-x)< 10){
-				return false;
+				if(onClickListener != null){
+					onClickListener.onClick(this);
+					return super.onTouchEvent(event);
+				}
 			}
 			if(new Date().getTime()-time<1000){
 				if(event.getX(0)-x>0){

@@ -27,9 +27,8 @@ public class AnimationMargin extends Animation{
 	@Override
 	protected void applyTransformation(float interpolatedTime, Transformation t) {
 		
-		LayoutParams params = (LayoutParams) view.getLayoutParams();
-		params.leftMargin = (int)(left * interpolatedTime);
-		view.setLayoutParams(params);
+		
+		view.layout( (int)(left * interpolatedTime), 0,  (int)(left * interpolatedTime) + view.getMeasuredWidth(), 0 + view.getMeasuredHeight() );
 	}
 	
 }

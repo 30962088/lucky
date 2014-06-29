@@ -94,6 +94,7 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 		layout = (TranslateRelativeLayout) findViewById(R.id.center);
 		findViewById(R.id.container).setOnClickListener(this);
 		layout.setMax(Utils.dpToPx(getContext(), 50));
+		
 		btnStar = (CheckBox) findViewById(R.id.icon_star);
 		btnStar.setOnClickListener(this);
 		avatar = (ImageView) findViewById(R.id.avatar);
@@ -112,6 +113,16 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 		textCoin.setText(""+model.coin);
 		BitmapLoader.displayImage(getContext(), model.avatar, avatar);
 		btnStar.setChecked(model.focused);
+		
+		layout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				layout.setExpand(!model.isExpand(), 200);
+				
+			}
+		});
+		
 		avatar.setOnClickListener(new OnClickListener() {
 			
 			@Override
