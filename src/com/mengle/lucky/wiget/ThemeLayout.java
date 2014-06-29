@@ -153,7 +153,10 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 		selectCoinBtn = findViewById(R.id.selectCoin);
 		introView = findViewById(R.id.intro);
 		gridView = (GridView) findViewById(R.id.gridview);
-
+		
+		
+		findViewById(R.id.intro).setOnClickListener(this);
+		
 		tousuView = findViewById(R.id.tousu);
 		tousuView.setOnClickListener(this);
 		headerImageView = (ImageView) findViewById(R.id.header_img);
@@ -371,6 +374,9 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 					
 				}
 			});
+			break;
+		case R.id.intro:
+			GameIntroDialog.open(getContext());
 			break;
 		default:
 			break;
