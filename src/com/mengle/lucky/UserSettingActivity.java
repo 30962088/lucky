@@ -235,6 +235,8 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		}
 		provinceView.setText(str);
 	}
+	
+	private User user1;
 
 	private void fill() {
 		Preferences.User user = new Preferences.User(this);
@@ -244,14 +246,14 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 			public void onPostExecute(Request request) {
 				if (userMe.getStatus() == Request.Status.SUCCESS) {
-					User user = userMe.getUserResult();
-					qqView.setText(Utils.getString(user.getQq()));
-					phoneView.setText(Utils.getString(user.getMobile()));
-					nicknameView.setText(Utils.getString(user.getNickname()));
-					switchGender(user.getGender());
+					user1 = userMe.getUserResult();
+					qqView.setText(Utils.getString(user1.getQq()));
+					phoneView.setText(Utils.getString(user1.getMobile()));
+					nicknameView.setText(Utils.getString(user1.getNickname()));
+					switchGender(user1.getGender());
 					try {
-						fillCity(user.getCity());
-						fillProvince(user.getProvince());
+						fillCity(user1.getCity());
+						fillProvince(user1.getProvince());
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -357,6 +359,16 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	}
 
 	private void unbindRequest(SHARE_MEDIA media) {
+		for(SNS sns:user1.getSns()){
+			boolean weibo =  TextUtils.equals(sns.getVia(), "weibo") && media == SHARE_MEDIA.SINA;
+			boolean tencent = TextUtils.equals(sns.getVia(), "tqq") && media == SHARE_MEDIA.TENCENT;
+			boolean renren = TextUtils.equals(sns.getVia(), "renren") && media == SHARE_MEDIA.RENREN;
+			boolean qq = TextUtils.equals(sns.getVia(), "qq") && media == SHARE_MEDIA.QQ;
+			if(weibo || tencent || renren || qq){
+				Utils.tip(this, "登录账号不能解除绑定失败");
+				return;
+			}
+		}
 		mController.deleteOauth(this, media, new SocializeClientListener() {
 			
 			@Override
