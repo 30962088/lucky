@@ -45,7 +45,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		OnResultClick {
 
 	public enum Sex {
-		MALE, FEMALE
+		MALE, FEMALE,UNKONWN
 	}
 
 	public static class UserHeadData {
@@ -186,34 +186,42 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		this.userHeadData = data;
 		Preferences.User user = new Preferences.User(getContext());
 		BitmapLoader.displayImage(getContext(), data.head, iconHead);
+		String s= "";
 		if (user.getUid() == data.uid) {
 			photoView.setEnabled(true);
 			btnMsgView.setVisibility(View.VISIBLE);
 			btnFocusView.setVisibility(View.GONE);
-			fansText.setText("关注我的用户");
-			focusText.setText("我关注的用户");
+			s = "我";
+			
 		} else {
+			
 			if(data.sex == Sex.FEMALE){
-				fansText.setText("关注她的用户");
-				focusText.setText("她关注的用户");
+				s = "她";
 			}else{
-				fansText.setText("关注他的用户");
-				focusText.setText("他关注的用户");
+				s = "他";
 			}
+			
+		
 			photoView.setEnabled(false);
 			btnMsgView.setVisibility(View.GONE);
 			btnFocusView.setChecked(data.isFallow());
 			btnFocusView.setVisibility(View.VISIBLE);
 		}
+		
+		fansText.setText("关注"+s+"的用户");
+		focusText.setText(s+"关注的用户");
 		newIconView.setVisibility(data.hasNewMsg ? View.VISIBLE : View.GONE);
 		BitmapLoader.displayImage(getContext(), data.photo, photoView);
 		nickView.setText(data.nick);
 		if (data.sex == Sex.FEMALE) {
 			femaleView.setVisibility(View.VISIBLE);
 			maleView.setVisibility(View.GONE);
-		} else {
+		} else if(data.sex == Sex.MALE){
 			femaleView.setVisibility(View.GONE);
 			maleView.setVisibility(View.VISIBLE);
+		}else{
+			femaleView.setVisibility(View.GONE);
+			maleView.setVisibility(View.GONE);
 		}
 		coinView.setText("" + data.coin);
 		statusView.setText(getContext().getString(R.string.user_head_status,

@@ -309,9 +309,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 	public static View getBubbleNoDaanView(Context context) {
 		View view = LayoutInflater.from(context).inflate(
 				R.layout.bubble_nodaan_view, null);
-		view.setLayoutParams(new ViewGroup.LayoutParams(
-				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
-						DisplayUtils.Dp2Px(context, 61))));
+
 		return view;
 
 	}
@@ -325,9 +323,6 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 		answerView.setColor(color);
 		TextView contentView = (TextView) view.findViewById(R.id.content);
 		contentView.setText(name);
-		view.setLayoutParams(new ViewGroup.LayoutParams(
-				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
-						DisplayUtils.Dp2Px(context, 61))));
 		return view;
 
 	}
@@ -337,9 +332,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 				R.layout.bubble_photo_view, null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.photo);
 		BitmapLoader.displayImage(context, photo, imageView);
-		view.setLayoutParams(new ViewGroup.LayoutParams(
-				new ViewGroup.LayoutParams(DisplayUtils.Dp2Px(context, 73),
-						DisplayUtils.Dp2Px(context, 61))));
+		
 		return view;
 
 	}

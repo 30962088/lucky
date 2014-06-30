@@ -50,12 +50,20 @@ public class ZoneActivity extends FragmentActivity implements
 	private ViewGroup tab;
 	
 	private TextView titleView;
+	
+	private TextView tabCreatorView;
+	
+	private TextView tabTitleView;
+	
+	private View containerView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.zone_layout);
+		containerView = findViewById(R.id.container);
+		containerView.setVisibility(View.GONE);
 		uid = getIntent().getIntExtra("uid",-1);
 //		uid = 11;
 		findViewById(R.id.leftnav).setOnClickListener(this);
@@ -89,11 +97,17 @@ public class ZoneActivity extends FragmentActivity implements
 			WigetUtils.switchVisible((ViewGroup)findViewById(R.id.right_container),R.id.right_comment );
 		}
 		findViewById(R.id.right_comment).setOnClickListener(this);
+		
+		tabCreatorView  = (TextView) findViewById(R.id.tab_creator);
+		
+		tabTitleView = (TextView) findViewById(R.id.tab_title);
+		
+		
 	}
 
 	private void login() {
 		Preferences.User user = new Preferences.User(this);
-		int uid = user.getUid();
+		final int uid = user.getUid();
 		String token = user.getToken();
 		IUserGet userGet;
 		if(uid == this.uid){
@@ -108,8 +122,25 @@ public class ZoneActivity extends FragmentActivity implements
 
 			public void onPostExecute(Request request) {
 				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
+					containerView.setVisibility(View.VISIBLE);
 					userHeadView.setData(finalUserGet.getUserResult().toUserHeadData());
 					titleView.setText(finalUserGet.getUserResult().getNickname());
+					
+					
+					String s="";
+					if(ZoneActivity.this.uid==uid){
+						s = "我";
+						
+					}else{
+						if(finalUserGet.getUserResult().getGender() == 0){
+							s = "她";
+						}else{
+							s = "他";
+						}
+					}
+					tabCreatorView.setText(s+"发起的");
+					tabTitleView.setText(s+"的竞猜详情");
+					
 				}
 
 			}

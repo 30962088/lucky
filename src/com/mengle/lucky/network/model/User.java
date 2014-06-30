@@ -194,7 +194,7 @@ public class User {
 			sex = Sex.MALE;
 			break;
 		default:
-			sex = Sex.FEMALE;
+			sex = Sex.UNKONWN;
 			break;
 		}
 		UserHeadData data = new UserHeadData(uid,false, getAvatar(),getHead(), nickname,sex , gold_coin, win_count, lost_count, fail_count, title, followings, followers, 0);
