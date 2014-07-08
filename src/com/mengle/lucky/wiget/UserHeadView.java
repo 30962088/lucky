@@ -26,6 +26,9 @@ import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.PhotoListDialog.OnResultClick;
 import com.mengle.lucky.wiget.PhotoListDialog.Type;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -185,7 +188,14 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		setVisibility(View.VISIBLE);
 		this.userHeadData = data;
 		Preferences.User user = new Preferences.User(getContext());
-		BitmapLoader.displayImage(getContext(), data.head, iconHead);
+		final ImageLoader imageLoader = Utils.getImageLoader(getContext());
+		imageLoader.displayImage(data.head, iconHead, new SimpleImageLoadingListener(){
+			@Override
+			public void onLoadingFailed(String imageUri, View view,
+					FailReason failReason) {
+				imageLoader.displayImage("http://res.joypaw.com/head/default/1.jpg",iconHead);
+			}
+		});
 		String s= "";
 		if (user.getUid() == data.uid) {
 			photoView.setEnabled(true);
@@ -211,7 +221,13 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		fansText.setText("关注"+s+"的用户");
 		focusText.setText(s+"关注的用户");
 		newIconView.setVisibility(data.hasNewMsg ? View.VISIBLE : View.GONE);
-		BitmapLoader.displayImage(getContext(), data.photo, photoView);
+		imageLoader.displayImage( data.photo, photoView, new SimpleImageLoadingListener(){
+			@Override
+			public void onLoadingFailed(String imageUri, View view,
+					FailReason failReason) {
+				imageLoader.displayImage("http://res.joypaw.com/avatar/default/1.jpg",photoView);
+			}
+		});
 		nickView.setText(data.nick);
 		if (data.sex == Sex.FEMALE) {
 			femaleView.setVisibility(View.VISIBLE);

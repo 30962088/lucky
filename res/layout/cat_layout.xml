@@ -61,6 +61,7 @@
                     android:layout_marginLeft="5dp"
                     android:clipToPadding="true"
                     android:gravity="center"
+                    android:listSelector="#00000000"
                     android:numColumns="4"
                     android:paddingBottom="40dp" >
                 </GridView>

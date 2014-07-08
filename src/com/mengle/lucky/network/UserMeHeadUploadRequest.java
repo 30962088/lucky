@@ -13,18 +13,18 @@ public class UserMeHeadUploadRequest extends Request{
 		private int uid;
 		private String token;
 		private File file;
-		private String avatar_url;
+		private String head_url;
 		public Param(int uid, String token, File file) {
 			super();
 			this.uid = uid;
 			this.token = token;
 			this.file = file;
 		}
-		public Param(int uid, String token, String avatar_url) {
+		public Param(int uid, String token, String head_url) {
 			super();
 			this.uid = uid;
 			this.token = token;
-			this.avatar_url = avatar_url;
+			this.head_url = head_url;
 		}
 		
 		
@@ -84,8 +84,8 @@ public class UserMeHeadUploadRequest extends Request{
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("uid", ""+param.uid));
 		pairs.add(new BasicNameValuePair("token", ""+param.token));
-		if(param.avatar_url != null){
-			pairs.add(new BasicNameValuePair("avatar_url", ""+param.avatar_url));
+		if(param.head_url != null){
+			pairs.add(new BasicNameValuePair("head_url", ""+param.head_url));
 		}
 		return pairs;
 	}

@@ -447,7 +447,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	
 	private void logout() {
 		InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-	    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+	    imm.hideSoftInputFromWindow(qqView.getWindowToken(), 0);;
 		final Preferences.User user = new Preferences.User(this);
 		ConfirmDialog.open(this, "您确认要退出登录吗？", new OnConfirmClick() {
 			

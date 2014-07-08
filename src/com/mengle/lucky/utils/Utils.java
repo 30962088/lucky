@@ -43,6 +43,13 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.DiscCacheUtil;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXImageObject;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -63,27 +70,88 @@ public class Utils {
 	}
 
 	public static Bitmap convertViewToBitmap(View view) {
-		
+		view.destroyDrawingCache();
 		view.buildDrawingCache();
 		Bitmap bitmap = view.getDrawingCache();
-
+		
 		return bitmap;
 	}
 	
 	public static UMSocialService getUMSocialService(Context context){
 		UMSocialService mController =UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
-		String appID = "wx1897ea1cb217a00e";
+		/*String appID = "wx1897ea1cb217a00e";
 		// 微信图文分享必须设置一个url 
 		String contentUrl = "http://www.umeng.com/social";
 		// 添加微信平台，参数1为当前Activity, 参数2为用户申请的AppID, 参数3为点击分享内容跳转到的目标url
-		UMWXHandler wxHandler = mController.getConfig().supportWXPlatform(context,appID, contentUrl);
+		UMWXHandler wxHandler = mController.getConfig().supportWXPlatform(context,new UMWXHandler(context, appID));
 		//设置分享标题
-		wxHandler.setWXTitle("友盟社会化组件很不错");
+//		wxHandler.setWXTitle("友盟社会化组件很不错");
 		
 		// 支持微信朋友圈
-		UMWXHandler circleHandler = mController.getConfig().supportWXCirclePlatform(context,appID, contentUrl) ;
-		circleHandler.setCircleTitle("友盟社会化组件还不错...");
+		UMWXHandler circleHandler = mController.getConfig().supportWXCirclePlatform(context,appID, contentUrl) ;*/
+//		circleHandler.setCircleTitle("友盟社会化组件还不错...");
 		return mController;
+	}
+	
+	public static class Wechat{
+		
+		private Context context;
+		
+		private static final int THUMB_SIZE = 150;
+		
+		private IWXAPI api;
+		
+		public Wechat(Context context) {
+			
+			this.context = context;
+			api = WXAPIFactory.createWXAPI(context,"wx1897ea1cb217a00e");
+			api.registerApp("wx1897ea1cb217a00e");
+		}
+		
+		public void sharePhoto(Bitmap bmp,int scene){
+			if(!api.isWXAppInstalled()){
+				Utils.tip(context, "微信未安装");
+				return;
+			}
+			
+			
+			
+			
+			
+			WXImageObject imgObj = new WXImageObject(bmp);
+			WXMediaMessage msg = new WXMediaMessage();
+			msg.mediaObject = imgObj;
+			
+			Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+			bmp.recycle();
+			msg.thumbData = Utils.bmpToByteArray(thumbBmp, true);  // 设置缩略图
+
+			SendMessageToWX.Req req = new SendMessageToWX.Req();
+			req.transaction = buildTransaction("img");
+			req.message = msg;
+			req.scene = scene;
+			api.sendReq(req);
+		}
+		
+		private String buildTransaction(final String type) {
+			return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+		}
+		
+		public static void share(Context context,Bitmap bitmap,SHARE_MEDIA media){
+			int scene = 0;
+			switch (media) {
+			case WEIXIN:
+				scene = SendMessageToWX.Req.WXSceneSession;
+				break;
+			case WEIXIN_CIRCLE:
+				scene = SendMessageToWX.Req.WXSceneTimeline;
+				break;
+			default:
+				break;
+			}
+			new Wechat(context).sharePhoto(bitmap, scene);
+		}
+		
 	}
 	
 	

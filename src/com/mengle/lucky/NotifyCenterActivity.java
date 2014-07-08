@@ -1,5 +1,7 @@
 package com.mengle.lucky;
 
+import java.sql.SQLException;
+
 import com.mengle.lucky.fragments.MsgFragment;
 import com.mengle.lucky.fragments.NofityFragment;
 import com.mengle.lucky.utils.WigetUtils;
@@ -30,13 +32,16 @@ public class NotifyCenterActivity extends FragmentActivity implements
 	private ViewGroup tab;
 
 	private Integer lastTab;
+	
+	private Fragment[] fragments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.nofity_center);
+		fragments = new Fragment[]{NofityFragment.newInstance(findViewById(R.id.new_notice)),MsgFragment.newInstance(findViewById(R.id.new_letter))};
 		findViewById(R.id.back).setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -57,13 +62,8 @@ public class NotifyCenterActivity extends FragmentActivity implements
 
 			@Override
 			public Fragment getItem(int position) {
-				Fragment fragment;
-				if (position == 0) {
-					fragment = NofityFragment.newInstance(findViewById(R.id.new_notice));
-				} else {
-					fragment = MsgFragment.newInstance(findViewById(R.id.new_letter));
-				}
-				return fragment;
+				
+				return fragments[position];
 			}
 		});
 		WigetUtils.onChildViewClick(tab, this);
@@ -86,6 +86,22 @@ public class NotifyCenterActivity extends FragmentActivity implements
 	public void onPageSelected(int position) {
 		if (lastTab != null) {
 			tab.getChildAt(lastTab).setSelected(false);
+		}
+		Fragment fragment = fragments[position];
+		if(fragment instanceof NofityFragment){
+			try {
+				((NofityFragment)fragment).request();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(fragment instanceof MsgFragment){
+			try {
+				((MsgFragment)fragment).request();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		tab.getChildAt(position).setSelected(true);
 		lastTab = position;

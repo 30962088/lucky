@@ -23,10 +23,12 @@ public class ShitiOverView extends FrameLayout implements OnClickListener{
 		private int addCoin;
 		private int currentCoin;
 		private int star;
-		public Model(int addCoin, int currentCoin,int star) {
+		private int totalCoin;
+		public Model(int addCoin, int currentCoin,int totalCoin,int star) {
 			super();
 			this.addCoin = addCoin;
 			this.currentCoin = currentCoin;
+			this.totalCoin = totalCoin;
 			this.star = star;
 		}
 		
@@ -84,7 +86,7 @@ public class ShitiOverView extends FrameLayout implements OnClickListener{
 		starView.setBackgroundResource(STARTS[model.star]);
 		currentView.setText(""+model.currentCoin);
 		addcount.setText("+"+model.addCoin);
-		totalView.setText("总金额："+(model.addCoin+model.currentCoin));
+		totalView.setText("总金额："+(model.totalCoin));
 		Chance.getChance(getContext(), new Callback() {
 			
 			@Override

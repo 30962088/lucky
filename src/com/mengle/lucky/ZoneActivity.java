@@ -124,6 +124,11 @@ public class ZoneActivity extends FragmentActivity implements
 				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
 					containerView.setVisibility(View.VISIBLE);
 					userHeadView.setData(finalUserGet.getUserResult().toUserHeadData());
+					if(uid == ZoneActivity.this.uid){
+						userHeadView.checkNewMsg();
+					}
+					
+					
 					titleView.setText(finalUserGet.getUserResult().getNickname());
 					
 					

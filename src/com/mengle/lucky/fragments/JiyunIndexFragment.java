@@ -14,6 +14,7 @@ import com.mengle.lucky.network.model.Chance;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
+import com.mengle.lucky.utils.Utils.Wechat;
 import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.JiyunIntroDialog;
 import com.mengle.lucky.wiget.LoadingPopup;
@@ -125,9 +126,14 @@ public class JiyunIndexFragment extends Fragment implements OnClickListener{
 	}
 
 	private void doShare(SHARE_MEDIA media){
-		final UMSocialService mController =Utils.getUMSocialService(getActivity());
 		View view = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
 		Bitmap bitmap = Utils.convertViewToBitmap(view);
+		if(media == SHARE_MEDIA.WEIXIN || media ==SHARE_MEDIA.WEIXIN_CIRCLE){
+			Wechat.share(getActivity(), bitmap, media);
+			return;
+		}
+		final UMSocialService mController =Utils.getUMSocialService(getActivity());
+		
 		mController.setShareContent("谁能帮忙猜出这题？我家房子就是你的");
 		mController.setShareImage(new UMImage(getActivity(), bitmap));
 		
