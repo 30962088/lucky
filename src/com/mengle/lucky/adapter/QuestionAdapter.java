@@ -170,7 +170,14 @@ public class QuestionAdapter extends BaseAdapter {
 		holder.nameView.setTextColor(questionItem.color);
 		holder.percentView.setText(""+String.format("%.0f", (questionItem.percent*100)));
 		holder.questionView.setColor(questionItem.color);
-		holder.questionView.setType(questionItem.type);
+		if(questionItem.percent<0.2){
+			holder.questionView.setPercent(3);
+		}else if(questionItem.percent<0.4) {
+			holder.questionView.setPercent(2);
+		}else{
+			holder.questionView.setPercent(1);
+		}
+//		holder.questionView.setType(questionItem.type);
 		if(questionItem.type == QuestionLayout.TYPE_MOST){
 			holder.selectedView.setVisibility(View.VISIBLE);
 			holder.noView.setVisibility(View.GONE);

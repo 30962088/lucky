@@ -83,6 +83,7 @@ public class FillAnswerActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		param = (Param) getIntent().getSerializableExtra("param");
 		setContentView(R.layout.fillanswer_layout);
 		findViewById(R.id.publish_btn).setOnClickListener(this);

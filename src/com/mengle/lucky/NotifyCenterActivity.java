@@ -39,7 +39,7 @@ public class NotifyCenterActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		App.currentActivity = this;
 		setContentView(R.layout.nofity_center);
 		fragments = new Fragment[]{NofityFragment.newInstance(findViewById(R.id.new_notice)),MsgFragment.newInstance(findViewById(R.id.new_letter))};
 		findViewById(R.id.back).setOnClickListener(new OnClickListener() {

@@ -1,6 +1,8 @@
 package com.mengle.lucky;
 
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.mengle.lucky.network.Login;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.Login.Params;
@@ -37,6 +39,8 @@ public class BuildAccountLoginActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
+		startPush();
 		context = this;
 		setContentView(R.layout.bind_account_layout);
 		oauthUtils = new OauthUtils(context);
@@ -50,7 +54,13 @@ public class BuildAccountLoginActivity extends Activity implements
 	
 	
 	
-	
+	private void startPush() {
+		
+        PushManager.startWork(getApplicationContext(),
+                PushConstants.LOGIN_TYPE_API_KEY,
+                com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
+		
+	}
 
 	public void onClick(View v) {
 		

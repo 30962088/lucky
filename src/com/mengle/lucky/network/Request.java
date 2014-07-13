@@ -24,9 +24,15 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
+import android.text.TextUtils;
+
 import com.mengle.lucky.App;
+import com.mengle.lucky.MainActivity;
+import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.LoadingPopup;
+import com.mengle.lucky.wiget.PushDialog;
 
 
 
@@ -147,9 +153,19 @@ public abstract class Request implements Response,IRequest{
 						success(data);
 						status = Status.SUCCESS;
 					}else{
-						error(-1,data);
-						status = Status.DATA_ERROR;
-						status = Status.ERROR;
+						if(TextUtils.equals("用户验证失败！", data)){
+							Utils.tip(App.getInstance(), "该账号已在其他设备上登录");
+							Preferences.User user = new Preferences.User(App.getInstance());
+							user.logout();
+							PushDialog.sletter = null;
+							PushDialog.smsg = null;
+						
+						}else{
+							error(-1,data);
+							status = Status.DATA_ERROR;
+							status = Status.ERROR;
+						}
+						
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

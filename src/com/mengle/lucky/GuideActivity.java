@@ -31,6 +31,7 @@ public class GuideActivity extends FragmentActivity implements OnPageChangeListe
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		setContentView(R.layout.guide_layout);
 		viewPager = (CustomViewPager) findViewById(R.id.viewpager);
 		indexViews = new View[]{findViewById(R.id.index_a_view),findViewById(R.id.index_b_view),findViewById(R.id.index_c_view)};

@@ -122,7 +122,7 @@ public class App extends FrontiaApplication{
 		}
 	};
 	
-	
+	public static Activity currentActivity;
 	
 	
 }

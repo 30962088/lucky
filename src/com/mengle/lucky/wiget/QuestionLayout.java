@@ -75,11 +75,34 @@ public class QuestionLayout extends RelativeLayout {
 				paint.setColor(Color.parseColor("#b9b9b9"));
 			}
 		}
-		if(type == TYPE_NORMAL){
+		
+		/*if(type == TYPE_NORMAL){
 			drawNormal(canvas);
 		}else if(type == TYPE_MOST){
 			drawMost(canvas);
+		}*/
+		drawCircle(canvas);
+		
+	}
+	
+	private int percent = 1;
+	
+	public void setPercent(int percent) {
+		this.percent = percent;
+	}
+	
+	private void drawCircle(Canvas canvas){
+		float cx = getWidth()/2;
+		float cy = getHeight()/2;
+		
+		
+		
+		for(int i = 0;i<4;i++){
+			paint.setAlpha(getOpacity(i));
+			canvas.drawCircle(cx, cy,getRadius(cx, i) , paint);
 		}
+		paint.setAlpha(255);
+		canvas.drawCircle(cx, cy,getRadius(cx, percent) , paint);
 		
 	}
 	

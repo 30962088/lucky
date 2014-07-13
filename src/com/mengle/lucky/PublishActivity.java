@@ -116,6 +116,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		setContentView(R.layout.publish_layout);
 		findViewById(R.id.leftnav).setOnClickListener(this);
 		headView = (ImageView) findViewById(R.id.bg_top);

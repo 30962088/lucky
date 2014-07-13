@@ -105,6 +105,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		setContentView(R.layout.user_setting_layout);
 		findViewById(R.id.btn_logout).setOnClickListener(this);
 		try {

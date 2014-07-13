@@ -1,6 +1,8 @@
 package com.mengle.lucky;
 
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.mengle.lucky.fragments.CaiFragment;
@@ -75,10 +77,21 @@ public class MainActivity extends SlidingFragmentActivity implements
 	public MainActivity() {
 		instance = this;
 	}
+	
+private void startPush() {
+		
+        PushManager.startWork(getApplicationContext(),
+                PushConstants.LOGIN_TYPE_API_KEY,
+                com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
+		
+	}
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
+		startPush();
 		UmengUpdateAgent.update(this);
 		checkFirstLogin();
 		setContentView(R.layout.activity_main);

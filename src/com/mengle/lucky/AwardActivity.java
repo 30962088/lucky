@@ -11,6 +11,7 @@ public class AwardActivity extends FragmentActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		setContentView(R.layout.fragment_layout);
 		getSupportFragmentManager().beginTransaction().replace(R.id.fragment,new AwardFragment()).commit();
 	}

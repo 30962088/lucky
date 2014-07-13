@@ -58,6 +58,7 @@ public class UserListActivity extends Activity implements OnLoadListener,OnClick
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		fuid = getIntent().getIntExtra("fuid", 0);
 		type = (Type) getIntent().getSerializableExtra("type");
 		setContentView(R.layout.user_list_layout);

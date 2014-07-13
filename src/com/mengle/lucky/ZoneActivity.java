@@ -61,6 +61,7 @@ public class ZoneActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		setContentView(R.layout.zone_layout);
 		containerView = findViewById(R.id.container);
 		containerView.setVisibility(View.GONE);

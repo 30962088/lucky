@@ -14,7 +14,7 @@ public class LaunchAcitivty extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		startPush();
+//		startPush();
 		Preferences.User user = new Preferences.User(this);
 		Intent intent = null;
 		if(user.isFirstLogin()){
@@ -29,12 +29,12 @@ public class LaunchAcitivty extends Activity{
 	}
 	
 
-	private void startPush() {
+	/*private void startPush() {
 		
         PushManager.startWork(getApplicationContext(),
                 PushConstants.LOGIN_TYPE_API_KEY,
                 com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
 		
 	}
-
+*/
 }

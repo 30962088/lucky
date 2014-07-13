@@ -62,6 +62,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		App.currentActivity = this;
 		game_id = getIntent().getIntExtra("game_id", 0);
 		// game_id = 4;
 		setContentView(R.layout.kan_zhuang_layout);
