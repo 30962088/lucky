@@ -193,7 +193,10 @@ private void startPush() {
 
 	public void login() {
 		menuFragment.onResume();
-		rightFragment.onResume();
+		if(rightFragment!=null ){
+			rightFragment.onResume();
+		}
+		
 	}
 
 	public void switchContent(Fragment fragment) {

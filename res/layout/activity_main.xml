@@ -13,34 +13,48 @@
         android:layout_height="46dp"
         android:gravity="center_vertical" >
 
-        <ImageView
+        <TextView
             android:id="@+id/btn_more"
-            android:layout_width="43dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/btn_more" />
+            android:text="更多"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:drawablePadding="5dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical" />
 
         <FrameLayout
             android:id="@+id/right_container"
-            android:layout_width="43dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true" >
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp" >
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/right_comment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/btn_comment" />
             
-            <ImageView
+            <TextView
                 android:visibility="gone"
-                android:id="@+id/right_search"
-                android:layout_width="match_parent"
+                android:drawablePadding="5dp"
+                android:id="@+id/right_comment"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:scaleType="centerInside"
-                android:src="@drawable/icon_search1" />
+                android:drawableLeft="@drawable/btn_comment"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="" />
+            
+            <TextView
+                android:visibility="gone"
+                android:drawablePadding="5dp"
+                android:id="@+id/right_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/icon_search1"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="" />
             
             <View 
                 android:id="@+id/right_empty"

@@ -103,7 +103,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="开局金额"
+                        android:text="成功发布将消耗您的金币数："
                         android:textColor="#101010"
                         android:textSize="12sp" />
 
@@ -131,7 +131,7 @@
                         android:layout_height="32dp"
                         android:background="@drawable/bg_radius_blue"
                         android:gravity="center"
-                        android:text="命题"
+                        android:text="题目"
                         android:textColor="#fff"
                         android:textSize="18sp" />
 
@@ -139,6 +139,7 @@
                         android:id="@+id/titleview"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
+                        android:hint="突出主题，建议不要太长"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_radius_white"
@@ -159,7 +160,7 @@
                         android:background="@drawable/bg_radius_header_gray1"
                         android:gravity="center_vertical"
                         android:paddingLeft="17dp"
-                        android:text="设置"
+                        android:text="编辑内容"
                         android:textColor="#434a54"
                         android:textSize="18sp" />
 
@@ -181,6 +182,15 @@
                                 android:layout_height="55dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_add_pic" />
+                            
+                            <TextView 
+                                android:layout_marginLeft="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="请选择题目照片（非必选）"
+                                android:gravity="center_vertical"
+                                android:textSize="12sp"
+                                android:textColor="#b8bac0"/>
                         </LinearLayout>
 
                         <View
@@ -329,7 +339,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="赔率"
+                            android:text="玩法设定"
                             android:textColor="#434a54"
                             android:textSize="12sp" />
 
@@ -341,7 +351,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="基数="
+                                android:text="单注金币数="
                                 android:textColor="#434a54"
                                 android:textSize="12sp" />
 
@@ -591,7 +601,7 @@
             android:background="@drawable/btn_orange_publish" />
     </LinearLayout>
 
-    <com.mengle.lucky.wiget.CommonHeaderView
+   <!--  <com.mengle.lucky.wiget.CommonHeaderView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -615,6 +625,6 @@
                 android:textColor="#fff"
                 android:textSize="18sp" />
         </RelativeLayout>
-    </com.mengle.lucky.wiget.CommonHeaderView>
+    </com.mengle.lucky.wiget.CommonHeaderView> -->
 
 </RelativeLayout>

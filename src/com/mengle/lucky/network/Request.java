@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.mengle.lucky.App;
@@ -159,7 +160,14 @@ public abstract class Request implements Response,IRequest{
 							user.logout();
 							PushDialog.sletter = null;
 							PushDialog.smsg = null;
-						
+							new Handler(App.currentActivity.getMainLooper()).post(new Runnable() {
+								
+								@Override
+								public void run() {
+									MainActivity.open(App.currentActivity);
+									
+								}
+							});
 						}else{
 							error(-1,data);
 							status = Status.DATA_ERROR;

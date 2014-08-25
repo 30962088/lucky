@@ -96,7 +96,8 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 				"#e47134", "#e47134" };
 		String[] options = new String[] { "A", "B", "C", "D", "E", "F", "G" };
 		View bubbleView = null;
-		if (user.getUid().equals(game.getCreator().get(0).getUid())) {
+		Integer uid = user.getUid();
+		if (uid != null && uid.equals(game.getCreator().get(0).getUid())) {
 			if (game.getIs_publish_answer() == 1) {
 				bubbleView = ThemeLayout.getBubbleDaanView(this,
 						Color.parseColor(colors[game.getAnswer()]),

@@ -61,7 +61,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 
 		view.findViewById(R.id.aicai).setOnClickListener(this);
 		
-		view.findViewById(R.id.cai).performClick();
+		view.findViewById(R.id.aizhuang).performClick();
 		
 		view.findViewById(R.id.login_qq).setOnClickListener(this);
 		
