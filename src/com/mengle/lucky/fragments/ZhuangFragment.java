@@ -1,7 +1,9 @@
 package com.mengle.lucky.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.mengle.lucky.KanZhuangActivity;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.PublishActivity;
 import com.mengle.lucky.R;
@@ -9,6 +11,8 @@ import com.mengle.lucky.adapter.CatListAdater;
 import com.mengle.lucky.adapter.CatListAdater.CatList;
 import com.mengle.lucky.adapter.StageAdapter;
 import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
+import com.mengle.lucky.adapter.ZhuangNewListAdapter;
+import com.mengle.lucky.adapter.ZhuangNewListAdapter.Model;
 import com.mengle.lucky.network.GameCategoryRequest;
 import com.mengle.lucky.network.GameCategoryRequest.Category;
 import com.mengle.lucky.network.GameGetsRequest;
@@ -22,6 +26,8 @@ import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.AlertDialog;
+import com.mengle.lucky.wiget.BaseListView;
+import com.mengle.lucky.wiget.BaseListView.OnLoadListener;
 import com.mengle.lucky.wiget.GameListView;
 import com.mengle.lucky.wiget.CommonHeaderView;
 
@@ -34,7 +40,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ZhuangFragment extends Fragment implements OnClickListener {
+public class ZhuangFragment extends Fragment implements OnClickListener,OnLoadListener,OnItemClickListener {
 
 	public static ZhuangFragment newInstance(int cid) {
 		ZhuangFragment fragment = new ZhuangFragment();
@@ -59,21 +65,25 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 		return inflater.inflate(R.layout.zhuang_layout, null);
 	}
 
-	private GameListView listView;
+	private BaseListView listView;
+	
+	private ZhuangNewListAdapter adapter;
+	
+	private List<ZhuangNewListAdapter.Model> list = new ArrayList<ZhuangNewListAdapter.Model>();
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
+		adapter = new ZhuangNewListAdapter(getActivity(), list);
 		view.findViewById(R.id.icon_bottom).setOnClickListener(this);
-		listView = (GameListView) getView().findViewById(R.id.listview);
+		listView = (BaseListView) getView().findViewById(R.id.listview);
 		View headView = View.inflate(getActivity(), R.layout.zhuang_header,
 				null);
 		listView.getRefreshableView().addHeaderView(headView);
-		Preferences.User user = new Preferences.User(getActivity());
-		listView.setRequest(new GameGetsRequest(new Pamras(user.getUid(), user
-				.getToken(), cid)));
-
+		listView.setOnLoadListener(this);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
 		stageFragment = new StageFragment();
 
 		getFragmentManager().beginTransaction()
@@ -136,6 +146,34 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 			}
 		});
 	}
+	
+	private int offset;
+	private List<Result> results;
+	@Override
+	public boolean onLoad(int offset, int limit) {
+		Preferences.User user = new Preferences.User(getActivity());
+		this.offset = offset;
+		boolean hasMore = true;
+		GameGetsRequest request = new GameGetsRequest(new Pamras(user.getUid(), user
+				.getToken(), cid));
+		request.request(offset, limit);
+		results =  request.getResult();
+		if(results.size()<limit){
+			hasMore = false;
+		}
+		
+		return hasMore;
+	}
+
+	@Override
+	public void onLoadSuccess() {
+		if(offset == 0){
+			list.clear();
+		}
+		this.list.addAll(Result.toNewModel(results));
+		adapter.notifyDataSetChanged();
+		
+	}
 
 	@Override
 	public void onResume() {
@@ -159,6 +197,13 @@ public class ZhuangFragment extends Fragment implements OnClickListener {
 			break;
 		}
 
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> adapterView, View arg1, int position, long arg3) {
+		ZhuangNewListAdapter.Model model = (Model) adapterView.getItemAtPosition(position);
+		KanZhuangActivity.open(getActivity(), model.getId());
+		
 	}
 
 }

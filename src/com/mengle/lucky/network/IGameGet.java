@@ -3,6 +3,7 @@ package com.mengle.lucky.network;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mengle.lucky.adapter.ZhuangNewListAdapter;
 import com.mengle.lucky.adapter.StageAdapter.Stage;
 import com.mengle.lucky.adapter.ZhuangListAdapter.ZhuangModel;
 import com.mengle.lucky.network.Request.Status;
@@ -41,6 +42,19 @@ public interface IGameGet extends IRequest{
 		public Result() {
 			// TODO Auto-generated constructor stub
 		}
+		
+		public ZhuangNewListAdapter.Model toNewModel(){
+			return new ZhuangNewListAdapter.Model(id, title, image, join_count, Utils.format12Hour(stop_time)+" 结束", "发起人："+nickname);
+		}
+		
+		public static List<ZhuangNewListAdapter.Model> toNewModel(List<Result> results){
+			List<ZhuangNewListAdapter.Model> list = new ArrayList<ZhuangNewListAdapter.Model>();
+			for(Result result:results){
+				list.add(result.toNewModel());
+			}
+			return list;
+		}
+		
 		public ZhuangModel toZhuangModel(){
 			
 			ZhuangModel model = new ZhuangModel(id, title, avatar, join_count,Utils.format12Hour(stop_time)+" 结束");

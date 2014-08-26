@@ -72,7 +72,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	
 	private EditText hourText;
 	
-	private EditText minuteText;
+//	private EditText minuteText;
 	
 	private RadioGroupLayout radioGroupLayout1;
 	
@@ -119,6 +119,15 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		App.currentActivity = this;
 		setContentView(R.layout.publish_layout);
 		findViewById(R.id.leftnav).setOnClickListener(this);
+		findViewById(R.id.shabi).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				findViewById(R.id.shabi).setVisibility(View.GONE);
+				findViewById(R.id.caonima).setVisibility(View.VISIBLE);
+				
+			}
+		});
 		headView = (ImageView) findViewById(R.id.bg_top);
 		btnRead = (CheckBox) findViewById(R.id.btn_read);
 		textRead = (TextView) findViewById(R.id.text_read);
@@ -145,7 +154,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		question2View = (EditText) findViewById(R.id.question2);
 		question3View = (EditText) findViewById(R.id.question3);
 		hourText = (EditText) findViewById(R.id.hour);
-		minuteText = (EditText) findViewById(R.id.minute);
+//		minuteText = (EditText) findViewById(R.id.minute);
 		jishuView = (EditText)findViewById(R.id.jishu);
 		findViewById(R.id.publish_btn).setOnClickListener(this);
 		radioGroupLayout2 = (RadioGroupLayout) findViewById(R.id.radio2);
@@ -193,10 +202,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			Utils.tip(this, "您还没有命题");
 			return false;
 		}
-		if(TextUtils.isEmpty(imagePath)){
+		/*if(TextUtils.isEmpty(imagePath)){
 			Utils.tip(this, "您还没有添加图片");
 			return false;
-		}
+		}*/
 		if(TextUtils.isEmpty(category)){
 			Utils.tip(this, "您还没有选择该问题的分类");
 			return false;
@@ -280,7 +289,8 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String jishu = jishuView.getText().toString();
 		String beishu = radioGroupLayout2.getValue();
 		String hour = hourText.getText().toString();
-		String miniute = minuteText.getText().toString();
+//		String miniute = minuteText.getText().toString();
+		String miniute = "0";
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
 			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title, Uri.fromFile(new File(imagePath)).toString(), A, B, C, jishu));
 		}
@@ -300,7 +310,8 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String jishu = jishuView.getText().toString();
 		String beishu = radioGroupLayout2.getValue();
 		String hour = hourText.getText().toString();
-		String miniute = minuteText.getText().toString();
+//		String miniute = minuteText.getText().toString();
+		String miniute = "0";
 		String reason = reasonText.getText().toString();
 		String answer = radioGroupLayout3.getValue();
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
@@ -327,8 +338,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			
 			Preferences.User user = new Preferences.User(this);
 			final GameCreateRequest createRequest = new GameCreateRequest(new GameCreateRequest.
-					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), 
-			new File(imagePath));
+					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), imagePath);
 			LoadingPopup.show(this);
 			RequestAsync.request(createRequest, new Async() {
 				

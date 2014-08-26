@@ -12,7 +12,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" >
+            android:layout_weight="1" 
+            android:background="#fff">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -95,6 +96,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:background="#fff"
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
                     android:gravity="center_vertical"
@@ -139,12 +141,13 @@
                         android:id="@+id/titleview"
                         android:layout_width="0dp"
                         android:layout_height="32dp"
-                        android:hint="突出主题，建议不要太长"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_radius_white"
+                        android:hint="突出主题，建议不要太长"
                         android:paddingLeft="5dp"
-                        android:paddingRight="5dp" />
+                        android:paddingRight="5dp"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -182,15 +185,15 @@
                                 android:layout_height="55dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/icon_add_pic" />
-                            
-                            <TextView 
-                                android:layout_marginLeft="5dp"
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="bottom"
                                 android:text="请选择题目照片（非必选）"
-                                android:gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="#b8bac0"/>
+                                android:textColor="#b8bac0"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <View
@@ -374,12 +377,27 @@
                                 android:background="@drawable/icon_star" />
                         </LinearLayout>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="请选择最多可下注投注倍数"
+                            android:textColor="#434a54"
+                            android:textSize="12sp" />
+
                         <com.mengle.lucky.wiget.RadioGroupLayout
                             android:id="@+id/radio2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp" >
                         </com.mengle.lucky.wiget.RadioGroupLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="参与者最高投注金额为基数×4"
+                            android:textColor="#434a54"
+                            android:textSize="12sp" />
 
                         <View
                             android:layout_width="match_parent"
@@ -437,6 +455,7 @@
                                 android:textColor="#fff"
                                 android:textSize="12sp" />
 
+                            <!--
                             <EditText
                                 android:id="@+id/minute"
                                 android:layout_width="63dp"
@@ -459,6 +478,7 @@
                                 android:text="分钟"
                                 android:textColor="#fff"
                                 android:textSize="12sp" />
+                            -->
                         </LinearLayout>
 
                         <View
@@ -475,8 +495,8 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1" 
-                                android:gravity="center_vertical">
+                                android:layout_weight="1"
+                                android:gravity="center_vertical" >
 
                                 <CheckBox
                                     android:id="@+id/btn_read"
@@ -508,7 +528,32 @@
                     </LinearLayout>
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="* 成功发布竞猜后，您可在猜题页面随时完成答案填写。"
+                    android:textColor="#e47033"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/shabi"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:background="@drawable/bg_radius_blue"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="现在就填写答案"
+                    android:textColor="#fff"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="15sp" />
+
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/caonima"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -601,7 +646,8 @@
             android:background="@drawable/btn_orange_publish" />
     </LinearLayout>
 
-   <!--  <com.mengle.lucky.wiget.CommonHeaderView
+   
+    <com.mengle.lucky.wiget.CommonHeaderView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -625,6 +671,7 @@
                 android:textColor="#fff"
                 android:textSize="18sp" />
         </RelativeLayout>
-    </com.mengle.lucky.wiget.CommonHeaderView> -->
+    </com.mengle.lucky.wiget.CommonHeaderView> 
+    
 
 </RelativeLayout>

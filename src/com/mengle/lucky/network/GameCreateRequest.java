@@ -70,10 +70,13 @@ public class GameCreateRequest extends Request{
 	
 	
 	
-	public GameCreateRequest(Param param, File image) {
+	public GameCreateRequest(Param param, String image) {
 		super();
 		this.param = param;
-		this.image = image;
+		if(image != null){
+			this.image = new File(image);
+		}
+		
 	}
 
 	@Override
