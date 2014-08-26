@@ -81,9 +81,9 @@ public class ZhuangNewListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 		if(position%2==0){
-			holder.setSelected(true);
-		}else{
 			holder.setSelected(false);
+		}else{
+			holder.setSelected(true);
 		}
 		
 		holder.count.setText("("+model.person+")");
