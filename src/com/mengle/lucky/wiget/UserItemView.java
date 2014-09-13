@@ -36,8 +36,9 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 		private int lose;
 		private boolean focused;
 		private boolean expand = false;
+		private boolean newGameTip;
 		public Model(int uid, String nickname, String avatar, String level,
-				int coin, int win, int lost, int lose, boolean focused) {
+				int coin, int win, int lost, int lose, boolean focused,boolean newGameTip) {
 			super();
 			this.uid = uid;
 			this.nickname = nickname;
@@ -47,6 +48,7 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 			this.win = win;
 			this.lost = lost;
 			this.lose = lose;
+			this.newGameTip = newGameTip;
 			this.focused = focused;
 		}
 		
@@ -88,9 +90,12 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 	
 	private TextView textCoin;
 	private TranslateRelativeLayout layout;
+	private View newGameTip;
+	
 	
 	private void init() {
 		LayoutInflater.from(getContext()).inflate(R.layout.user_item, this);
+		newGameTip = findViewById(R.id.new_game_tip);
 		layout = (TranslateRelativeLayout) findViewById(R.id.center);
 		findViewById(R.id.container).setOnClickListener(this);
 		layout.setMax(Utils.dpToPx(getContext(), 50));
@@ -113,6 +118,7 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 		textCoin.setText(""+model.coin);
 		BitmapLoader.displayImage(getContext(), model.avatar, avatar);
 		btnStar.setChecked(model.focused);
+		newGameTip.setVisibility(model.newGameTip?View.VISIBLE:View.GONE);
 		
 		layout.setOnClickListener(new OnClickListener() {
 			

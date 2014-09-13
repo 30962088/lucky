@@ -10,7 +10,12 @@ import com.mengle.lucky.fragments.CommentFragment;
 import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
 import com.mengle.lucky.fragments.ZhuangFragment;
+import com.mengle.lucky.network.Request;
+import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.RequestAsync.Async;
+import com.mengle.lucky.network.TipGameGet;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.Preferences.Push;
@@ -67,6 +72,8 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private View rightEmpty;
 
 	private ViewGroup rightContainer;
+	
+	private View newGameTip;
 
 	public static MainActivity getInstance() {
 		return instance;
@@ -95,6 +102,7 @@ private void startPush() {
 		UmengUpdateAgent.update(this);
 		checkFirstLogin();
 		setContentView(R.layout.activity_main);
+		newGameTip = findViewById(R.id.new_game_tip);
 		rightContainer = (ViewGroup) findViewById(R.id.right_container);
 		rightComment = findViewById(R.id.right_comment);
 		rightComment.setOnClickListener(this);
@@ -104,6 +112,28 @@ private void startPush() {
 		initSlidingMenu();
 		
 	}
+	
+	private void checkNewGame(){
+		User user = new User(this);
+		if(user.isLogin()){
+			final TipGameGet gameGet = new TipGameGet(new TipGameGet.Param(user.getUid(), user.getToken()));
+			RequestAsync.request(gameGet, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					displayNewTipDone(gameGet.getCount()>0?true:false);
+					
+				}
+			});
+		}
+		
+	}
+	
+	private void displayNewTipDone(boolean val){
+		newGameTip.setVisibility(val?View.VISIBLE:View.GONE);
+	}
+	
+	
 	
 	
 
@@ -125,6 +155,7 @@ private void startPush() {
 			switchContent(switchFragment);
 			switchFragment = null;
 		}
+		checkNewGame();
 		
 	}
 

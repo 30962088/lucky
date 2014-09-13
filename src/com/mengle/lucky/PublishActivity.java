@@ -292,7 +292,11 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 //		String miniute = minuteText.getText().toString();
 		String miniute = "0";
 		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
-			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title, Uri.fromFile(new File(imagePath)).toString(), A, B, C, jishu));
+			String fileuri="";
+			if(imagePath != null){
+				fileuri = Uri.fromFile(new File(imagePath)).toString();
+			}
+			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title,fileuri , A, B, C, jishu));
 		}
 		
 	}

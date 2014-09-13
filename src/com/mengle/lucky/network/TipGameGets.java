@@ -5,55 +5,61 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.mengle.lucky.network.IUserListRequest.Result;
-
 import android.text.TextUtils;
 
-public class UserFollowingRequest extends Request implements IUserListRequest{
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.mengle.lucky.network.GameLibraryGets.Result;
 
-	public static class Params{
-		protected int uid;
+public class TipGameGets extends Request{
+
+	public static class Param{
+		protected Integer uid;
 		protected String token;
-		protected int vuid;
-		protected int start;
-		
-		protected int limit;
-
-		public Params(int uid, String token, int vuid, int start, int limit) {
+		public Param(Integer uid, String token) {
 			super();
 			this.uid = uid;
 			this.token = token;
-			this.vuid = vuid;
-			this.start = start;
-			this.limit = limit;
 		}
 		
-		
 	}
 	
-	private Params params;
+	private Param param;
+	
+	private int count;
 	
 	
 	
-	private List<Result> results = new ArrayList<IUserListRequest.Result>();
-	
-	public UserFollowingRequest(Params params) {
+	public TipGameGets(Param param) {
 		super();
-		this.params = params;
+		this.param = param;
 	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public static class Result{
+		private int uid;
+		public int getUid() {
+			return uid;
+		}
+	}
+	
+	private List<Result> results = new ArrayList<TipGameGets.Result>();
 
+	
+	public List<Result> getResults() {
+		return results;
+	}
 	@Override
 	public void onSuccess(String data) {
-		
 		if(!TextUtils.isEmpty(data)){
 			results = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
-			
 		}
 		
+		
 	}
-
 
 	@Override
 	public void onError(int code, String msg) {
@@ -76,19 +82,13 @@ public class UserFollowingRequest extends Request implements IUserListRequest{
 	@Override
 	public String getURL() {
 		// TODO Auto-generated method stub
-		return HOST+"user/followings/";
+		return HOST+"tip/game/uids/";
 	}
 
 	@Override
 	public List<NameValuePair> fillParams() {
 		// TODO Auto-generated method stub
-		return build(params);
-	}
-
-	@Override
-	public List<Result> getResults() {
-		// TODO Auto-generated method stub
-		return results;
+		return build(param);
 	}
 
 }

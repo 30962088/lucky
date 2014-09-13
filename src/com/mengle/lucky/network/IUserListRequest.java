@@ -20,6 +20,7 @@ public interface IUserListRequest extends IRequest{
 		private int win_count;
 		private int fail_count;
 		private int lost_count;
+		private boolean hasNewGame;
 		public int getUid() {
 			return uid;
 		}
@@ -48,10 +49,15 @@ public interface IUserListRequest extends IRequest{
 			return avatar;
 		}
 		public Model toModel(){
-			Model model = new Model(uid, nickname, avatar, title, gold_coin, win_count, lost_count, fail_count, followed==1?true:false);
+			Model model = new Model(uid, nickname, avatar, title, gold_coin, win_count, lost_count, fail_count, followed==1?true:false,hasNewGame);
 			return model;
 		}
-		
+		public void setHasNewGame(boolean hasNewGame) {
+			this.hasNewGame = hasNewGame;
+		}
+		public boolean isHasNewGame() {
+			return hasNewGame;
+		}
 		public static List<Model> toModels(List<Result> results){
 			List<Model> list = new ArrayList<Model>();
 			for(Result result:results){

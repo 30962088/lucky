@@ -146,10 +146,13 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	private TextView fansText;
 	
 	private TextView focusText;
+	
+	private View newGameTip;
 
 	private void init() {
 		setVisibility(View.GONE);
 		LayoutInflater.from(getContext()).inflate(R.layout.user_head, this);
+		newGameTip = findViewById(R.id.new_game_tip);
 		iconHead = (ImageView) findViewById(R.id.icon_head);
 		iconHead.setOnClickListener(this);
 		btnFocusView = (CheckBox) findViewById(R.id.btn_focus);
@@ -366,6 +369,10 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	
 	
 	private int requestCount = 0;
+	
+	public void displayNewGame(boolean val){
+		newGameTip.setVisibility(val?View.VISIBLE:View.GONE);
+	}
 	
 	private void showNewMsg(){
 		long count = Msg.getNewCount(getContext())+Notice.getNewCount(getContext());

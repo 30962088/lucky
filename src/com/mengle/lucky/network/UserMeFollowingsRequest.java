@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mengle.lucky.network.IUserListRequest.Result;
 
 import android.text.TextUtils;
 
@@ -40,6 +41,15 @@ public class UserMeFollowingsRequest extends Request implements IUserListRequest
 	public void onSuccess(String data) {
 		if(!TextUtils.isEmpty(data)){
 			results = new Gson().fromJson(data, new TypeToken<List<Result>>(){}.getType());
+			for(Result result : results){
+				for(TipGameGets.Result rs : results2){
+					if(result.getUid() == rs.getUid()){
+						result.setHasNewGame(true);
+					}else{
+						result.setHasNewGame(false);
+					}
+				}
+			}
 		}
 		
 	}
@@ -54,6 +64,17 @@ public class UserMeFollowingsRequest extends Request implements IUserListRequest
 	public void onResultError(int code, String msg) {
 		// TODO Auto-generated method stub
 		
+	}
+	private List<TipGameGets.Result> results2;
+	@Override
+	public void request() {
+		if(params.start == 0){
+			TipGameGets gameGets = new TipGameGets(new TipGameGets.Param(params.uid,params.token));
+			gameGets.request();
+			results2 = gameGets.getResults();
+		}
+		
+		super.request();
 	}
 
 	@Override

@@ -8,10 +8,12 @@ import com.mengle.lucky.fragments.UserGamingFragment;
 import com.mengle.lucky.network.IUserGet;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.TipGameRead;
 import com.mengle.lucky.network.UserGet;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.WigetUtils.OnItemClickListener;
 import com.mengle.lucky.wiget.UserHeadView;
@@ -103,6 +105,13 @@ public class ZoneActivity extends FragmentActivity implements
 		
 		tabTitleView = (TextView) findViewById(R.id.tab_title);
 		
+		readGame();
+	}
+
+	private void readGame() {
+		User user = new User(this);
+		TipGameRead read = new TipGameRead(new TipGameRead.Param(user.getUid(), user.getToken(), uid));
+		RequestAsync.request(read, null);
 		
 	}
 

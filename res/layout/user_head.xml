@@ -71,13 +71,13 @@
             android:layout_marginTop="21dp"
             android:background="#80ffffff" />
 
-        <ImageView 
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:src="@drawable/bg_user_bottom"
+            android:layout_alignParentBottom="true"
             android:scaleType="centerCrop"
-            android:layout_alignParentBottom="true"/>
-        
+            android:src="@drawable/bg_user_bottom" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -188,25 +188,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginTop="9dp"
+                android:background="#fff"
                 android:paddingLeft="1px"
-                android:paddingRight="1px"
-                android:background="#fff" >
+                android:paddingRight="1px" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="#f1f1f2"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:background="#f1f1f2" >
+                    android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/focus_text"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="我关注的用户"
-                        android:textColor="#768082"
-                        android:textSize="11sp" />
+                        android:gravity="center" >
+
+                        <View 
+                            android:visibility="gone"
+                            android:id="@+id/new_game_tip"
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/new_tip"/>
+                        
+                        <TextView
+                            android:id="@+id/focus_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="我关注的用户"
+                            android:textColor="#768082"
+                            android:textSize="11sp" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/focus_count"

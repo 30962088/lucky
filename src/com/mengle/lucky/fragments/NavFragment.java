@@ -7,12 +7,14 @@ import com.mengle.lucky.network.Login.Params;
 import com.mengle.lucky.network.Login;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
+import com.mengle.lucky.network.TipGameGet;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.UserMe;
 
 import com.mengle.lucky.utils.OauthUtils;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.OauthUtils.Callback;
+import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.LoadingPopup;
 import com.mengle.lucky.wiget.UserHeadView;
 
@@ -99,8 +101,29 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 			notLoginView.setVisibility(View.GONE);
 			headView.setVisibility(View.VISIBLE);
 			login();
+			checkNewGame();
 		}
 
+	}
+	
+	private void checkNewGame(){
+		User user = new User(getActivity());
+		if(user.isLogin()){
+			final TipGameGet gameGet = new TipGameGet(new TipGameGet.Param(user.getUid(), user.getToken()));
+			RequestAsync.request(gameGet, new Async() {
+				
+				@Override
+				public void onPostExecute(Request request) {
+					displayNewTipDone(gameGet.getCount()>0?true:false);
+					
+				}
+			});
+		}
+		
+	}
+	
+	private void displayNewTipDone(boolean val){
+		headView.displayNewGame(val);
 	}
 
 	public void onClick(View v) {
