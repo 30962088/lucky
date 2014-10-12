@@ -96,6 +96,10 @@ public class ZhuangFragment extends Fragment implements OnClickListener,OnLoadLi
 		loadCat();
 		listView.load(true);
 	}
+	
+	public void refresh(){
+		listView.load(true);
+	}
 
 	private void loadHot() {
 		Preferences.User user = new Preferences.User(getActivity());

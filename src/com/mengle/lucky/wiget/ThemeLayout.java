@@ -336,6 +336,10 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 		return view;
 
 	}
+	
+	public void countPlus(){
+		peronCountView._setCount(peronCountView.getCount()+1);
+	}
 
 	public View getLostView() {
 		return lostView;

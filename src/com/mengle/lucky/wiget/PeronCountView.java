@@ -49,9 +49,20 @@ public class PeronCountView extends FrameLayout {
 		setVisibility(View.VISIBLE);
 	}
 	
+	private int count;
+	
 	public void setCount(Count count){
-		countView.setText(""+count.count);
+		_setCount(count.count);
 		iconView.setBackgroundResource(count.icon);
+	}
+	
+	public void _setCount(int count){
+		this.count = count;
+		countView.setText(""+count);
+	}
+	
+	public int getCount() {
+		return count;
 	}
 
 }

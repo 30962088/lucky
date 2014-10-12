@@ -293,7 +293,9 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			
 			@Override
 			public void onPostExecute(Request request) {
-				// TODO Auto-generated method stub
+				if(request.getStatus() == com.mengle.lucky.network.Request.Status.SUCCESS){
+					themeLayout.countPlus();
+				}
 				
 			}
 		});

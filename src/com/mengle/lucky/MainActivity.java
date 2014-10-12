@@ -275,5 +275,27 @@ private void startPush() {
 	public void setSwitchFragment(Fragment switchFragment) {
 		this.switchFragment = switchFragment;
 	}
+	
+	public static final String ACTION_REFRESH_ZHUANG = "refresh_zhuang";
+	
+	public static final String ACTION_LOGOUT = "logout";
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		super.onNewIntent(intent);
+		if(TextUtils.equals(intent.getAction(), ACTION_REFRESH_ZHUANG)){
+			if(mContent != null && mContent instanceof ZhuangFragment){
+				((ZhuangFragment)mContent).refresh();
+			}
+			
+		}else if(TextUtils.equals(intent.getAction(), ACTION_LOGOUT)){
+			AlertDialog.open(this, "该账号已在其他设备上登录", null);
+		}
+		
+		
+		
+		
+	}
 
 }

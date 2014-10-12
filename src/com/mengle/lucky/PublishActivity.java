@@ -353,6 +353,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 						LoadingPopup.hide(PublishActivity.this);
 						if(createRequest.getGame() != null){
 							Intent intent = new Intent(PublishActivity.this, MainActivity.class);
+							intent.setAction(MainActivity.ACTION_REFRESH_ZHUANG);
 							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 							startActivity(intent);
 						}
