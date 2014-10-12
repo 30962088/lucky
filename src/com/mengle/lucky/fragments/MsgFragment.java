@@ -62,15 +62,7 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		list = Msg.getModelList(getActivity());
-		adapter = new MsgListAdapter(getActivity(), list);
-		listView.setAdapter(adapter);
-		try {
-			request();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		
 	}
@@ -83,7 +75,16 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		checkNew();
+//		checkNew();
+		list = Msg.getModelList(getActivity());
+		adapter = new MsgListAdapter(getActivity(), list);
+		listView.setAdapter(adapter);
+		try {
+			request();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -120,9 +121,7 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 		MsgListAdapter.Message msg = (Message) list.get(position-1);
 		msg.setChecked(false);
 		try {
-			Msg msg2= helper.getMsgDao().queryForId(msg.getId());
-			msg2.setChecked(false);
-			helper.getMsgDao().update(msg2);
+			helper.getMsgDao().executeRaw("update msg set checked=0 where sender like '{\"uid\":\""+msg.getUid()+"\"%';");
 			adapter.notifyDataSetChanged();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
