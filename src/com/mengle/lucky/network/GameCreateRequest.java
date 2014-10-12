@@ -1,15 +1,22 @@
 package com.mengle.lucky.network;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.mengle.lucky.App;
 import com.mengle.lucky.network.model.Game;
+import com.svenkapudija.imageresizer.operations.ImageResize;
+import com.svenkapudija.imageresizer.operations.ResizeMode;
 
 public class GameCreateRequest extends Request{
 
@@ -74,7 +81,13 @@ public class GameCreateRequest extends Request{
 		super();
 		this.param = param;
 		if(image != null){
-			this.image = new File(image);
+			File originImage = new File(image);
+			File compressImage = cropImage(originImage, 640, 400);
+			if(compressImage != null){
+				this.image = compressImage;
+			}else{
+				this.image =originImage ;
+			}
 		}
 		
 	}
@@ -113,6 +126,51 @@ public class GameCreateRequest extends Request{
 	public String getURL() {
 		// TODO Auto-generated method stub
 		return HOST+"game/create/";
+	}
+	
+	private static Bitmap resizeBitmap(String photoPath, int targetW, int targetH) {
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(photoPath, bmOptions);
+	    int photoW = bmOptions.outWidth;
+	    int photoH = bmOptions.outHeight;
+	    Bitmap bitmap = null;
+	    if(targetW<photoW||targetH<photoH){
+	    	bitmap = ImageResize.resize(new File(photoPath),targetW , targetH, ResizeMode.AUTOMATIC);
+	    }else{
+
+		    bmOptions.inJustDecodeBounds = false;
+		    bmOptions.inSampleSize = 1;
+		    bmOptions.inPurgeable = true;
+
+		    bitmap = BitmapFactory.decodeFile(photoPath, bmOptions);
+	    } 
+	    return bitmap;
+	}
+	
+	public static File cropImage(File image, int width,int height){
+		FileOutputStream out = null;
+		File outputDir = App.getInstance().getCacheDir();
+		File outputFile = null;
+		try {
+			outputFile = File.createTempFile("prefix", "extension", outputDir);
+	        Bitmap bitmap = resizeBitmap(image.toString(),width,height);
+	        out = new FileOutputStream(outputFile);
+	        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}finally{
+			try {
+		        if (out != null) {
+		            out.close();
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+		return outputFile;
 	}
 	
 	@Override
