@@ -31,6 +31,7 @@ import android.text.TextUtils;
 
 import com.mengle.lucky.App;
 import com.mengle.lucky.MainActivity;
+import com.mengle.lucky.PublishActivity;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.LoadingPopup;
@@ -85,6 +86,8 @@ public abstract class Request implements Response,IRequest{
 	
 	private String errorMsg;
 	
+	private boolean disable = false;
+	
 	protected Context context;
 	
 	public Request(Context context) {
@@ -108,6 +111,9 @@ public abstract class Request implements Response,IRequest{
 	}
 	
 	public void request(){
+		if(disable){
+			return;
+		}
 		/*if(!Utils.isMobileNetworkAvailable(App.getInstance())){
 			AlertDialog.show(App.getInstance(), "网络未连接");
 			return;
@@ -158,16 +164,19 @@ public abstract class Request implements Response,IRequest{
 						status = Status.SUCCESS;
 					}else{
 						if(TextUtils.equals("用户验证失败！", data)){
-							Utils.tip(App.getInstance(), "该账号已在其他设备上登录");
-							Preferences.User user = new Preferences.User(App.getInstance());
-							user.logout();
-							PushDialog.sletter = null;
-							PushDialog.smsg = null;
-							new Handler(App.currentActivity.getMainLooper()).post(new Runnable() {
+							disable = true;
+//							Utils.tip(App.getInstance(), "该账号已在其他设备上登录");
+							
+							new Handler(context.getMainLooper()).post(new Runnable() {
 								
 								@Override
 								public void run() {
-									MainActivity.open(App.currentActivity);
+
+									Intent intent = new Intent(context, MainActivity.class);
+									intent.setAction(MainActivity.ACTION_LOGOUT);
+									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+									context.startActivity(intent);
+									disable = false;
 									
 								}
 							});

@@ -20,6 +20,7 @@ import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.Preferences.Push;
 import com.mengle.lucky.wiget.AlertDialog;
+import com.mengle.lucky.wiget.PushDialog;
 import com.umeng.update.UmengUpdateAgent;
 
 import android.os.Bundle;
@@ -280,6 +281,8 @@ private void startPush() {
 	
 	public static final String ACTION_LOGOUT = "logout";
 	
+	private boolean flag9 = false;
+	
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// TODO Auto-generated method stub
@@ -290,7 +293,25 @@ private void startPush() {
 			}
 			
 		}else if(TextUtils.equals(intent.getAction(), ACTION_LOGOUT)){
-			AlertDialog.open(this, "该账号已在其他设备上登录", null);
+			Preferences.User user = new Preferences.User(App.getInstance());
+			user.logout();
+			PushDialog.sletter = null;
+			PushDialog.smsg = null;
+			if(!flag9){
+				flag9 = true;
+				System.out.println("zzmzzm");
+				AlertDialog.open(this, "该账号已在其他设备上登录", null);
+				new Handler(getMainLooper()).postDelayed(new Runnable() {
+					
+					@Override
+					public void run() {
+						flag9 = false;
+						
+					}
+				}, 30*1000);
+			}
+			
+			
 		}
 		
 		
