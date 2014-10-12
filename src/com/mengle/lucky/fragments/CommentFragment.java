@@ -148,7 +148,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	
 	private void onPraise(){
 		Preferences.User user = new Preferences.User(getActivity());
-		final GamePraiseRequest praiseRequest = new GamePraiseRequest(new GamePraiseRequest.Params(user.getUid(), user.getToken(), gameId));
+		final GamePraiseRequest praiseRequest = new GamePraiseRequest(getActivity(), new GamePraiseRequest.Params(user.getUid(), user.getToken(), gameId));
 		RequestAsync.request(praiseRequest, new Async() {
 			
 			@Override
@@ -255,7 +255,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		this.offset = offset;
 		this.results = null;
 		Preferences.User user = new Preferences.User(getActivity());
-		GameCommentRequest commentRequest = new GameCommentRequest(new GameCommentRequest.Params(user.getUid(), user.getToken(), gameId, offset, limit));
+		GameCommentRequest commentRequest = new GameCommentRequest(getActivity(), new GameCommentRequest.Params(user.getUid(), user.getToken(), gameId, offset, limit));
 		commentRequest.request();
 		results = commentRequest.getResults();
 		
@@ -304,7 +304,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		if(replyModel != null){
 			uid =  replyModel.getUid();
 		}
-		final GameCommentUpdate commentUpdate = new GameCommentUpdate(new 
+		final GameCommentUpdate commentUpdate = new GameCommentUpdate(getActivity(), new 
 				GameCommentUpdate.Params(user.getUid(), user.getToken(), gameId, uid, replyTextView.getText().toString()));
 		replyTextView.setText("");
 		RequestAsync.request(commentUpdate, new Async() {

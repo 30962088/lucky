@@ -116,7 +116,7 @@ private void startPush() {
 	private void checkNewGame(){
 		User user = new User(this);
 		if(user.isLogin()){
-			final TipGameGet gameGet = new TipGameGet(new TipGameGet.Param(user.getUid(), user.getToken()));
+			final TipGameGet gameGet = new TipGameGet(this, new TipGameGet.Param(user.getUid(), user.getToken()));
 			RequestAsync.request(gameGet, new Async() {
 				
 				@Override

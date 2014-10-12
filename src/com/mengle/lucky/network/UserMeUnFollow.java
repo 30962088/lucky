@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class UserMeUnFollow extends Request{
 
 	public static class Params{
@@ -23,8 +25,8 @@ public class UserMeUnFollow extends Request{
 	
 	
 	
-	public UserMeUnFollow(Params params) {
-		super();
+	public UserMeUnFollow(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

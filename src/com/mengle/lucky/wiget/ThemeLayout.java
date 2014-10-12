@@ -360,7 +360,7 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 				Utils.tip(getContext(), "您已投诉过该竞猜请勿重复投诉");
 				return;
 			}
-			GameComplainRequest complainRequest = new GameComplainRequest(
+			GameComplainRequest complainRequest = new GameComplainRequest(getContext(),
 					new GameComplainRequest.Param(user.getUid(),
 							user.getToken(), theme.id));
 			RequestAsync.request(complainRequest, new Async() {

@@ -4,7 +4,14 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class UserAvatarUpload extends Request{
+
+	public UserAvatarUpload(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
 
 	private int uid;
 	private String token;

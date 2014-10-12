@@ -169,6 +169,7 @@ public class Login extends Request {
 	private Result result;
 
 	public Login(Context context,Params params) {
+		super(context);
 		this.context = context;
 		this.params = params;
 	}

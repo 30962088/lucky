@@ -85,7 +85,7 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 	
 	private void request() {
 		Preferences.User user = new Preferences.User(getContext());
- 		final CampaignsGetRequest getRequest = new CampaignsGetRequest(
+ 		final CampaignsGetRequest getRequest = new CampaignsGetRequest(getContext(),
 				new CampaignsGetRequest.Param(user.getUid(), user.getToken()));
  		RequestAsync.request(getRequest, new Async() {
 			

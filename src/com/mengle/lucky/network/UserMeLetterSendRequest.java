@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class UserMeLetterSendRequest extends Request{
 
 	public static class Param{
@@ -25,8 +27,8 @@ public class UserMeLetterSendRequest extends Request{
 	
 	
 	
-	public UserMeLetterSendRequest(Param param) {
-		super();
+	public UserMeLetterSendRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

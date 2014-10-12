@@ -107,7 +107,7 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 	public boolean onLoad(int offset, int limit) {
 		boolean hasMore = false;
 		this.offset = offset;
-		UserGameCreatorRequest request = new UserGameCreatorRequest(new UserGameCreatorRequest.Params(user.getUid(), user.getToken(),uid, offset, limit));
+		UserGameCreatorRequest request = new UserGameCreatorRequest(getActivity(), new UserGameCreatorRequest.Params(user.getUid(), user.getToken(),uid, offset, limit));
 		request.request();
 		
 		if(request.getStatus() == Request.Status.SUCCESS){

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
@@ -77,8 +78,8 @@ public class GameCreateRequest extends Request{
 	
 	
 	
-	public GameCreateRequest(Param param, String image) {
-		super();
+	public GameCreateRequest(Context context, Param param, String image) {
+		super(context);
 		this.param = param;
 		if(image != null){
 			File originImage = new File(image);

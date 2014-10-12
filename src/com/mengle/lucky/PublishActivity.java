@@ -245,7 +245,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void loadCat(){
-		final GameCategoryRequest categoryRequest = new GameCategoryRequest();
+		final GameCategoryRequest categoryRequest = new GameCategoryRequest(this);
 		RequestAsync.request(categoryRequest, new Async(){
 
 			@Override
@@ -341,7 +341,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 			}
 			
 			Preferences.User user = new Preferences.User(this);
-			final GameCreateRequest createRequest = new GameCreateRequest(new GameCreateRequest.
+			final GameCreateRequest createRequest = new GameCreateRequest(this, new GameCreateRequest.
 					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), imagePath);
 			LoadingPopup.show(this);
 			RequestAsync.request(createRequest, new Async() {

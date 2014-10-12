@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.mengle.lucky.network.model.Game;
 
@@ -24,8 +26,8 @@ public class CaiRequest extends Request{
 	
 	private Game game;
 	
-	public CaiRequest(Params params) {
-		super();
+	public CaiRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	

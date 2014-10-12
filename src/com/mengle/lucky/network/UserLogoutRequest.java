@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.mengle.lucky.App;
 import com.mengle.lucky.utils.Utils;
 
@@ -24,8 +26,8 @@ public class UserLogoutRequest extends Request{
 	
 	
 	
-	public UserLogoutRequest(Param param) {
-		super();
+	public UserLogoutRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

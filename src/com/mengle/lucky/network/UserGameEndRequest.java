@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -39,8 +40,8 @@ public class UserGameEndRequest extends Request{
 	}
 	
 	
-	public UserGameEndRequest(Params params) {
-		super();
+	public UserGameEndRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

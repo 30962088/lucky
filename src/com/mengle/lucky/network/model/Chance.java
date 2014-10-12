@@ -77,7 +77,7 @@ public class Chance {
 		if(chance != null){
 			callback.onChanceCount(chance);
 		}else{
-			final GameLibraryDayChanceRequest dayChanceRequest = new GameLibraryDayChanceRequest(
+			final GameLibraryDayChanceRequest dayChanceRequest = new GameLibraryDayChanceRequest(context,
 					new GameLibraryDayChanceRequest.Params(user.getUid(),user.getToken()));
 			RequestAsync.request(dayChanceRequest, new Async() {
 				

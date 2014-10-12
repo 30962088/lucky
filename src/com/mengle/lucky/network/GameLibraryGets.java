@@ -98,7 +98,7 @@ public class GameLibraryGets extends Request{
 	private Preferences.User user;
 	
 	public GameLibraryGets(Context context, Params params) {
-		super();
+		super(context);
 		this.params = params;
 		user = new Preferences.User(context);
 		this.params.last = user.getLastShitiId();

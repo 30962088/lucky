@@ -242,7 +242,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 	private void request() {
 		Preferences.User user = new Preferences.User(this);
 		
-		final GrameGetRequest getRequest = new GrameGetRequest(new Params(
+		final GrameGetRequest getRequest = new GrameGetRequest(this, new Params(
 				user.getUid(), user.getToken(), game_id));
 
 		RequestAsync.request(getRequest, new Async() {
@@ -286,7 +286,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		
 		LoadingPopup.show(this);
 
-		GameBetRequest betRequest = new GameBetRequest(
+		GameBetRequest betRequest = new GameBetRequest(this,
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
 						game_id, lastItem.getId(), themeLayout.getCoin()));
 		RequestAsync.request(betRequest, new Async() {

@@ -100,7 +100,7 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 	public void request() throws SQLException{
 		final Dao<Msg, Integer> dao = new DataBaseHelper(getActivity()).getMsgDao();
 		Preferences.User user = new Preferences.User(getActivity());
-		final MsgGetRequest noticeGetRequest = new MsgGetRequest(new MsgGetRequest.Params(user.getUid(), user.getToken()));
+		final MsgGetRequest noticeGetRequest = new MsgGetRequest(getActivity(), new MsgGetRequest.Params(user.getUid(), user.getToken()));
 		RequestAsync.request(noticeGetRequest, new Async() {
 			
 			public void onPostExecute(Request request) {

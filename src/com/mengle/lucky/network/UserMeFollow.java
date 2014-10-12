@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class UserMeFollow extends Request{
 
 	public static class Params{
@@ -23,8 +25,8 @@ public class UserMeFollow extends Request{
 	
 	
 	
-	public UserMeFollow(Params params) {
-		super();
+	public UserMeFollow(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

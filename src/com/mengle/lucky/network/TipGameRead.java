@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class TipGameRead extends Request{
 
 	public static class Param{
@@ -25,8 +27,8 @@ public class TipGameRead extends Request{
 	
 	
 	
-	public TipGameRead(Param param) {
-		super();
+	public TipGameRead(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 	

@@ -6,6 +6,7 @@ import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -31,8 +32,8 @@ public class UserGet extends Request implements IUserGet{
 	
 	private UserResult user;
 	
-	public UserGet(Params params) {
-		super();
+	public UserGet(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

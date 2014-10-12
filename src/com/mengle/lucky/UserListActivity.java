@@ -106,15 +106,15 @@ public class UserListActivity extends Activity implements OnLoadListener,OnClick
 		IUserListRequest request = null;
 		if(user.getUid() == fuid){
 			if(type == Type.FOLLERS){
-				request = new UserMeFollowersRequest(new UserMeFollowersRequest.Params(fuid, user.getToken(), offset, limit));
+				request = new UserMeFollowersRequest(this,new UserMeFollowersRequest.Params(fuid, user.getToken(), offset, limit));
 			}else{
-				request = new UserMeFollowingsRequest(new UserMeFollowingsRequest.Params(fuid, user.getToken(), offset, limit));
+				request = new UserMeFollowingsRequest(this,new UserMeFollowingsRequest.Params(fuid, user.getToken(), offset, limit));
 			}
 		}else{
 			if(type == Type.FOLLERS){
-				request = new UserFollowersRequest(new UserFollowersRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
+				request = new UserFollowersRequest(this,new UserFollowersRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
 			}else{
-				request = new UserFollowingRequest(new UserFollowingRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
+				request = new UserFollowingRequest(this,new UserFollowingRequest.Params(user.getUid(), user.getToken(),fuid, offset, limit));
 			}
 		}
 		boolean rev = false;

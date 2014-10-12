@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -33,8 +34,8 @@ public class GameGetsRequest extends Request implements IGameGet{
 	
 	private List<Result> list = new ArrayList<Result>();
 	
-	public GameGetsRequest(Pamras pamras) {
-		super();
+	public GameGetsRequest(Context context, Pamras pamras) {
+		super(context);
 		this.pamras = pamras;
 	}
 

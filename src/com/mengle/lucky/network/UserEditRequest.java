@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.mengle.lucky.network.model.User;
 
@@ -37,8 +39,8 @@ public class UserEditRequest extends Request{
 	
 	private User user;
 	
-	public UserEditRequest(Params params) {
-		super();
+	public UserEditRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

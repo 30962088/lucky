@@ -11,6 +11,7 @@ import com.mengle.lucky.adapter.CommentModel;
 import com.mengle.lucky.adapter.CommentModel.Reply;
 import com.mengle.lucky.network.UserRank.Result;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class GameCommentRequest extends Request{
@@ -89,8 +90,8 @@ public class GameCommentRequest extends Request{
 	
 	private List<Result> results = new ArrayList<GameCommentRequest.Result>();
 	
-	public GameCommentRequest(Params params) {
-		super();
+	public GameCommentRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	

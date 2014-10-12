@@ -153,9 +153,9 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 //		btnStar.setChecked(btnStar.isChecked());
 		Request request = null;
 		if(!btnStar.isChecked()){
-			request = new UserMeFollow(new UserMeFollow.Params(user.getUid(), user.getToken(), model.uid));
+			request = new UserMeFollow(getContext(), new UserMeFollow.Params(user.getUid(), user.getToken(), model.uid));
 		}else{
-			request = new UserMeUnFollow(new UserMeUnFollow.Params(user.getUid(), user.getToken(), model.uid));
+			request = new UserMeUnFollow(getContext(), new UserMeUnFollow.Params(user.getUid(), user.getToken(), model.uid));
 		}
 		final Request request2 = request;
 		new Thread(new Runnable() {

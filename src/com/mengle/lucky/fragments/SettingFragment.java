@@ -145,7 +145,7 @@ public class SettingFragment extends Fragment implements OnClickListener{
 	private void login(){
 		Preferences.User user = new Preferences.User(getActivity());
 		if(user.isLogin()){
-			final UserMe userMe = new UserMe(new UserMe.Params(user.getUid(),
+			final UserMe userMe = new UserMe(getActivity(), new UserMe.Params(user.getUid(),
 					user.getToken()));
 			RequestAsync.request(userMe, new Async() {
 

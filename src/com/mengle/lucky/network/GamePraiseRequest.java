@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 
 public class GamePraiseRequest extends Request{
@@ -44,8 +46,8 @@ public class GamePraiseRequest extends Request{
 	
 	private Result result;
 	
-	public GamePraiseRequest(Params params) {
-		super();
+	public GamePraiseRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

@@ -110,7 +110,7 @@ public class ZoneActivity extends FragmentActivity implements
 
 	private void readGame() {
 		User user = new User(this);
-		TipGameRead read = new TipGameRead(new TipGameRead.Param(user.getUid(), user.getToken(), uid));
+		TipGameRead read = new TipGameRead(this,new TipGameRead.Param(user.getUid(), user.getToken(), uid));
 		RequestAsync.request(read, null);
 		
 	}
@@ -121,9 +121,9 @@ public class ZoneActivity extends FragmentActivity implements
 		String token = user.getToken();
 		IUserGet userGet;
 		if(uid == this.uid){
-			userGet = new UserMe(new UserMe.Params(uid, token));
+			userGet = new UserMe(this,new UserMe.Params(uid, token));
 		}else{
-			userGet = new UserGet(new UserGet.Params(uid,token,this.uid));
+			userGet = new UserGet(this,new UserGet.Params(uid,token,this.uid));
 		}
 		
 		final IUserGet finalUserGet = userGet;

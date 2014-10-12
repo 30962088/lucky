@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class UserMeNoticeReceiptRequest extends Request{
 
 	public static class Param{
@@ -23,8 +25,8 @@ public class UserMeNoticeReceiptRequest extends Request{
 	
 	
 	
-	public UserMeNoticeReceiptRequest(Param param) {
-		super();
+	public UserMeNoticeReceiptRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

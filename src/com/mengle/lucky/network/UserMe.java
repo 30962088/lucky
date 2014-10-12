@@ -24,7 +24,7 @@ public class UserMe extends Request implements IUserGet{
 		}
 		
 		Preferences.User user = new Preferences.User(context);
-		final UserMe userMe = new UserMe(new Params(user.getUid(), user.getToken()));
+		final UserMe userMe = new UserMe(context,new Params(user.getUid(), user.getToken()));
 		RequestAsync.request(userMe, new Async() {
 			
 			@Override
@@ -55,8 +55,8 @@ public class UserMe extends Request implements IUserGet{
 	
 	private static UserResult userResult;
 	
-	public UserMe(Params params) {
-		super();
+	public UserMe(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

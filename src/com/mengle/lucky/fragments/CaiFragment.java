@@ -81,7 +81,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		super.onResume();
 		Preferences.User user = new Preferences.User(getActivity());
 		if(user.isLogin()&&!Award.isAward()){
-			final UserDayAwardRequest awardRequest = new UserDayAwardRequest(new UserDayAwardRequest.Param(user.getUid(), user.getToken()));
+			final UserDayAwardRequest awardRequest = new UserDayAwardRequest(getActivity(), new UserDayAwardRequest.Param(user.getUid(), user.getToken()));
 			RequestAsync.request(awardRequest, new Async() {
 				
 				@Override
@@ -185,7 +185,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 	private void request() {
 		Preferences.User user = new Preferences.User(getActivity());
-		final CaiRequest caiRequest = new CaiRequest(new CaiRequest.Params(
+		final CaiRequest caiRequest = new CaiRequest(getActivity(), new CaiRequest.Params(
 				user.getUid(), user.getToken()));
 		RequestAsync.request(caiRequest, new Async() {
 
@@ -216,7 +216,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 		LoadingPopup.show(getActivity());
 		
-		GameBetRequest betRequest = new GameBetRequest(
+		GameBetRequest betRequest = new GameBetRequest(getActivity(),
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
 						game.getId(), lastItem.getId(), game.getGold_coin()));
 		RequestAsync.request(betRequest, null);

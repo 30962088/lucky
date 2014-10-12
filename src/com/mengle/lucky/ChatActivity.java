@@ -145,7 +145,7 @@ public class ChatActivity extends Activity implements OnEditorActionListener,OnC
 		msgText.setText("");
 		final Date date = new Date();
 		Preferences.User user = new Preferences.User(this);
-		UserMeLetterSendRequest sendRequest = new UserMeLetterSendRequest(
+		UserMeLetterSendRequest sendRequest = new UserMeLetterSendRequest(this,
 				new UserMeLetterSendRequest.Param(user.getUid(), user.getToken(), uid, msg));
 		RequestAsync.request(sendRequest, new Async() {
 			

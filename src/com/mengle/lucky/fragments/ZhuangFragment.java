@@ -103,7 +103,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener,OnLoadLi
 
 	private void loadHot() {
 		Preferences.User user = new Preferences.User(getActivity());
-		final GameHotRequest hotRequest = new GameHotRequest(new Params(
+		final GameHotRequest hotRequest = new GameHotRequest(getActivity(), new Params(
 				user.getUid(), user.getToken()));
 		RequestAsync.request(hotRequest, new Async() {
 
@@ -118,7 +118,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener,OnLoadLi
 	}
 
 	private void loadCat() {
-		final GameCategoryRequest categoryRequest = new GameCategoryRequest();
+		final GameCategoryRequest categoryRequest = new GameCategoryRequest(getActivity());
 		RequestAsync.request(categoryRequest, new Async() {
 
 			@Override
@@ -158,7 +158,7 @@ public class ZhuangFragment extends Fragment implements OnClickListener,OnLoadLi
 		Preferences.User user = new Preferences.User(getActivity());
 		this.offset = offset;
 		boolean hasMore = true;
-		GameGetsRequest request = new GameGetsRequest(new Pamras(user.getUid(), user
+		GameGetsRequest request = new GameGetsRequest(getActivity(), new Pamras(user.getUid(), user
 				.getToken(), cid));
 		request.request(offset, limit);
 		results =  request.getResult();

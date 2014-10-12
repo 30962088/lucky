@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.mengle.lucky.network.GameCommentRequest.Result;
 
@@ -31,8 +33,8 @@ public class GameCommentUpdate extends Request{
 	
 	private Result result;
 	
-	public GameCommentUpdate(Params params) {
-		super();
+	public GameCommentUpdate(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.network.IUserListRequest.Result;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class UserMeFollowingsRequest extends Request implements IUserListRequest{
@@ -32,8 +33,8 @@ public class UserMeFollowingsRequest extends Request implements IUserListRequest
 	
 	private List<Result> results = new ArrayList<IUserListRequest.Result>();
 	
-	public UserMeFollowingsRequest(Params params) {
-		super();
+	public UserMeFollowingsRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 
@@ -69,7 +70,7 @@ public class UserMeFollowingsRequest extends Request implements IUserListRequest
 	@Override
 	public void request() {
 		if(params.start == 0){
-			TipGameGets gameGets = new TipGameGets(new TipGameGets.Param(params.uid,params.token));
+			TipGameGets gameGets = new TipGameGets(context, new TipGameGets.Param(params.uid,params.token));
 			gameGets.request();
 			results2 = gameGets.getResults();
 		}

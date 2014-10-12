@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -30,8 +31,8 @@ public class TipGameGets extends Request{
 	
 	
 	
-	public TipGameGets(Param param) {
-		super();
+	public TipGameGets(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 	

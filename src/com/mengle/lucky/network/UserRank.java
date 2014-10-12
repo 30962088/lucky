@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -59,8 +60,8 @@ public class UserRank extends Request{
 	
 	private List<Result> results = new ArrayList<UserRank.Result>();
 	
-	public UserRank(Params params) {
-		super();
+	public UserRank(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	

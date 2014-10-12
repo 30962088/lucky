@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.content.Context;
+
 public class UserMeAvatarUploadRequest extends Request{
 
 	public static class Param{
@@ -34,8 +36,8 @@ public class UserMeAvatarUploadRequest extends Request{
 	
 	
 	
-	public UserMeAvatarUploadRequest(Param param) {
-		super();
+	public UserMeAvatarUploadRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

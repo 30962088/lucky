@@ -46,7 +46,7 @@ public class SearchListActivity extends BaseActivity{
 		listView = (GameListView) findViewById(R.id.listview);
 		keyword = getIntent().getStringExtra("keyword");
 		Preferences.User user = new Preferences.User(this);
-		listView.setRequest(new GameSearchRequest(new Pamras(user.getUid(), user.getToken(), keyword)));
+		listView.setRequest(new GameSearchRequest(this, new Pamras(user.getUid(), user.getToken(), keyword)));
 		listView.load(true);
 	}
 

@@ -241,7 +241,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 
 	private void fill() {
 		Preferences.User user = new Preferences.User(this);
-		final UserMe userMe = new UserMe(new UserMe.Params(user.getUid(),
+		final UserMe userMe = new UserMe(this,new UserMe.Params(user.getUid(),
 				user.getToken()));
 		RequestAsync.request(userMe, new Async() {
 
@@ -333,7 +333,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 		
 		LoadingPopup.show(this);
 		
-		UserEditRequest editRequest = new UserEditRequest(new Params(
+		UserEditRequest editRequest = new UserEditRequest(this, new Params(
 				user.getUid(), user.getToken(), nicknameView.getText()
 						.toString(), gender, province, city, qqView.getText()
 						.toString(), phoneView.getText().toString()));
@@ -455,7 +455,7 @@ public class UserSettingActivity extends Activity implements OnClickListener,
 			@Override
 			public void onConfirm() {
 				LoadingPopup.show(UserSettingActivity.this);
-				UserLogoutRequest logoutRequest = new UserLogoutRequest(
+				UserLogoutRequest logoutRequest = new UserLogoutRequest(UserSettingActivity.this,
 						new UserLogoutRequest.Param(user.getUid(), user.getToken()));
 				
 				RequestAsync.request(logoutRequest, new Async() {

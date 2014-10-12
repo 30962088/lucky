@@ -108,7 +108,7 @@ public class UserGamingFragment extends Fragment implements OnLoadListener,OnCli
 	public boolean onLoad(int offset, int limit) {
 		boolean hasMore = false;
 		this.offset = offset;
-		UserGamingRequest request = new UserGamingRequest(new Params(user.getUid(), user.getToken(),uid, offset, limit));
+		UserGamingRequest request = new UserGamingRequest(getActivity(), new Params(user.getUid(), user.getToken(),uid, offset, limit));
 		request.request();
 		
 		if(request.getStatus() == Request.Status.SUCCESS){

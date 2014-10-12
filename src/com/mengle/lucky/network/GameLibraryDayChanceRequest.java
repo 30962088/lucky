@@ -32,8 +32,8 @@ public class GameLibraryDayChanceRequest extends Request{
 	
 	private int change;
 	
-	public GameLibraryDayChanceRequest(Params params) {
-		super();
+	public GameLibraryDayChanceRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

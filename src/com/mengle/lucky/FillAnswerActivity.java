@@ -137,7 +137,7 @@ public class FillAnswerActivity extends Activity implements OnClickListener{
 		}
 		Preferences.User user = new Preferences.User(this);
 		LoadingPopup.show(this);
-		GameFillAnswerRequest answerRequest = new GameFillAnswerRequest(
+		GameFillAnswerRequest answerRequest = new GameFillAnswerRequest(this,
 				new GameFillAnswerRequest.Param(user.getUid(), user.getToken(), param.game_id, param.opts.get(ArrayUtils.indexOf(numbers, answer)).getId(), reason));
 		RequestAsync.request(answerRequest, new Async() {
 			

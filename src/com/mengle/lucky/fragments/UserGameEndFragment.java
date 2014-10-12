@@ -109,7 +109,7 @@ public class UserGameEndFragment extends Fragment implements OnLoadListener,OnCl
 	public boolean onLoad(int offset, int limit) {
 		boolean hasMore = false;
 		this.offset = offset;
-		UserGameEndRequest request = new UserGameEndRequest(new UserGameEndRequest.Params( user.getUid(),user.getToken(),uid, offset, limit));
+		UserGameEndRequest request = new UserGameEndRequest(getActivity(), new UserGameEndRequest.Params( user.getUid(),user.getToken(),uid, offset, limit));
 		request.request();
 		
 		if(request.getStatus() == Request.Status.SUCCESS){

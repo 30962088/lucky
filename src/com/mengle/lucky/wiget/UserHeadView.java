@@ -295,10 +295,10 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		Preferences.User user = new Preferences.User(getContext());
 		Request request = null;
 		if (!btnFocusView.isChecked()) {
-			request = new UserMeUnFollow(new UserMeUnFollow.Params(
+			request = new UserMeUnFollow(getContext(), new UserMeUnFollow.Params(
 					user.getUid(), user.getToken(), userHeadData.uid));
 		} else {
-			request = new UserMeFollow(new UserMeFollow.Params(user.getUid(),
+			request = new UserMeFollow(getContext(), new UserMeFollow.Params(user.getUid(),
 					user.getToken(), userHeadData.uid));
 		}
 		RequestAsync.request(request, new Async() {
@@ -330,7 +330,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		}
 		
 		if (type == Type.AVATAR) {
-			UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(param1);
+			UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(getContext(), param1);
 			RequestAsync.request(uploadRequest, new Async() {
 				
 				@Override
@@ -348,7 +348,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			
 		} else {
 			
-			UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(param2);
+			UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(getContext(), param2);
 			RequestAsync.request(uploadRequest, new Async() {
 				
 				@Override
@@ -387,8 +387,8 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		requestCount = 0;
 		Preferences.User user = new Preferences.User(getContext());
 		if(userHeadData != null && user.getUid() == userHeadData.uid){
-			NoticeGetRequest noticeGetRequest = new NoticeGetRequest(new NoticeGetRequest.Params(user.getUid(), user.getToken()));
-			MsgGetRequest msgGetRequest = new MsgGetRequest(new MsgGetRequest.Params(user.getUid(), user.getToken()));
+			NoticeGetRequest noticeGetRequest = new NoticeGetRequest(getContext(), new NoticeGetRequest.Params(user.getUid(), user.getToken()));
+			MsgGetRequest msgGetRequest = new MsgGetRequest(getContext(),new MsgGetRequest.Params(user.getUid(), user.getToken()));
 			
 			RequestAsync.request(noticeGetRequest, new Async() {
 				

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.mengle.lucky.network.model.User;
 
@@ -24,8 +26,8 @@ public class SNSUnBindRequest extends Request{
 	
 	private Params params;
 	
-	public SNSUnBindRequest(Params params) {
-		super();
+	public SNSUnBindRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	

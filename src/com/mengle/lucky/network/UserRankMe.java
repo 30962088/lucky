@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class UserRankMe extends Request{
@@ -23,8 +24,8 @@ public class UserRankMe extends Request{
 	
 	
 	
-	public UserRankMe(Params params) {
-		super();
+	public UserRankMe(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	

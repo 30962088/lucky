@@ -46,7 +46,7 @@ public class SearchActivity extends BaseActivity implements OnClickListener {
 
 	private void request() {
 		Preferences.User user = new Preferences.User(this);
-		final GameHotKeywordRequest keywordRequest = new GameHotKeywordRequest(
+		final GameHotKeywordRequest keywordRequest = new GameHotKeywordRequest(this,
 				new GameHotKeywordRequest.Param(user.getUid(),user.getToken()));
 		RequestAsync.request(keywordRequest, new Async() {
 			

@@ -89,7 +89,7 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 	public void request() throws SQLException{
 		
 		Preferences.User user = new Preferences.User(getActivity());
-		final NoticeGetRequest noticeGetRequest = new NoticeGetRequest(new NoticeGetRequest.Params(user.getUid(), user.getToken()));
+		final NoticeGetRequest noticeGetRequest = new NoticeGetRequest(getActivity(), new NoticeGetRequest.Params(user.getUid(), user.getToken()));
 		RequestAsync.request(noticeGetRequest, new Async() {
 			
 			public void onPostExecute(Request request) {

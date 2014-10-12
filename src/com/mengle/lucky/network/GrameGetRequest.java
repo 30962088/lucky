@@ -6,6 +6,7 @@ import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -78,8 +79,8 @@ public class GrameGetRequest extends Request{
 	
 	
 	
-	public GrameGetRequest(Params params) {
-		super();
+	public GrameGetRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

@@ -95,7 +95,7 @@ public class AicaiFragment extends Fragment implements OnLoadListener,OnItemClic
 			rankView.setText("未登录，无法查看我的排名");
 			rankView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
 		}else{
-			final UserRankMe rankMe = new UserRankMe(new UserRankMe.Params(user.getUid(), user.getToken()));
+			final UserRankMe rankMe = new UserRankMe(getActivity(), new UserRankMe.Params(user.getUid(), user.getToken()));
 			RequestAsync.request(rankMe, new Async() {
 				
 				@Override
@@ -125,7 +125,7 @@ public class AicaiFragment extends Fragment implements OnLoadListener,OnItemClic
 	public boolean onLoad(int offset, int limit) {
 		results = null;
 		this.offset = offset;
-		UserRank rank = new UserRank(new UserRank.Params(user.getUid(), user.getToken(), offset,limit));
+		UserRank rank = new UserRank(getActivity(), new UserRank.Params(user.getUid(), user.getToken(), offset,limit));
 		rank.request();
 		results = rank.getResults();
 		

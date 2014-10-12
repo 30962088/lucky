@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.mengle.lucky.App;
 import com.mengle.lucky.utils.Utils;
 
@@ -26,8 +28,8 @@ public class GameComplainRequest extends Request{
 	
 	
 	
-	public GameComplainRequest(Param param) {
-		super();
+	public GameComplainRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

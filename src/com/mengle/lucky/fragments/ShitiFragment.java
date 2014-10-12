@@ -183,7 +183,7 @@ public class ShitiFragment extends Fragment implements OnItemClickListener,OnCli
 			Utils.tip(getActivity(), "您还没有作答");
 			return;
 		}
-		final GameLibrarySubmitRequest submitRequest = new GameLibrarySubmitRequest(toSubmitParam());
+		final GameLibrarySubmitRequest submitRequest = new GameLibrarySubmitRequest(getActivity(), toSubmitParam());
 		RequestAsync.request(submitRequest, new Async() {
 			
 			@Override

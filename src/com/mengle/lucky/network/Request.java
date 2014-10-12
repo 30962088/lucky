@@ -24,6 +24,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -84,8 +85,10 @@ public abstract class Request implements Response,IRequest{
 	
 	private String errorMsg;
 	
-	public Request() {
-		
+	protected Context context;
+	
+	public Request(Context context) {
+		this.context = context;
 	}
 	
 	public static class BinaryBody{

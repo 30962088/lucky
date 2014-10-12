@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class UserFollowersRequest extends Request implements IUserListRequest{
@@ -36,8 +37,8 @@ public class UserFollowersRequest extends Request implements IUserListRequest{
 	
 	private List<Result> results = new ArrayList<IUserListRequest.Result>();
 	
-	public UserFollowersRequest(Params params) {
-		super();
+	public UserFollowersRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

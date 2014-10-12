@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -38,8 +39,8 @@ public class MsgGetRequest extends Request{
 	
 	
 	
-	public MsgGetRequest(Params params) {
-		super();
+	public MsgGetRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	
@@ -62,7 +63,7 @@ public class MsgGetRequest extends Request{
 					}
 					ids[i] = obj.getString("id");
 				}
-				UserMeLetterReceiptRequest receiptRequest = new UserMeLetterReceiptRequest(
+				UserMeLetterReceiptRequest receiptRequest = new UserMeLetterReceiptRequest(context,
 						new UserMeLetterReceiptRequest.Param(params.uid, params.token, ids));
 				RequestAsync.request(receiptRequest, null);
 				msgs = new Gson().fromJson(array.toString(), new TypeToken<List<Msg>>(){}.getType());

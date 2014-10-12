@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -35,8 +36,8 @@ public class NoticeGetRequest extends Request{
 	
 	
 	
-	public NoticeGetRequest(Params params) {
-		super();
+	public NoticeGetRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 	
@@ -60,7 +61,7 @@ public class NoticeGetRequest extends Request{
 				ids[i] = ""+notices.get(i).getId();
 			}
 			Preferences.User user = new Preferences.User(App.getInstance());
-			UserMeNoticeReceiptRequest receiptRequest = new UserMeNoticeReceiptRequest(
+			UserMeNoticeReceiptRequest receiptRequest = new UserMeNoticeReceiptRequest(context,
 					new UserMeNoticeReceiptRequest.Param(user.getUid(),	user.getToken(), ids));
 			RequestAsync.request(receiptRequest, null);
 		}

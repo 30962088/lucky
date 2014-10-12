@@ -108,7 +108,7 @@ public class PushDialog implements OnClickListener{
 	private void changeLetter(boolean val){
 		Preferences.User user = new Preferences.User(context);
 		if(user.isLogin()){
-			UserMeSetPushLetterRequest letterRequest = new UserMeSetPushLetterRequest(new UserMeSetPushLetterRequest.Param(user.getUid(), user.getToken(), val?1:0));
+			UserMeSetPushLetterRequest letterRequest = new UserMeSetPushLetterRequest(context, new UserMeSetPushLetterRequest.Param(user.getUid(), user.getToken(), val?1:0));
 			RequestAsync.request(letterRequest, null);
 		}
 	}
@@ -116,7 +116,7 @@ public class PushDialog implements OnClickListener{
 	private void changeMsg(boolean val){
 		Preferences.User user = new Preferences.User(context);
 		if(user.isLogin()){
-			UserMeSetPushNoticeRequest letterRequest = new UserMeSetPushNoticeRequest(new UserMeSetPushNoticeRequest.Param(user.getUid(), user.getToken(), val?1:0));
+			UserMeSetPushNoticeRequest letterRequest = new UserMeSetPushNoticeRequest(context,new UserMeSetPushNoticeRequest.Param(user.getUid(), user.getToken(), val?1:0));
 			RequestAsync.request(letterRequest, null);
 		}
 	}

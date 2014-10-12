@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.mengle.lucky.wiget.ShitiOverView.Model;
 
@@ -73,8 +75,8 @@ public class GameLibrarySubmitRequest extends Request{
 	
 	
 	
-	public GameLibrarySubmitRequest(Param param) {
-		super();
+	public GameLibrarySubmitRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.network.UserRank.Result;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class CampaignsGetRequest extends Request{
@@ -60,8 +61,8 @@ public class CampaignsGetRequest extends Request{
 	}
 	
 	
-	public CampaignsGetRequest(Param param) {
-		super();
+	public CampaignsGetRequest(Context context, Param param) {
+		super(context);
 		this.param = param;
 	}
 

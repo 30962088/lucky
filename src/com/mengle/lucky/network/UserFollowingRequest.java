@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.network.IUserListRequest.Result;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 public class UserFollowingRequest extends Request implements IUserListRequest{
@@ -39,8 +40,8 @@ public class UserFollowingRequest extends Request implements IUserListRequest{
 	
 	private List<Result> results = new ArrayList<IUserListRequest.Result>();
 	
-	public UserFollowingRequest(Params params) {
-		super();
+	public UserFollowingRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

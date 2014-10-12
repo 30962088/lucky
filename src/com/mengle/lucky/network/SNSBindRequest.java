@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 public class SNSBindRequest extends Request{
 
 	public static class Params{
@@ -26,8 +28,8 @@ public class SNSBindRequest extends Request{
 	private Params params;
 
 	
-	public SNSBindRequest(Params params) {
-		super();
+	public SNSBindRequest(Context context, Params params) {
+		super(context);
 		this.params = params;
 	}
 

@@ -75,7 +75,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 
 	private void login() {
 		Preferences.User user = new Preferences.User(getActivity());
-		final UserMe userMe = new UserMe(new UserMe.Params(user.getUid(),
+		final UserMe userMe = new UserMe(getActivity(), new UserMe.Params(user.getUid(),
 				user.getToken()));
 		RequestAsync.request(userMe, new Async() {
 
@@ -109,7 +109,7 @@ public class NavFragment extends Fragment implements OnClickListener,Callback {
 	private void checkNewGame(){
 		User user = new User(getActivity());
 		if(user.isLogin()){
-			final TipGameGet gameGet = new TipGameGet(new TipGameGet.Param(user.getUid(), user.getToken()));
+			final TipGameGet gameGet = new TipGameGet(getActivity(),new TipGameGet.Param(user.getUid(), user.getToken()));
 			RequestAsync.request(gameGet, new Async() {
 				
 				@Override

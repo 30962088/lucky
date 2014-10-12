@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.http.NameValuePair;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mengle.lucky.adapter.CatListAdater;
@@ -13,6 +15,11 @@ import com.mengle.lucky.adapter.CatListAdater.CatList.Cat;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
 
 public class GameCategoryRequest extends Request{
+
+	public GameCategoryRequest(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
 
 	public static class Category{
 		private int id;
