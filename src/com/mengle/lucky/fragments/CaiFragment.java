@@ -168,11 +168,11 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 							int position, long id) {
 						if (endTime1 > 0) {
 							QuestionItem item = list.get(position);
-							/*if (lastItem != null) {
+							if (lastItem != null) {
 								lastItem.setType(QuestionLayout.TYPE_NORMAL);
 							}
 
-							item.setType(QuestionLayout.TYPE_MOST);*/
+							item.setType(QuestionLayout.TYPE_MOST);
 
 							themeLayout.getAdapter().notifyDataSetChanged();
 

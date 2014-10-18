@@ -105,8 +105,8 @@ public class Utils {
 		public Wechat(Context context) {
 			
 			this.context = context;
-			api = WXAPIFactory.createWXAPI(context,"wx1897ea1cb217a00e");
-			api.registerApp("wx1897ea1cb217a00e");
+			api = WXAPIFactory.createWXAPI(context,"wx79a22d52f7174c29");
+			api.registerApp("wx79a22d52f7174c29");
 		}
 		
 		public void sharePhoto(Bitmap bmp,int scene){
