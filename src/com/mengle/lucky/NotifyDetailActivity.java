@@ -100,18 +100,24 @@ public class NotifyDetailActivity extends Activity {
 		
 		List<Symbol> symbols = new ArrayList<Symbol>();
 		{
-			Pattern pattern = Pattern.compile("<user:([0-9]{1,})>(.+?)<\\/user>");
+			Pattern pattern = Pattern.compile("<(user|game):([0-9]{1,})>(.+?)<\\/(user|game)>");
 			Matcher matcher = pattern.matcher(content);
 			while (matcher.find()) {
 				int start = matcher.start();
 				int end = matcher.end();
-				int id = Integer.parseInt(matcher.group(1));
-				String name = matcher.group(2);
-				symbols.add(new Symbol(id,name,start, end, Type.USER));
+				int id = Integer.parseInt(matcher.group(2));
+				String name = matcher.group(3);
+				Type type = null;
+				if(matcher.group(1).equals("user")){
+					type = Type.USER;
+				}else{
+					type = Type.GAME;
+				}
+				symbols.add(new Symbol(id,name,start, end, type));
 			}
 		}
 		
-		{
+		/*{
 			Pattern pattern = Pattern.compile("<game:([0-9]{1,})>(.+?)<\\/game>");
 			Matcher matcher = pattern.matcher(content);
 			while (matcher.find()) {
@@ -121,7 +127,7 @@ public class NotifyDetailActivity extends Activity {
 				String name = matcher.group(2);
 				symbols.add(new Symbol(id,name,start, end, Type.GAME));
 			}
-		}
+		}*/
 		
 		
 		
@@ -176,6 +182,7 @@ public class NotifyDetailActivity extends Activity {
 			Notice notice = dao.queryForId(id);
 			titleView.setText(notice.getTitle());
 			timeView.setText(notice.getSend_time());
+//			setContent("您发起的游戏<game:6>写代码累不累？</game>被<user:10002>qigemingzizhenfeishia</user>评论啦，点击查看详情");
 //			setContent("<user:40>某某某</user>,<user:40>某某某</user>,<user:40>某某某</user>,<game:40>游戏</game>,<game:40>游戏</game>,我擦你妈妈吗啊啊啊啊啊");
 			setContent(notice.getContent());
 			notice.setChecked(false);
