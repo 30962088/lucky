@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/img"
+        <com.mengle.lucky.wiget.FixedAspectRatioFrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/bg_radius_blue_alpha"
-            android:gravity="center"
-            android:padding="6dp" >
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
 
-            <View
-                android:layout_width="18.5dp"
-                android:layout_height="18.5dp"
-                android:background="@drawable/icon_clock_white" />
-
-            <TextView
-                android:id="@+id/endtime"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="PM 12：00 结束"
-                android:textColor="#fff"
-                android:textSize="9sp" />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/bg_radius_blue_alpha"
+                android:gravity="center"
+                android:padding="6dp" >
 
-    <include layout="@layout/zhuang_list_item1" />
+                <View
+                    android:layout_width="18.5dp"
+                    android:layout_height="18.5dp"
+                    android:background="@drawable/icon_clock_white" />
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/endtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="PM 12：00 结束"
+                    android:textColor="#fff"
+                    android:textSize="9sp" />
+            </LinearLayout>
+        </com.mengle.lucky.wiget.FixedAspectRatioFrameLayout>
+
+        <include layout="@layout/zhuang_list_item1" />
+    </LinearLayout>
+
+</FrameLayout>

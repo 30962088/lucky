@@ -49,6 +49,12 @@ public class CampaignsGetRequest extends Request{
 		public int getHeight() {
 			return height;
 		}
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		public void setImage(String image) {
+			this.image = image;
+		}
 		
 	}
 	

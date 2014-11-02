@@ -7,6 +7,9 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
+import com.mengle.lucky.network.model.User;
+
 import android.content.Context;
 
 public class UserMeHeadUploadRequest extends Request{
@@ -34,16 +37,20 @@ public class UserMeHeadUploadRequest extends Request{
 	
 	private Param param;
 	
-	
+	private User user;
 	
 	public UserMeHeadUploadRequest(Context context, Param param) {
 		super(context);
 		this.param = param;
 	}
+	
+	public User getUser() {
+		return user;
+	}
 
 	@Override
 	public void onSuccess(String data) {
-		// TODO Auto-generated method stub
+		user = new Gson().fromJson(data, User.class);
 		
 	}
 

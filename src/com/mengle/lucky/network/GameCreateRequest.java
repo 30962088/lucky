@@ -129,33 +129,122 @@ public class GameCreateRequest extends Request{
 		return HOST+"game/create/";
 	}
 	
+
+
+	public static Bitmap getBitmapFromFile(File dst, int width, int height) {
+	    if (null != dst && dst.exists()) {
+	        BitmapFactory.Options opts = null;
+	        if (width > 0 && height > 0) {
+	            opts = new BitmapFactory.Options();
+	            opts.inJustDecodeBounds = true;
+	            BitmapFactory.decodeFile(dst.getPath(), opts);
+	            // 计算图片缩放比例
+	            final int minSideLength = Math.min(width, height);
+	            opts.inSampleSize = computeSampleSize(opts, minSideLength,
+	                    width * height);
+	            opts.inJustDecodeBounds = false;
+	            opts.inInputShareable = true;
+	            opts.inPurgeable = true;
+	        }
+	        try {
+	            return BitmapFactory.decodeFile(dst.getPath(), opts);
+	        } catch (OutOfMemoryError e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return null;
+	}
+	 
+
+
+	 
+
+	public static int computeSampleSize(BitmapFactory.Options options,
+	        int minSideLength, int maxNumOfPixels) {
+	    int initialSize = computeInitialSampleSize(options, minSideLength,
+	            maxNumOfPixels);
+
+	    int roundedSize;
+	    if (initialSize <= 8) {
+	        roundedSize = 1;
+	        while (roundedSize < initialSize) {
+	            roundedSize <<= 1;
+	        }
+	    } else {
+	        roundedSize = (initialSize + 7) / 8 * 8;
+	    }
+
+	    return roundedSize;
+	}
+
+	private static int computeInitialSampleSize(BitmapFactory.Options options,
+	        int minSideLength, int maxNumOfPixels) {
+	    double w = options.outWidth;
+	    double h = options.outHeight;
+
+	    int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math
+	            .sqrt(w * h / maxNumOfPixels));
+	    int upperBound = (minSideLength == -1) ? 128 : (int) Math.min(Math
+	            .floor(w / minSideLength), Math.floor(h / minSideLength));
+
+	    if (upperBound < lowerBound) {
+	        // return the larger one when there is no overlapping zone.
+	        return lowerBound;
+	    }
+
+	    if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+	        return 1;
+	    } else if (minSideLength == -1) {
+	        return lowerBound;
+	    } else {
+	        return upperBound;
+	    }
+	}
+	 
+
+	
 	private static Bitmap resizeBitmap(String photoPath, int targetW, int targetH) {
-	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-	    bmOptions.inJustDecodeBounds = true;
-	    BitmapFactory.decodeFile(photoPath, bmOptions);
-	    int photoW = bmOptions.outWidth;
-	    int photoH = bmOptions.outHeight;
-	    Bitmap bitmap = null;
-	    if(targetW<photoW||targetH<photoH){
-	    	bitmap = ImageResize.resize(new File(photoPath),targetW , targetH, ResizeMode.AUTOMATIC);
-	    }else{
+		Bitmap bitmap =	getBitmapFromFile(new File(photoPath), targetW, targetH);
+		
+	    return crop(bitmap,targetW,targetH);
+	}
+	
+	public static Bitmap crop(Bitmap bitmap,int twidth,int theight) {
+		int width = bitmap.getWidth(), height = bitmap.getHeight();
+		int cropWidth = 0, cropHeight = 0;
+		if(width == height){
+			cropWidth = width;
+			cropHeight = height;
+		}else if (width > height) {
+			cropHeight = height;
+			cropWidth = height;
+		} else {
+			cropWidth = width;
+			cropHeight = width;
+		}
 
-		    bmOptions.inJustDecodeBounds = false;
-		    bmOptions.inSampleSize = 1;
-		    bmOptions.inPurgeable = true;
+		int x = (width - cropWidth) / 2;
 
-		    bitmap = BitmapFactory.decodeFile(photoPath, bmOptions);
-	    } 
-	    return bitmap;
+		int y = (height - cropHeight) / 2;
+
+		Bitmap bitmap1 = Bitmap.createBitmap(bitmap, x, y, cropWidth, cropHeight);
+		
+		Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap1, twidth, theight, true);
+		
+		bitmap1.recycle();
+		
+		return bitmap2;
+
 	}
 	
 	public static File cropImage(File image, int width,int height){
 		FileOutputStream out = null;
 		File outputDir = App.getInstance().getCacheDir();
 		File outputFile = null;
+		Bitmap bitmap = null;
 		try {
 			outputFile = File.createTempFile("prefix", "extension", outputDir);
-	        Bitmap bitmap = resizeBitmap(image.toString(),width,height);
+	        bitmap = resizeBitmap(image.toString(),width,height);
 	        out = new FileOutputStream(outputFile);
 	        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 		} catch (IOException e) {
@@ -166,6 +255,9 @@ public class GameCreateRequest extends Request{
 			try {
 		        if (out != null) {
 		            out.close();
+		        }
+		        if(bitmap != null && !bitmap.isRecycled()){
+		        	bitmap.recycle();
 		        }
 		    } catch (IOException e) {
 		        e.printStackTrace();

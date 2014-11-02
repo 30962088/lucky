@@ -3,6 +3,8 @@ package com.mengle.lucky.adapter;
 import java.util.List;
 
 import com.mengle.lucky.R;
+import com.mengle.lucky.ZoneActivity;
+import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.ChatLeftItem;
 import com.mengle.lucky.wiget.ChatRightItem;
 import com.mengle.lucky.wiget.ChatTitleItem;
@@ -12,6 +14,7 @@ import com.mengle.lucky.wiget.ChatItem.Orientation;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
@@ -77,7 +80,7 @@ public class ChatListAdapter extends BaseAdapter{
 		return convertView;
 	}
 	
-	private static class ViewHolder{
+	private  class ViewHolder{
 		private ChatLeftItem chatLeftItem;
 		private ChatRightItem chatRightItem;
 		private ChatTitleItem chatTitleItem;
@@ -86,7 +89,7 @@ public class ChatListAdapter extends BaseAdapter{
 			chatRightItem = (ChatRightItem) view.findViewById(R.id.right);
 			chatTitleItem = (ChatTitleItem) view.findViewById(R.id.title_layout);
 		}
-		private void setItem(Item item){
+		private void setItem(final Item item){
 			chatTitleItem.setVisibility(View.GONE);
 			chatLeftItem.setVisibility(View.GONE);
 			chatRightItem.setVisibility(View.GONE);
@@ -94,11 +97,28 @@ public class ChatListAdapter extends BaseAdapter{
 				
 				if(item.chat.getOrientation() == Orientation.LEFT){
 					chatLeftItem.setVisibility(View.VISIBLE);
+					chatLeftItem.getPhotoView().setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							ZoneActivity.open(context, item.chat.getUid());
+							
+						}
+					});
 					chatLeftItem.setChatItem(item.chat);
 					chatRightItem.setVisibility(View.GONE);
 					
 				}else{
 					chatRightItem.setVisibility(View.VISIBLE);
+					chatRightItem.getPhotoView().setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							User user = new User(context);
+							ZoneActivity.open(context, user.getUid());
+							
+						}
+					});
 					chatRightItem.setChatItem(item.chat);
 					chatLeftItem.setVisibility(View.GONE);
 				}

@@ -16,6 +16,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 
 	
 	public static interface OnResultClick{
-		public void onResult(Type type, String uri);
+		public void onResult(Type type, Photo photo);
 	}
 	
 	public enum Type{
@@ -51,8 +52,11 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 	
 	private String defaultImg;
 	
+	private String currentUrl;
 	
-	public PhotoListDialog(Context context,Type type,OnResultClick onResultClick,String defaultImg) {
+	
+	public PhotoListDialog(String currentUrl, Context context,Type type,OnResultClick onResultClick,String defaultImg) {
+		this.currentUrl  =currentUrl;
 		this.context = context;
 		this.type = type;
 		this.onResultClick = onResultClick;
@@ -116,9 +120,15 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		list.addAll(Photo.findPhotosByType(context, type));
 		list.add(new Photo( "drawable://" + resId,type));
 		photoList =  new PhotoList(list,type);
+		Integer index = 0;
 		
-		
-		photoList.setIndex(0);
+		for(int i = 0;i<list.size();i++){
+			if(TextUtils.equals(list.get(i).getPhoto(), currentUrl)){
+				index = i;
+				break;
+			}
+		}
+		photoList.setIndex(index);
 		adapter = new PhotoListAdapter(context, photoList);
 		gridView.setAdapter(adapter);
 	}
@@ -131,7 +141,11 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 			mPopupWindow.dismiss();
 			break;
 		case R.id.ok:
-			onResultClick.onResult(type, photoList.getList().get(photoList.getIndex()).getPhoto());
+			Photo photo = photoList.getList().get(photoList.getIndex());
+			if(!TextUtils.equals(photo.getPhoto(), currentUrl)){
+				onResultClick.onResult(type, photo);
+			}
+			
 			mPopupWindow.dismiss();
 			break;
 		

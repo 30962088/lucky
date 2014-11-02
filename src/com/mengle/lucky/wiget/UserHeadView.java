@@ -1,12 +1,15 @@
 package com.mengle.lucky.wiget;
 
 import java.io.File;
+import java.sql.SQLException;
 
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.NotifyCenterActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.UserListActivity;
 import com.mengle.lucky.ZoneActivity;
+import com.mengle.lucky.adapter.PhotoListAdapter.Photo;
+import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.MsgGetRequest;
 import com.mengle.lucky.network.NoticeGetRequest;
 import com.mengle.lucky.network.Request;
@@ -272,7 +275,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			if (getContext() instanceof MainActivity) {
 				ZoneActivity.open(getContext(), userHeadData.uid);
 			} else if (user.getUid() == userHeadData.uid) {
-				new PhotoListDialog(getContext(), Type.AVATAR, this,
+				new PhotoListDialog(userHeadData.photo, getContext(), Type.AVATAR, this,
 						userHeadData.photo);
 			}
 
@@ -280,7 +283,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		case R.id.icon_head:
 			if (!(getContext() instanceof MainActivity)
 					&& user.getUid() == userHeadData.uid) {
-				new PhotoListDialog(getContext(), Type.HEAD, this,
+				new PhotoListDialog(userHeadData.head,getContext(), Type.HEAD, this,
 						userHeadData.head);
 			}
 
@@ -315,8 +318,9 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	}
 
 	
-
-	public void onResult(Type type, final String uri) {
+	@Override
+	public void onResult(Type type, final Photo photo) {
+		final String uri = photo.getPhoto();
 		Preferences.User user = new Preferences.User(getContext());
 		UserMeAvatarUploadRequest.Param param1;
 		UserMeHeadUploadRequest.Param param2;
@@ -330,14 +334,25 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		}
 		
 		if (type == Type.AVATAR) {
-			UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(getContext(), param1);
+			final UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(getContext(), param1);
 			RequestAsync.request(uploadRequest, new Async() {
 				
 				@Override
 				public void onPostExecute(Request request) {
+					
 					if(request.getStatus() == Status.SUCCESS){
-						userHeadData.photo = uri;
-						BitmapLoader.displayImage(getContext(), uri, photoView);
+						
+						userHeadData.photo = uploadRequest.getUser().getAvatar();
+						photo.setPhoto(userHeadData.photo);
+						BitmapLoader.displayImage(getContext(), userHeadData.photo, photoView);
+						DataBaseHelper helper = new DataBaseHelper(getContext());
+						try {
+							helper.getPhotoDao().update(photo);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 					}
 					
 					
@@ -348,14 +363,23 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			
 		} else {
 			
-			UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(getContext(), param2);
+			final UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(getContext(), param2);
 			RequestAsync.request(uploadRequest, new Async() {
 				
 				@Override
 				public void onPostExecute(Request request) {
 					if(request.getStatus() == Status.SUCCESS){
-						userHeadData.head = uri;
-						BitmapLoader.displayImage(getContext(), uri, iconHead);
+						userHeadData.head = uploadRequest.getUser().getHead();
+						photo.setPhoto(userHeadData.head);
+						BitmapLoader.displayImage(getContext(), userHeadData.head, iconHead);
+						
+						DataBaseHelper helper = new DataBaseHelper(getContext());
+						try {
+							helper.getPhotoDao().update(photo);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					
 					

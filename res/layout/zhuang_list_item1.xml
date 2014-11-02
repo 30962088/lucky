@@ -11,6 +11,7 @@
         android:layout_marginRight="17dp"
         android:layout_weight="1"
         android:ellipsize="marquee"
+        android:singleLine="true"
         android:gravity="center_vertical"
         android:text="恒大亚冠决赛谁赢?"
         android:textColor="#29353f"

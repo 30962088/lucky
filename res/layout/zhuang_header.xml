@@ -7,6 +7,6 @@
     <FrameLayout 
         android:id="@+id/stage_fragment"
         android:layout_width="match_parent"
-        android:layout_height="150dp"></FrameLayout>
+        android:layout_height="wrap_content"></FrameLayout>
 
 </LinearLayout>

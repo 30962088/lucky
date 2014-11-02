@@ -1,8 +1,12 @@
 package com.mengle.lucky.wiget;
 
 
+import java.util.List;
+
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.CatListAdater;
+import com.mengle.lucky.network.CampaignsGetRequest.Result;
+import com.mengle.lucky.wiget.CatDropList.OnAdCallback;
 import com.mengle.lucky.wiget.CatDropList.OnStateChange;
 
 import android.content.Context;
@@ -42,13 +46,29 @@ public class CommonHeaderView extends RelativeLayout implements OnClickListener,
 	private void init(){
 		LayoutInflater.from(getContext()).inflate(R.layout.common_header, this);
 		catList = (CatDropList) findViewById(R.id.catList);
+		catList.setOnAdCallback(new OnAdCallback() {
+			
+			@Override
+			public void onAdCallback(List<Result> results) {
+				if((results == null || results.size() == 0) && !dd){
+					catdropdown.setVisibility(View.GONE);
+				}else{
+					catdropdown.setVisibility(View.VISIBLE);
+				}
+				
+			}
+		});
 		catList.setOnStateChange(this);
 		catdropdown = findViewById(R.id.catdropdown);
 		catdropdown.setOnClickListener(this);
 	}
 	
+	private boolean dd = false;
+	
 	public void setAdapter(CatListAdater catListAdater){
+		dd = true;
 		catList.setAdapter(catListAdater);
+		catdropdown.setVisibility(View.VISIBLE);
 
 	}
 	

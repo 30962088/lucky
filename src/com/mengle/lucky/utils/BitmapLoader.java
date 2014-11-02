@@ -14,7 +14,7 @@ public class BitmapLoader {
 
 	private static ImageLoader imageLoader = null;
 	
-	private synchronized static ImageLoader getImageLoader(Context context) {
+	public synchronized static ImageLoader getImageLoader(Context context) {
 		if (imageLoader == null) {
 			DisplayImageOptions options = new DisplayImageOptions.Builder()
 					.cacheInMemory(true).cacheOnDisc(true).build();

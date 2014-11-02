@@ -100,12 +100,12 @@ public class ChatActivity extends Activity implements OnEditorActionListener,OnC
 			long send_time = Long.parseLong(row[2]);
 			String type = row[3];
 			if(TextUtils.equals(type, "1")){
-				list.add(new Item(new Chat(Orientation.RIGHT, avatar, 
+				list.add(new Item(new Chat(uid,Orientation.RIGHT, avatar, 
 							content, 
 							Utils.formatDate(send_time), R.drawable.bg_chat_right_blue), null));
 			}else{
 				Sender sender = new Gson().fromJson(row[4], Sender.class);
-				list.add(new Item(new Chat(Orientation.LEFT, sender.getAvatar(), 
+				list.add(new Item(new Chat(uid,Orientation.LEFT, sender.getAvatar(), 
 						content, 
 						Utils.formatDate(send_time), R.drawable.bg_chat_left), null));
 
@@ -152,7 +152,7 @@ public class ChatActivity extends Activity implements OnEditorActionListener,OnC
 			@Override
 			public void onPostExecute(Request request) {
 				
-				list.add(new Item(new Chat(Orientation.RIGHT, userResult.getAvatar(), 
+				list.add(new Item(new Chat(uid,Orientation.RIGHT, userResult.getAvatar(), 
 						msg, Utils.formatDate(date.getTime())
 						, R.drawable.bg_chat_right_blue), null));
 				notifyAdapter();

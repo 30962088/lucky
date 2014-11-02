@@ -1,5 +1,6 @@
 package com.mengle.lucky.wiget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.mengle.lucky.R;
@@ -83,6 +84,16 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 		request();
 	}
 	
+	public static interface OnAdCallback{
+		public void onAdCallback(List<Result> results);
+	}
+	
+	private OnAdCallback onAdCallback;
+	
+	public void setOnAdCallback(OnAdCallback onAdCallback) {
+		this.onAdCallback = onAdCallback;
+	}
+	
 	private void request() {
 		Preferences.User user = new Preferences.User(getContext());
  		final CampaignsGetRequest getRequest = new CampaignsGetRequest(getContext(),
@@ -92,8 +103,18 @@ public class CatDropList extends FrameLayout implements AnimationListener,OnClic
 			@Override
 			public void onPostExecute(Request request) {
 				List<Result> results = getRequest.getResults();
+			/*	List<Result> results = new ArrayList<CampaignsGetRequest.Result>(){{
+					Result result = new Result();
+					result.setImage("http://tp4.sinaimg.cn/2129028663/180/5684393877/1");
+					result.setUrl("http://tp4.sinaimg.cn/2129028663/180/5684393877/1");
+					add(result);
+				}};*/
+				adImg.setVisibility(View.GONE);
 				if(results != null && results.size()>0){
 					setAdimg(results.get(0));
+				}
+				if(onAdCallback != null){
+					onAdCallback.onAdCallback(results);
 				}
 				
 			}

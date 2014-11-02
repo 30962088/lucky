@@ -286,6 +286,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		
 		LoadingPopup.show(this);
 
+
 		GameBetRequest betRequest = new GameBetRequest(this,
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
 						game_id, lastItem.getId(), themeLayout.getCoin()));
@@ -295,6 +296,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			public void onPostExecute(Request request) {
 				if(request.getStatus() == com.mengle.lucky.network.Request.Status.SUCCESS){
 					themeLayout.countPlus();
+					new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(ResultDialog.Status.CHECK,game.getGold_coin()));
 				}
 				
 			}

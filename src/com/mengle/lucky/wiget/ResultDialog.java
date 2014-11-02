@@ -5,6 +5,7 @@ import java.util.Map;
 import com.mengle.lucky.R;
 import com.mengle.lucky.network.Login.Params;
 import com.mengle.lucky.utils.OauthUtils;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.OauthUtils.Callback;
 import com.umeng.socialize.bean.MultiStatus;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -15,8 +16,11 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.MulStatusListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.media.UMImage;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
@@ -203,7 +207,10 @@ public class ResultDialog implements OnClickListener,SnsPostListener{
 		case R.id.result_dialog:
 		case R.id.cancel:
 			mPopupWindow.dismiss();
-			mController.setShareContent("測試22");
+			View view = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
+			Bitmap bitmap = Utils.convertViewToBitmap(view);
+			mController.setShareImage(new UMImage(context, bitmap));
+//			mController.setShareContent("我在");
 			if(checkRenren.isSelected()){
 				
 				mController.directShare(context,SHARE_MEDIA.RENREN, this);

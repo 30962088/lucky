@@ -23,13 +23,15 @@ public abstract class ChatItem extends FrameLayout{
 	
 	public static class Chat implements Serializable{
 		private Orientation orientation;
+		private int uid;
 		private String photo;
 		private String content;
 		private String time;
 		private int bgRes;
-		public Chat(Orientation orientation, String photo, String content,
+		public Chat(int uid, Orientation orientation, String photo, String content,
 				String time, int bgRes) {
 			super();
+			this.uid = uid;
 			this.orientation = orientation;
 			this.photo = photo;
 			this.content = content;
@@ -38,6 +40,9 @@ public abstract class ChatItem extends FrameLayout{
 		}
 		public Orientation getOrientation() {
 			return orientation;
+		}
+		public int getUid() {
+			return uid;
 		}
 		
 	}
@@ -71,6 +76,10 @@ public abstract class ChatItem extends FrameLayout{
 		textView = ((TextView)findViewById(R.id.content));
 		textView.setMaxWidth(wm.getDefaultDisplay().getWidth()-DisplayUtils.Dp2Px(getContext(), 120));
 		timeView = ((TextView) findViewById(R.id.time));
+	}
+	
+	public ImageView getPhotoView() {
+		return imageView;
 	}
 	
 	protected abstract Orientation orientation();

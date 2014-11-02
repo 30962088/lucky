@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+import com.mengle.lucky.KanZhuangActivity;
 import com.mengle.lucky.MainActivity;
 import com.mengle.lucky.R;
 import com.mengle.lucky.adapter.QuestionAdapter.Question;
@@ -23,6 +23,7 @@ import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.wiget.AwardPopup;
 import com.mengle.lucky.wiget.LoadingPopup;
+import com.mengle.lucky.wiget.ResultDialog;
 import com.mengle.lucky.wiget.PeronCountView.Count;
 
 import com.mengle.lucky.wiget.QuestionLayout;
@@ -41,7 +42,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class CaiFragment extends Fragment implements OnBtnClickListener{
+public class CaiFragment extends Fragment implements OnBtnClickListener {
 
 	private ThemeLayout themeLayout;
 
@@ -53,7 +54,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 	}
 
 	private QuestionItem lastItem;
-	
+
 	private TextView dayView;
 
 	@Override
@@ -72,43 +73,46 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		Date date = new Date();
 		String weekday = Utils.getWeekday(date);
 		int day = date.getDate();
-		dayView.setText(weekday+" "+day);
+		dayView.setText(weekday + " " + day);
 	}
-	
+
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		Preferences.User user = new Preferences.User(getActivity());
-		if(user.isLogin()&&!Award.isAward()){
-			final UserDayAwardRequest awardRequest = new UserDayAwardRequest(getActivity(), new UserDayAwardRequest.Param(user.getUid(), user.getToken()));
+		if (user.isLogin() && !Award.isAward()) {
+			final UserDayAwardRequest awardRequest = new UserDayAwardRequest(
+					getActivity(), new UserDayAwardRequest.Param(user.getUid(),
+							user.getToken()));
 			RequestAsync.request(awardRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
 					int award = awardRequest.getResult().getAward_gold_coin();
-					if(award>0){
+					if (award > 0) {
 						AwardPopup.open(getActivity(), award);
 						Award.setAward(award);
 					}
-					
+
 				}
 			});
 		}
 	}
-	
+
 	private long endTime1;
-	
+
 	private Game game;
 
 	private void doSuccess(final Game game) {
-		
+
 		this.game = game;
-		
-		MainActivity activity =  (MainActivity)getActivity();
-		
-		activity.switchRight(CommentFragment.newInstance(game.getId(),game.getPraise()));
-		
+
+		MainActivity activity = (MainActivity) getActivity();
+
+		activity.switchRight(CommentFragment.newInstance(game.getId(),
+				game.getPraise()));
+
 		final List<QuestionItem> list = game.toQuestionList();
 
 		long endTime = 0;
@@ -119,17 +123,16 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 			e.printStackTrace();
 		}
 		this.endTime1 = endTime;
-		
+
 		String[] colors = new String[] { "#a0d468", "#4fc0e8", "#e47134",
 				"#e47134", "#e47134", "#e47134", "#e47134", "#e47134",
 				"#e47134", "#e47134" };
 		String[] options = new String[] { "A", "B", "C", "D", "E", "F", "G" };
-		
-		View bubbleView = ThemeLayout
-				.getBubbleCaiView(getActivity());
-		
+
+		View bubbleView = ThemeLayout.getBubbleCaiView(getActivity());
+
 		Status status = null;
-		
+
 		switch (game.getState()) {
 		case 1:
 			if (endTime <= 0) {
@@ -152,14 +155,14 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		default:
 			break;
 		}
-		
+
 		themeLayout.setOnBtnClickListener(this);
-		
-		
-		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(new Count(
-				R.drawable.btn_count, game.getJoin_count()), true, false,
-				game.getImage()), new Question(game.getTitle(), status, list),
-				game.getGold_coin(),game.getOdds(), endTime, endTime > 0 ? true : false,"今日已结束"));
+
+		themeLayout.setTheme(new Theme(game.getId(), bubbleView, new Header(
+				new Count(R.drawable.btn_count, game.getJoin_count()), true,
+				false, game.getImage()), new Question(game.getTitle(), status,
+				list), game.getGold_coin(), game.getOdds(), endTime,
+				endTime > 0 ? true : false, "今日已结束"));
 
 		themeLayout.getGridView().setOnItemClickListener(
 				new OnItemClickListener() {
@@ -185,8 +188,8 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 	private void request() {
 		Preferences.User user = new Preferences.User(getActivity());
-		final CaiRequest caiRequest = new CaiRequest(getActivity(), new CaiRequest.Params(
-				user.getUid(), user.getToken()));
+		final CaiRequest caiRequest = new CaiRequest(getActivity(),
+				new CaiRequest.Params(user.getUid(), user.getToken()));
 		RequestAsync.request(caiRequest, new Async() {
 
 			public void onPostExecute(Request request) {
@@ -196,16 +199,13 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 
 			}
 		});
-		
 
 	}
-	
-	
 
 	@Override
 	public void onOKClick() {
 		Preferences.User user = new Preferences.User(getActivity());
-		if(!user.isLogin()){
+		if (!user.isLogin()) {
 			Utils.tip(getActivity(), "由于您没有登录所以无法完成下注");
 			return;
 		}
@@ -215,12 +215,23 @@ public class CaiFragment extends Fragment implements OnBtnClickListener{
 		}
 
 		LoadingPopup.show(getActivity());
-		
+
 		GameBetRequest betRequest = new GameBetRequest(getActivity(),
 				new GameBetRequest.Param(user.getUid(), user.getToken(),
 						game.getId(), lastItem.getId(), game.getGold_coin()));
-		RequestAsync.request(betRequest, null);
-		
+		RequestAsync.request(betRequest, new Async() {
+
+			@Override
+			public void onPostExecute(Request request) {
+				if (request.getStatus() == com.mengle.lucky.network.Request.Status.SUCCESS) {
+					themeLayout.countPlus();
+					new ResultDialog(getActivity(), new ResultDialog.Result(
+							ResultDialog.Status.CHECK, game.getGold_coin()));
+				}
+
+			}
+		});
+
 	}
 
 }

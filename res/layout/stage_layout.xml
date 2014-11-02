@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#000">
-    </android.support.v4.view.ViewPager>
-    
-    <com.mengle.lucky.wiget.TabPageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="56dp">
-        
-    </com.mengle.lucky.wiget.TabPageIndicator>
+    android:layout_height="wrap_content" >
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.mengle.lucky.wiget.WrapContentHeightViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000" >
+        </com.mengle.lucky.wiget.WrapContentHeightViewPager>
+
+        <com.mengle.lucky.wiget.TabPageIndicator
+            android:id="@+id/indicator"
+            android:layout_alignBottom="@id/viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="56dp" >
+        </com.mengle.lucky.wiget.TabPageIndicator>
+    </RelativeLayout>
+
+</FrameLayout>

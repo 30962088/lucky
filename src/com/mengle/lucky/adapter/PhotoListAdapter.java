@@ -45,15 +45,21 @@ public class PhotoListAdapter extends BaseAdapter {
 		@DatabaseField(columnName="type")
 		private int type;
 
-		public Photo(String photo,int type) {
+
+		public Photo(String photo, int type) {
 			super();
 			this.photo = photo;
 			this.type = type;
 		}
 
+		public void setPhoto(String photo) {
+			this.photo = photo;
+		}
+
 		public String getId() {
 			return id;
 		}
+	
 
 		public String getPhoto() {
 			return photo;
@@ -68,7 +74,8 @@ public class PhotoListAdapter extends BaseAdapter {
 			}
 			List<Photo> photos = new ArrayList<PhotoListAdapter.Photo>();
 			for(int i = 1;i<=4;i++){
-				photos.add(new Photo("http://res.joypaw.com/"+folder+"/default/"+i+".jpg", type));
+				String url = "http://res.joypaw.com/"+folder+"/default/"+i+".jpg";
+				photos.add(new Photo(url, type));
 			}
 			return photos;
 		}
@@ -86,7 +93,7 @@ public class PhotoListAdapter extends BaseAdapter {
 
 	public static class PhotoList {
 		private List<Photo> list;
-		private int index;
+		private Integer index;
 		private int type;
 
 		public PhotoList(List<Photo> list,int type) {
@@ -95,7 +102,7 @@ public class PhotoListAdapter extends BaseAdapter {
 			this.type = type;
 		}
 
-		public void setIndex(int index) {
+		public void setIndex(Integer index) {
 			this.index = index;
 		}
 
@@ -103,7 +110,7 @@ public class PhotoListAdapter extends BaseAdapter {
 			return list;
 		}
 
-		public int getIndex() {
+		public Integer getIndex() {
 			return index;
 		}
 	}

@@ -7,6 +7,10 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.google.gson.Gson;
+import com.mengle.lucky.network.model.Game;
+import com.mengle.lucky.network.model.User;
+
 import android.content.Context;
 
 public class UserMeAvatarUploadRequest extends Request{
@@ -40,10 +44,16 @@ public class UserMeAvatarUploadRequest extends Request{
 		super(context);
 		this.param = param;
 	}
+	
+	private User user;
 
+	public User getUser() {
+		return user;
+	}
+	
 	@Override
 	public void onSuccess(String data) {
-		// TODO Auto-generated method stub
+		user = new Gson().fromJson(data, User.class);
 		
 	}
 
