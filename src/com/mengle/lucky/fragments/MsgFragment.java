@@ -18,16 +18,22 @@ import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.network.model.Msg;
 import com.mengle.lucky.utils.Preferences;
 
+import de.timroes.swipetodismiss.SwipeDismissList;
+import de.timroes.swipetodismiss.SwipeDismissList.OnDismissCallback;
+import de.timroes.swipetodismiss.SwipeDismissList.UndoMode;
+import de.timroes.swipetodismiss.SwipeDismissList.Undoable;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class MsgFragment extends Fragment implements OnItemClickListener,OnRefreshListener<ListView>{
+public class MsgFragment extends Fragment implements OnItemClickListener,OnRefreshListener<ListView>,OnDismissCallback{
 
 	public static MsgFragment newInstance(View newMsg){
 		MsgFragment fragment =  new MsgFragment();
@@ -79,6 +85,8 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 		list = Msg.getModelList(getActivity());
 		adapter = new MsgListAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
+		UndoMode mode = UndoMode.SINGLE_UNDO;
+		SwipeDismissList swipeList = new SwipeDismissList(listView.getRefreshableView(), this, mode);
 		try {
 			request();
 		} catch (SQLException e) {
@@ -139,6 +147,30 @@ public class MsgFragment extends Fragment implements OnItemClickListener,OnRefre
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public Undoable onDismiss(AbsListView listView, final int position) {
+		final com.mengle.lucky.adapter.MsgListAdapter.Msg msg = list.remove(position-1);
+		adapter.notifyDataSetChanged();
+		try {
+			helper.getMsgDao().executeRaw("update msg set deleted = 1 where id = "+msg.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new SwipeDismissList.Undoable() {
+            public void undo() {
+            	try {
+        			helper.getMsgDao().executeRaw("update msg set deleted = 0 where id = "+msg.getId());
+        		} catch (SQLException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+                list.add(position-1, msg);
+                adapter.notifyDataSetChanged();
+            }
+        };
 	}
 	
 }

@@ -10,6 +10,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.mengle.lucky.adapter.MsgListAdapter;
 import com.mengle.lucky.adapter.MsgListAdapter.Message;
@@ -46,9 +47,18 @@ public class Msg {
 	@DatabaseField
 	protected boolean checked = true;
 	
+	@DatabaseField
+	protected boolean deleted = false;
 	
 	public int getId() {
 		return id;
+	}
+	
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	public boolean isDeleted() {
+		return deleted;
 	}
 	
 	public boolean isChecked() {
@@ -67,7 +77,9 @@ public class Msg {
 	public static List<Msg> getMsg(Context context) throws SQLException{
 		List<Msg> list = new ArrayList<Msg>();
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-		list.addAll(dataBaseHelper.getMsgDao().queryBuilder().orderBy("send_time", false).query());
+		QueryBuilder<Msg, Integer> queryBuilder = dataBaseHelper.getMsgDao().queryBuilder();
+		queryBuilder.where().eq("deleted", false);
+		list.addAll(queryBuilder.orderBy("send_time", false).query());
 		return list;
 	}
 	
@@ -88,7 +100,7 @@ public class Msg {
 		long res = 0;
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
 		try {
-			res = dataBaseHelper.getMsgDao().queryBuilder().where().eq("checked", true).countOf();
+			res = dataBaseHelper.getMsgDao().queryBuilder().where().eq("checked", true).and().eq("deleted", false).countOf();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

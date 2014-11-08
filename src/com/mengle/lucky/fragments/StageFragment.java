@@ -40,20 +40,22 @@ public class StageFragment extends Fragment {
 
 		@Override
 		public void run() {
-			getActivity().runOnUiThread(new Runnable() {
+			if (getActivity() != null) {
+				getActivity().runOnUiThread(new Runnable() {
 
-				@Override
-				public void run() {
-					int i = viewPager.getCurrentItem();
-					i++;
-					int total = viewPager.getAdapter().getCount();
-					if (i >= total) {
-						i = 0;
+					@Override
+					public void run() {
+						int i = viewPager.getCurrentItem();
+						i++;
+						int total = viewPager.getAdapter().getCount();
+						if (i >= total) {
+							i = 0;
+						}
+						viewPager.setCurrentItem(i, true);
+						// doStart();
 					}
-					viewPager.setCurrentItem(i, true);
-//					doStart();
-				}
-			});
+				});
+			}
 
 		}
 	};
@@ -65,7 +67,6 @@ public class StageFragment extends Fragment {
 
 	}
 
-
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -76,7 +77,6 @@ public class StageFragment extends Fragment {
 
 			@Override
 			public void onPageSelected(int arg0) {
-				
 
 			}
 
@@ -87,7 +87,6 @@ public class StageFragment extends Fragment {
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
-				
 
 			}
 		});

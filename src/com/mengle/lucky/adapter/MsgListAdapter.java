@@ -1,14 +1,16 @@
 package com.mengle.lucky.adapter;
 
+import java.util.Date;
 import java.util.List;
 
 import com.mengle.lucky.R;
 import com.mengle.lucky.utils.WigetUtils;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
 import android.widget.BaseAdapter;
@@ -108,6 +110,7 @@ public class MsgListAdapter extends BaseAdapter{
 			
 			convertView = LayoutInflater.from(context).inflate(
 					R.layout.msg_item, null);
+			
 			holder = new ViewHolder((ViewGroup)convertView);
 			convertView.setTag(holder);
 			convertView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, (int) context.getResources().getDimension(R.dimen.nofity_tab)));

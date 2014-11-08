@@ -1,7 +1,17 @@
 package com.mengle.lucky.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
@@ -81,6 +91,8 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	
 	private List<CommentModel> list = new ArrayList<CommentModel>();
 	
+	private TextView rewardText;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -97,6 +109,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		praiseView = (TextView) view.findViewById(R.id.praiseCount);
 		praiseView.setText(""+praiseCount);
 		nologinView = view.findViewById(R.id.nologinpanel);
+		rewardText = (TextView) nologinView.findViewById(R.id.reward_text);
 		replylayout = view.findViewById(R.id.replylayout);
 		view.findViewById(R.id.refresh).setOnClickListener(this);
 		replyTextView = (TextView) view.findViewById(R.id.reply_content);
@@ -143,6 +156,7 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 			
 		}else{
 			nologinView.setVisibility(View.VISIBLE);
+			request();
 		}
 	}
 	
@@ -333,6 +347,46 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 	@Override
 	public void onClose() {
 		hideReply();
+		
+	}
+	
+	private void request(){
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				HttpClient client = new DefaultHttpClient();
+				HttpGet get = new HttpGet("http://api.joypaw.com/user/register/coin/");
+				 try {
+					HttpResponse response = client.execute(get);
+					if(response.getStatusLine().getStatusCode() == 200){
+						JSONObject jsonObject =new JSONObject(IOUtils.toString(response.getEntity().getContent()));
+						final int coin =jsonObject.getInt("coin");
+						getActivity().runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								rewardText.setText("首次绑定公共账号，可获得"+coin+"金币奖励");
+								
+							}
+						});
+					}
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}).start();
 		
 	}
 	

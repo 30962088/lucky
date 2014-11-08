@@ -91,7 +91,7 @@ public class ChatActivity extends Activity implements OnEditorActionListener,OnC
 	}
 	
 	private void getList(String avatar) throws SQLException{
-		String sql = "select id,content,send_time,1 as type,'' as sender from  msgme where toUid="+uid+" union all select id,content,send_time,0 as type,sender from msg where sender like '{\"uid%"+uid+"%,%' order by send_time asc";
+		String sql = "select id,content,send_time,1 as type,'' as sender from  msgme where toUid="+uid+" union all select id,content,send_time,0 as type,sender from msg where sender like '{\"uid%"+uid+"%,%' and deleted = 0 order by send_time asc";
 		
 		GenericRawResults<String[]> results =  helper.getMsgDao().queryRaw(sql);
 		for(String[] row : results){

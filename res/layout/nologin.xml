@@ -4,21 +4,32 @@
     android:layout_height="match_parent"
     android:background="#f1f1f2"
     android:orientation="vertical"
-    android:padding="40dp" >
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="绑定公共账号后\n金币才可累计并可关注好友"
         android:textColor="#434a54"
-        android:textSize="15sp" />
+        android:textSize="15sp" 
+        android:layout_marginTop="10dp"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/bg_nologin" />
+    
+    <TextView
+        android:id="@+id/reward_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="首次绑定公共账号，可获得XX金币奖励"
+        android:textColor="#e47134"
+        android:textSize="15sp" 
+        android:layout_marginBottom="40dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"

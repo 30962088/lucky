@@ -6,6 +6,7 @@ import com.mengle.lucky.fragments.MsgFragment;
 import com.mengle.lucky.fragments.NofityFragment;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.WigetUtils.OnItemClickListener;
+import com.mengle.lucky.wiget.CustomViewPager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,7 +28,7 @@ public class NotifyCenterActivity extends FragmentActivity implements
 		context.startActivity(new Intent(context, NotifyCenterActivity.class));
 	}
 
-	private ViewPager viewPager;
+	private CustomViewPager viewPager;
 
 	private ViewGroup tab;
 
@@ -50,7 +51,8 @@ public class NotifyCenterActivity extends FragmentActivity implements
 			}
 		});
 		tab = (ViewGroup) findViewById(R.id.tab);
-		viewPager = (ViewPager) findViewById(R.id.viewpager);
+		viewPager = (CustomViewPager) findViewById(R.id.viewpager);
+		viewPager.setPagingEnabled(false);
 		viewPager.setAdapter(new FragmentPagerAdapter(
 				getSupportFragmentManager()) {
 
