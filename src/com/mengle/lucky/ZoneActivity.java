@@ -34,7 +34,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ZoneActivity extends FragmentActivity implements
+public class ZoneActivity extends BaseActivity implements
 		OnItemClickListener, OnClickListener,OnPageChangeListener {
 	
 	public static void open(Context context, int uid){

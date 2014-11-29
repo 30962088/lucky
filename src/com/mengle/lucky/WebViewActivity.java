@@ -12,7 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-public class WebViewActivity extends Activity{
+public class WebViewActivity extends BaseActivity{
 
 
 	public static void open(Context context,String url){

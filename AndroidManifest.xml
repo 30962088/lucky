@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mengle.lucky"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -139,7 +139,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5370639556240ba9b80219cf" >
+            android:value="53c8e5be56240bcb480013dd" >
         </meta-data>
         <meta-data
             android:name="api_key"

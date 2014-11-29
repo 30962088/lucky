@@ -32,7 +32,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class FillAnswerActivity extends Activity implements OnClickListener{
+public class FillAnswerActivity extends BaseActivity implements OnClickListener{
 	
 	public static void open(Context context,Param param){
 		Intent intent = new Intent(context, FillAnswerActivity.class);

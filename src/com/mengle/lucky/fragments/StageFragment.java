@@ -40,7 +40,7 @@ public class StageFragment extends Fragment {
 
 		@Override
 		public void run() {
-			if (getActivity() != null) {
+			if (getActivity() != null && !getActivity().isFinishing()) {
 				getActivity().runOnUiThread(new Runnable() {
 
 					@Override
@@ -51,7 +51,10 @@ public class StageFragment extends Fragment {
 						if (i >= total) {
 							i = 0;
 						}
-						viewPager.setCurrentItem(i, true);
+						if(viewPager != null){
+							viewPager.setCurrentItem(i, true);
+						}
+						
 						// doStart();
 					}
 				});
@@ -90,7 +93,7 @@ public class StageFragment extends Fragment {
 
 			}
 		});
-		doStart();
+//		doStart();
 		if (getActivity() instanceof MainActivity) {
 			((MainActivity) getActivity()).getSlidingMenu().addIgnoredView(
 					viewPager);

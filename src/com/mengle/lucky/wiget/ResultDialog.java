@@ -210,7 +210,7 @@ public class ResultDialog implements OnClickListener,SnsPostListener{
 			View view = ((Activity)context).getWindow().getDecorView().findViewById(android.R.id.content);
 			Bitmap bitmap = Utils.convertViewToBitmap(view);
 			mController.setShareImage(new UMImage(context, bitmap));
-//			mController.setShareContent("我在");
+			mController.setShareContent("亲，别抠脚看热闹了。猜中就有金币拿，你也来试试？");
 			if(checkRenren.isSelected()){
 				
 				mController.directShare(context,SHARE_MEDIA.RENREN, this);

@@ -2,7 +2,6 @@ package com.mengle.lucky;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -11,8 +10,6 @@ import com.mengle.lucky.adapter.QuestionAdapter.Question;
 import com.mengle.lucky.adapter.QuestionAdapter.QuestionItem;
 import com.mengle.lucky.adapter.QuestionAdapter.Status;
 import com.mengle.lucky.fragments.CommentFragment;
-import com.mengle.lucky.fragments.SidingMenuFragment;
-import com.mengle.lucky.network.CaiRequest;
 import com.mengle.lucky.network.GameBetRequest;
 import com.mengle.lucky.network.GrameGetRequest;
 import com.mengle.lucky.network.GrameGetRequest.Params;
@@ -28,12 +25,11 @@ import com.mengle.lucky.wiget.QuestionLayout;
 import com.mengle.lucky.wiget.ResultDialog;
 import com.mengle.lucky.wiget.ThemeLayout;
 import com.mengle.lucky.wiget.PeronCountView.Count;
-import com.mengle.lucky.wiget.ResultDialog.Result;
 import com.mengle.lucky.wiget.ThemeLayout.OnBtnClickListener;
 import com.mengle.lucky.wiget.ThemeLayout.Theme;
 import com.mengle.lucky.wiget.ThemeLayout.Theme.Header;
+import com.umeng.analytics.MobclickAgent;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -71,6 +67,20 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		request();
 		initSlidingMenu();
 	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	private long endTime1;
 
@@ -81,7 +91,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		fragment.setPraiseCount(game.getPraise());
 		final List<QuestionItem> list = game.toQuestionList();
 
-		Preferences.User user = new Preferences.User(this);
+		final Preferences.User user = new Preferences.User(this);
 
 		long endTime = 0;
 		try {
@@ -123,7 +133,12 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 				
 				@Override
 				public void onClick(View v) {
-					ZoneActivity.open(KanZhuangActivity.this, creator.getUid());
+					if(!user.isLogin()){
+						Utils.tip(KanZhuangActivity.this, "由于您没有登录所以无法查看他人信息");
+					}else{
+						ZoneActivity.open(KanZhuangActivity.this, creator.getUid());
+					}
+					
 					
 				}
 			});
@@ -155,15 +170,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 		}
 		themeLayout.setOnBtnClickListener(this);
 		
-		if(game.getJoin() != null && game.getJoin().getState() == 1){
-			ResultDialog.Status stat = null;
-			if(game.getJoin().getOption_id() == game.getWin_option()){
-				stat = ResultDialog.Status.SUCCESS;
-			}else{
-				stat = ResultDialog.Status.FAIL;
-			}
-			new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(stat,game.getGold_coin()));
-		}
+		
 		
 		
 		 /* themeLayout.setOnBtnClickListener(new OnBtnClickListener() {
@@ -205,6 +212,15 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 
 					}
 				});
+		if(game.getJoin() != null && game.getIs_complete() == 1){
+			ResultDialog.Status stat = null;
+			if(game.getJoin().getOption_id() == game.getWin_option()){
+				stat = ResultDialog.Status.SUCCESS;
+			}else{
+				stat = ResultDialog.Status.FAIL;
+			}
+			new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(stat,themeLayout.getCoin()));
+		}
 	}
 
 	private CommentFragment fragment;
@@ -296,7 +312,7 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			public void onPostExecute(Request request) {
 				if(request.getStatus() == com.mengle.lucky.network.Request.Status.SUCCESS){
 					themeLayout.countPlus();
-					new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(ResultDialog.Status.CHECK,game.getGold_coin()));
+					new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(ResultDialog.Status.CHECK,themeLayout.getCoin()));
 				}
 				
 			}

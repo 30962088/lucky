@@ -272,10 +272,6 @@ public class CommentFragment extends Fragment implements OnClickListener,Callbac
 		GameCommentRequest commentRequest = new GameCommentRequest(getActivity(), new GameCommentRequest.Params(user.getUid(), user.getToken(), gameId, offset, limit));
 		commentRequest.request();
 		results = commentRequest.getResults();
-		
-		
-		
-		
 		return results.size()>=limit?true:false;
 	}
 

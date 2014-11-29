@@ -39,7 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class ChatActivity extends Activity implements OnEditorActionListener,OnClickListener{
+public class ChatActivity extends BaseActivity implements OnEditorActionListener,OnClickListener{
 	
 	public static void open(Context context, int uid){
 		Intent intent = new Intent(context,ChatActivity.class);

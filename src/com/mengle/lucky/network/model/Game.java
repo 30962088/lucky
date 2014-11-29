@@ -124,6 +124,8 @@ public class Game {
 	protected int praise;
 	
 	protected int state;
+	
+	protected int is_complete;
 
 	public int getId() {
 		return id;
@@ -211,6 +213,10 @@ public class Game {
 	
 	public int getState() {
 		return state;
+	}
+	
+	public int getIs_complete() {
+		return is_complete;
 	}
 	
 	

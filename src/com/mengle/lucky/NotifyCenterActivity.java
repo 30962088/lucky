@@ -21,7 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
-public class NotifyCenterActivity extends FragmentActivity implements
+public class NotifyCenterActivity extends BaseActivity implements
 		OnItemClickListener, OnPageChangeListener {
 
 	public static void open(Context context) {

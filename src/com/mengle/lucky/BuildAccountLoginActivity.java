@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class BuildAccountLoginActivity extends Activity implements
+public class BuildAccountLoginActivity extends BaseActivity implements
 		OnClickListener,Callback {
 
 	public static void open(Context context) {

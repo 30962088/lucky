@@ -55,7 +55,7 @@ import android.widget.RadioGroup;
 
 import android.widget.TextView;
 
-public class UserSettingActivity extends Activity implements OnClickListener,
+public class UserSettingActivity extends BaseActivity implements OnClickListener,
 		Callback,TextWatcher {
 
 	public static void open(Context context) {

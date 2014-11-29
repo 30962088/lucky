@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Context;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import com.mengle.lucky.adapter.MsgListAdapter;
 import com.mengle.lucky.adapter.MsgListAdapter.Msg;
@@ -31,6 +32,9 @@ public class Notice {
 	
 	@DatabaseField
 	private boolean checked = true;
+	
+	@DatabaseField
+	protected boolean deleted = false;
 	
 	public Notice() {
 		// TODO Auto-generated constructor stub
@@ -78,7 +82,9 @@ public class Notice {
 	public static List<Notice> getNotices(Context context) throws SQLException{
 		List<Notice> list = new ArrayList<Notice>();
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-		list.addAll(dataBaseHelper.getNoticeDao().queryBuilder().orderBy("send_time", false).query());
+		QueryBuilder<Notice, Integer> queryBuilder =  dataBaseHelper.getNoticeDao().queryBuilder();
+		queryBuilder.where().eq("deleted", false);
+		list.addAll(queryBuilder.orderBy("send_time", false).query());
 		return list;
 	}
 	
@@ -86,7 +92,7 @@ public class Notice {
 		long res = 0;
 		DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
 		try {
-			res = dataBaseHelper.getNoticeDao().queryBuilder().where().eq("checked", true).countOf();
+			res = dataBaseHelper.getNoticeDao().queryBuilder().where().eq("checked", true).and().eq("deleted", false).countOf();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +116,13 @@ public class Notice {
 	public Nofity toModel(){
 		Nofity nofity = new Nofity(id, title, checked);
 		return nofity;
+	}
+	
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	public boolean isDeleted() {
+		return deleted;
 	}
 	
 	

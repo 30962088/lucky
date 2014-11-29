@@ -39,7 +39,7 @@ public class GameBetRequest extends Request{
 
 	@Override
 	public void onSuccess(String data) {
-		Utils.tip(App.getInstance(), data);
+//		Utils.tip(App.getInstance(), data);
 		
 	}
 

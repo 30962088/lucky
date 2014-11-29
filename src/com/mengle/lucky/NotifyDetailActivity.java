@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class NotifyDetailActivity extends Activity {
+public class NotifyDetailActivity extends BaseActivity {
 
 	public static void open(Context context, int id) {
 		Intent intent = new Intent(context, NotifyDetailActivity.class);

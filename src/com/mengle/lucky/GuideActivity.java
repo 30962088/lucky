@@ -18,7 +18,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.ImageView;
 
-public class GuideActivity extends FragmentActivity implements OnPageChangeListener{
+public class GuideActivity extends BaseActivity implements OnPageChangeListener{
 	
 	
 	private CustomViewPager viewPager;

@@ -226,7 +226,7 @@ public class CaiFragment extends Fragment implements OnBtnClickListener {
 				if (request.getStatus() == com.mengle.lucky.network.Request.Status.SUCCESS) {
 					themeLayout.countPlus();
 					new ResultDialog(getActivity(), new ResultDialog.Result(
-							ResultDialog.Status.CHECK, game.getGold_coin()));
+							ResultDialog.Status.CHECK, themeLayout.getCoin()));
 				}
 
 			}

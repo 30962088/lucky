@@ -75,6 +75,9 @@ public class CommentListAdapter extends BaseAdapter {
 	private void initReply(ViewHolder holder,List<Reply> list){
 		holder.listView.removeAllViews();
 		for(Reply reply : list){
+			if(TextUtils.isEmpty(reply.getName()) && TextUtils.isEmpty(reply.getContent())){
+				break;
+			}
 			TextView textView = (TextView) LayoutInflater.from(context).inflate(
 					R.layout.comment_list_item, null);
 			
@@ -83,7 +86,7 @@ public class CommentListAdapter extends BaseAdapter {
 				replyContent = "回复"+reply.getName()+":";
 			}
 			SpannableString sp = new SpannableString(replyContent+reply.getContent());
-			if(reply.getName() != null){
+			if(!TextUtils.isEmpty(reply.getName()) ){
 				sp.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.reply_highlight)),2,reply.getName().length()+2,Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 			}
 			

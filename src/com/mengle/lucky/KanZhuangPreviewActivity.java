@@ -24,7 +24,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class KanZhuangPreviewActivity extends Activity implements OnClickListener{
+public class KanZhuangPreviewActivity extends BaseActivity implements OnClickListener{
 	public static class PreviewModel implements Serializable {
 		private String avatar;
 		private String title;

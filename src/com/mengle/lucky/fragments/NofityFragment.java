@@ -19,16 +19,22 @@ import com.mengle.lucky.network.model.Msg;
 import com.mengle.lucky.network.model.Notice;
 import com.mengle.lucky.utils.Preferences;
 
+import de.timroes.swipetodismiss.SwipeDismissList;
+import de.timroes.swipetodismiss.SwipeDismissList.OnDismissCallback;
+import de.timroes.swipetodismiss.SwipeDismissList.UndoMode;
+import de.timroes.swipetodismiss.SwipeDismissList.Undoable;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class NofityFragment extends Fragment implements OnItemClickListener,OnRefreshListener<ListView>{
+public class NofityFragment extends Fragment implements OnItemClickListener,OnRefreshListener<ListView>,OnDismissCallback{
 
 	public static NofityFragment newInstance(View newMsg){
 		NofityFragment fragment = new NofityFragment();
@@ -40,10 +46,21 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 	
 	private View newMsg;
 	
+	private DataBaseHelper helper;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		helper = new DataBaseHelper(getActivity());
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		listView = new PullToRefreshListView(getActivity());
+		UndoMode mode = UndoMode.SINGLE_UNDO;
+		SwipeDismissList swipeList = new SwipeDismissList(listView.getRefreshableView(), this, mode);
 		listView.getRefreshableView().setDivider(null);
 		listView.setOnRefreshListener(this);
 		return listView;
@@ -122,6 +139,30 @@ public class NofityFragment extends Fragment implements OnItemClickListener,OnRe
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
+	}
+
+	@Override
+	public Undoable onDismiss(AbsListView listView, final int position) {
+		final com.mengle.lucky.adapter.MsgListAdapter.Msg msg = list.remove(position-1);
+		adapter.notifyDataSetChanged();
+		try {
+			helper.getNoticeDao().executeRaw("update notice set deleted = 1 where id = "+msg.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new SwipeDismissList.Undoable() {
+            public void undo() {
+            	try {
+        			helper.getNoticeDao().executeRaw("update notice set deleted = 0 where id = "+msg.getId());
+        		} catch (SQLException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+                list.add(position-1, msg);
+                adapter.notifyDataSetChanged();
+            }
+        };
 	}
 	
 }

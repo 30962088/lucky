@@ -26,7 +26,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class UserListActivity extends Activity implements OnLoadListener,OnClickListener{
+public class UserListActivity extends BaseActivity implements OnLoadListener,OnClickListener{
 	
 	public enum Type {
 		FOLLOWS,FOLLERS

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.mengle.lucky.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.DisplayImageOptions.Builder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
@@ -28,6 +29,23 @@ public class BitmapLoader {
 		return imageLoader;
 	}
 	
+
+	public enum DisplayOptions {
+		IMG(new Builder().showImageForEmptyUri(R.drawable.empty)
+				.showImageOnLoading(R.drawable.empty).cacheInMemory(true)
+				.cacheOnDisc(true).build());
+
+		DisplayImageOptions options;
+
+		DisplayOptions(DisplayImageOptions options) {
+			this.options = options;
+		}
+
+		public DisplayImageOptions getOptions() {
+			return options;
+		}
+	}
+	
 	public static String getPhoto(String photo){
 		return !TextUtils.isEmpty(photo)?photo:"drawable://" + R.drawable.test_img_user;
 	}
@@ -38,7 +56,7 @@ public class BitmapLoader {
 	
 	public static void displayImage(Context context, String url,ImageView imageView){
 		ImageLoader imageLoader = getImageLoader(context);
-		imageLoader.displayImage(url, imageView);
+		imageLoader.displayImage(url, imageView,DisplayOptions.IMG.getOptions());
 	}
 	
 	

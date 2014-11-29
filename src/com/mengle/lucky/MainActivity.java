@@ -21,6 +21,7 @@ import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.Preferences.Push;
 import com.mengle.lucky.wiget.AlertDialog;
 import com.mengle.lucky.wiget.PushDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import android.os.Bundle;
@@ -151,6 +152,7 @@ private void startPush() {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		MobclickAgent.onResume(this);
 		doPushLogout();
 		if(switchFragment != null){
 			switchContent(switchFragment);
@@ -158,6 +160,13 @@ private void startPush() {
 		}
 		checkNewGame();
 		
+	}
+	
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 

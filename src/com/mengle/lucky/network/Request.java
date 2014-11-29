@@ -158,7 +158,10 @@ public abstract class Request implements Response,IRequest{
 				try {
 					JSONObject result = new JSONObject(IOUtils.toString(entity.getContent()));
 					boolean s = result.getBoolean("s");
-					String data = result.getString("v");
+					String data = null;
+					if(result.has("v")){
+						data = result.getString("v");
+					}
 					if(s){
 						success(data);
 						status = Status.SUCCESS;
@@ -171,7 +174,7 @@ public abstract class Request implements Response,IRequest{
 								
 								@Override
 								public void run() {
-
+									
 									Intent intent = new Intent(context, MainActivity.class);
 									intent.setAction(MainActivity.ACTION_LOGOUT);
 									intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -240,7 +243,10 @@ public abstract class Request implements Response,IRequest{
 		errorMsg = msg;
 		onResultError(code, msg);
 		onError(code,msg);
-		Utils.tip(App.getInstance().getApplicationContext(), msg);
+		if(msg != null){
+			Utils.tip(App.getInstance().getApplicationContext(), msg);
+		}
+		
 	}
 	
 	public String getErrorMsg() {

@@ -5,7 +5,7 @@ import com.mengle.lucky.fragments.AwardFragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class AwardActivity extends FragmentActivity{
+public class AwardActivity extends BaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

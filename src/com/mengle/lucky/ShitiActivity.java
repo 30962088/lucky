@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class ShitiActivity extends FragmentActivity{
+public class ShitiActivity extends BaseActivity{
 	
 	public static void open(Context context){
 		Intent intent = new Intent(context, ShitiActivity.class);

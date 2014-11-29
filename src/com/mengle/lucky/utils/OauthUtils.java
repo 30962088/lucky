@@ -33,6 +33,7 @@ public class OauthUtils implements UMAuthListener,FetchUserListener{
 	public OauthUtils(Context context){
 		this.context = context;
 		mController = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
+		
 	}
 	public void setCallback(Callback callback) {
 		this.callback = callback;
@@ -55,7 +56,7 @@ public class OauthUtils implements UMAuthListener,FetchUserListener{
 	
 	public void qqOauth(){
 		media = SHARE_MEDIA.QQ;
-		mController.getConfig().supportQQPlatform((Activity)context,"100424468","http://www.umeng.com/social","social");  
+		mController.getConfig().supportQQPlatform((Activity)context,"101084076","http://www.umeng.com/social","social");  
 		oauth();
 	}
 	
@@ -135,12 +136,15 @@ public class OauthUtils implements UMAuthListener,FetchUserListener{
 				
 			}
 		}
-		params.setAvatar(snsAccount.getAccountIconUrl());
-		params.setNickname(snsAccount.getUserName());
-		params.setGender(snsAccount.getGender().ordinal());
-		if(callback != null){
-			callback.onSuccess(params);
+		if(snsAccount != null){
+			params.setAvatar(snsAccount.getAccountIconUrl());
+			params.setNickname(snsAccount.getUserName());
+			params.setGender(snsAccount.getGender().ordinal());
+			if(callback != null){
+				callback.onSuccess(params);
+			}
 		}
+		
 	}
 
 	@Override
