@@ -1,6 +1,8 @@
 package com.mengle.lucky;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,10 @@ import com.mengle.lucky.wiget.MyClickSpan;
 import com.mengle.lucky.wiget.RadioGroupLayout;
 import com.mengle.lucky.wiget.RadioGroupLayout.RadioItem;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,73 +49,137 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+public class PublishActivity extends BaseActivity implements OnClickListener {
 
-public class PublishActivity extends BaseActivity implements OnClickListener{
-
-	
-	
 	private static final int SELECT_PHOTO = 100;
-	
+
 	private TextView nickView;
-	
+
 	private ImageView avatarView;
-	
+
 	private TextView totalCoinView;
-	
+
 	private ImageView imageView;
-	
+
 	private EditText titleView;
-	
+
 	private EditText question1View;
-	
+
 	private EditText question2View;
-	
+
 	private EditText question3View;
-	
+
 	private EditText jishuView;
-	
+
 	private EditText hourText;
-	
-//	private EditText minuteText;
-	
+
+	// private EditText minuteText;
+
 	private RadioGroupLayout radioGroupLayout1;
-	
+
 	private RadioGroupLayout radioGroupLayout2;
-	
+
 	private RadioGroupLayout radioGroupLayout3;
-	
+
 	private EditText reasonText;
-	
+
 	private CheckBox btnRead;
-	
+
 	private TextView textRead;
-	
+
 	private ImageView headView;
-	
-	private void openGallery(){
+
+	private void openGallery() {
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
-		startActivityForResult(photoPickerIntent, SELECT_PHOTO);    
+		startActivityForResult(photoPickerIntent, SELECT_PHOTO);
 	}
-	
+
+	final int PIC_CROP = 1;
+
+	private void performCrop(Uri picUri) {
+		try {
+
+			Intent cropIntent = new Intent("com.android.camera.action.CROP");
+			// indicate image type and Uri
+			cropIntent.setDataAndType(picUri, "image/*");
+			// set crop properties
+			cropIntent.putExtra("crop", "true");
+			// indicate aspect of desired crop
+			cropIntent.putExtra("aspectX", 4);
+			cropIntent.putExtra("aspectY", 3);
+			// indicate output X and Y
+			cropIntent.putExtra("outputX", 450);
+			cropIntent.putExtra("outputY", 300);
+			// retrieve data on return
+			cropIntent.putExtra("scale", true);
+			cropIntent.putExtra("return-data", true);
+			// start the activity - we handle returning in onActivityResult
+			startActivityForResult(cropIntent, PIC_CROP);
+		}
+		// respond to users whose devices do not support the crop action
+		catch (ActivityNotFoundException anfe) {
+			onSelectImage(picUri);
+		}
+	}
+
+	private void onSelectImage(Uri selectedImage) {
+		String filepath;
+		if(selectedImage.toString().startsWith("file:")){
+			filepath = selectedImage.getPath();
+		}else{
+			filepath = Utils.getRealPathFromURI(this, selectedImage);
+		}
+		imageView.setTag(filepath);
+		BitmapLoader.displayImage(this, selectedImage.toString(), imageView);
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		switch(requestCode) { 
-	    case SELECT_PHOTO:
-	        if(resultCode == RESULT_OK){  
-	            Uri selectedImage = data.getData();
-	            imageView.setTag(Utils.getRealPathFromURI(this, selectedImage));
-	            BitmapLoader.displayImage(this, selectedImage.toString(), imageView);
+		switch (requestCode) {
+		case SELECT_PHOTO:
+			if (resultCode == RESULT_OK) {
+				Uri selectedImage = data.getData();
+				performCrop(selectedImage);
+			}
+			break;
+		case PIC_CROP:
+			if (data != null) {
+	            // get the returned data
+	            Bundle extras = data.getExtras();
+	            // get the cropped bitmap
+	            Bitmap selectedBitmap = extras.getParcelable("data");
+	            
+	            FileOutputStream out = null;
+	            try {
+	            	File outputFile = File.createTempFile("prefix", ".png", App.getInstance().getCacheDir());
+	                out = new FileOutputStream(outputFile);
+	                selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
+	                onSelectImage(Uri.fromFile(outputFile));
+	                // PNG is a lossless format, the compression factor (100) is ignored
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            } finally {
+	                try {
+	                    if (out != null) {
+	                        out.close();
+	                    }
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            
 	        }
-	    }
+			break;
+		}
 	}
-	
-	public static void open(Context context){
+
+	public static void open(Context context) {
 		context.startActivity(new Intent(context, PublishActivity.class));
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -120,27 +188,33 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		setContentView(R.layout.publish_layout);
 		findViewById(R.id.leftnav).setOnClickListener(this);
 		findViewById(R.id.shabi).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				findViewById(R.id.shabi).setVisibility(View.GONE);
 				findViewById(R.id.caonima).setVisibility(View.VISIBLE);
-				
+
 			}
 		});
 		headView = (ImageView) findViewById(R.id.bg_top);
 		btnRead = (CheckBox) findViewById(R.id.btn_read);
 		textRead = (TextView) findViewById(R.id.text_read);
-		
-		ClickableSpan  textClickable = new MyClickSpan(Color.parseColor("#5dc9e6"),new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				IntroDialog.open(PublishActivity.this, "好运7之霸王条款", getResources().getString(R.string.zhuang_intro), null);
-			}
-		});
+
+		ClickableSpan textClickable = new MyClickSpan(
+				Color.parseColor("#5dc9e6"), new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						IntroDialog
+								.open(PublishActivity.this,
+										"好运7之霸王条款",
+										getResources().getString(
+												R.string.zhuang_intro), null);
+					}
+				});
 		SpannableString spanableInfo = new SpannableString("游戏规则。");
-		spanableInfo.setSpan(textClickable,0, 4,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spanableInfo.setSpan(textClickable, 0, 4,
+				Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		textRead.setText(spanableInfo);
 		textRead.setClickable(true);
 		btnRead.setChecked(true);
@@ -154,103 +228,109 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		question2View = (EditText) findViewById(R.id.question2);
 		question3View = (EditText) findViewById(R.id.question3);
 		hourText = (EditText) findViewById(R.id.hour);
-//		minuteText = (EditText) findViewById(R.id.minute);
-		jishuView = (EditText)findViewById(R.id.jishu);
+		// minuteText = (EditText) findViewById(R.id.minute);
+		jishuView = (EditText) findViewById(R.id.jishu);
 		findViewById(R.id.publish_btn).setOnClickListener(this);
 		radioGroupLayout2 = (RadioGroupLayout) findViewById(R.id.radio2);
-		radioGroupLayout2.setList(new ArrayList<RadioGroupLayout.RadioItem>(){{
-			add(new RadioItem("2", "2倍"));
-			add(new RadioItem("3", "3倍"));
-			add(new RadioItem("4", "4倍"));
-		}});
+		radioGroupLayout2.setList(new ArrayList<RadioGroupLayout.RadioItem>() {
+			{
+				add(new RadioItem("2", "2倍"));
+				add(new RadioItem("3", "3倍"));
+				add(new RadioItem("4", "4倍"));
+			}
+		});
 		radioGroupLayout3 = (RadioGroupLayout) findViewById(R.id.radio3);
-		radioGroupLayout3.setList(new ArrayList<RadioGroupLayout.RadioItem>(){{
-			add(new RadioItem("A", "A"));
-			add(new RadioItem("B", "B"));
-			add(new RadioItem("C", "C"));
-		}});
-		
-		
+		radioGroupLayout3.setList(new ArrayList<RadioGroupLayout.RadioItem>() {
+			{
+				add(new RadioItem("A", "A"));
+				add(new RadioItem("B", "B"));
+				add(new RadioItem("C", "C"));
+			}
+		});
+
 		imageView = (ImageView) findViewById(R.id.add_pic);
 		imageView.setOnClickListener(this);
-		radioGroupLayout1 =(RadioGroupLayout) findViewById(R.id.radio1);
+		radioGroupLayout1 = (RadioGroupLayout) findViewById(R.id.radio1);
 		findViewById(R.id.preview).setOnClickListener(this);
 		loadCat();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		UserMe.get(this, new Callback() {
-			
+
 			@Override
 			public void onsuccess(UserResult userResult) {
-				totalCoinView.setText(""+userResult.getGold_coin());
+				totalCoinView.setText("" + userResult.getGold_coin());
 				nickView.setText(userResult.getNickname());
 				avatarView.setTag(userResult.getAvatar());
-				BitmapLoader.displayImage(PublishActivity.this, userResult.getHead(), headView);
-				BitmapLoader.displayImage(PublishActivity.this, userResult.getAvatar(), avatarView);
-				
+				BitmapLoader.displayImage(PublishActivity.this,
+						userResult.getHead(), headView);
+				BitmapLoader.displayImage(PublishActivity.this,
+						userResult.getAvatar(), avatarView);
+
 			}
 		});
-		
+
 	}
-	
-	private boolean validate(String title,String imagePath,String A,String B,String category,String jishu,String beishu,String hour,String miniute){
-		if(TextUtils.isEmpty(title)){
+
+	private boolean validate(String title, String imagePath, String A,
+			String B, String category, String jishu, String beishu,
+			String hour, String miniute) {
+		if (TextUtils.isEmpty(title)) {
 			Utils.tip(this, "您还没有命题");
 			return false;
 		}
-		/*if(TextUtils.isEmpty(imagePath)){
-			Utils.tip(this, "您还没有添加图片");
-			return false;
-		}*/
-		if(TextUtils.isEmpty(category)){
+		/*
+		 * if(TextUtils.isEmpty(imagePath)){ Utils.tip(this, "您还没有添加图片"); return
+		 * false; }
+		 */
+		if (TextUtils.isEmpty(category)) {
 			Utils.tip(this, "您还没有选择该问题的分类");
 			return false;
 		}
-		if(TextUtils.isEmpty(A)){
+		if (TextUtils.isEmpty(A)) {
 			Utils.tip(this, "您还没有填写选项A内容");
 			return false;
 		}
-		if(TextUtils.isEmpty(B)){
+		if (TextUtils.isEmpty(B)) {
 			Utils.tip(this, "您还没有填写选项B内容");
 			return false;
 		}
-		if(TextUtils.isEmpty(beishu)){
+		if (TextUtils.isEmpty(beishu)) {
 			Utils.tip(this, "您还没有填写倍数");
 			return false;
 		}
-		
-		if(TextUtils.isEmpty(jishu)){
+
+		if (TextUtils.isEmpty(jishu)) {
 			Utils.tip(this, "您还没有填写基数");
 			return false;
 		}
-		
 
-		if(TextUtils.isEmpty(hour)){
+		if (TextUtils.isEmpty(hour)) {
 			Utils.tip(this, "您还没有小时倒计时");
 			return false;
 		}
-		if(TextUtils.isEmpty(miniute)){
+		if (TextUtils.isEmpty(miniute)) {
 			Utils.tip(this, "您还没有分钟倒计时");
 			return false;
 		}
-		
-		
-		
+
 		return true;
-		
+
 	}
-	
-	private void loadCat(){
-		final GameCategoryRequest categoryRequest = new GameCategoryRequest(this);
-		RequestAsync.request(categoryRequest, new Async(){
+
+	private void loadCat() {
+		final GameCategoryRequest categoryRequest = new GameCategoryRequest(
+				this);
+		RequestAsync.request(categoryRequest, new Async() {
 
 			@Override
 			public void onPostExecute(Request request) {
-				radioGroupLayout1.setList(Category.toRadioItemList(categoryRequest.getResult()));
+				radioGroupLayout1.setList(Category
+						.toRadioItemList(categoryRequest.getResult()));
 			}
 		});
 	}
@@ -273,13 +353,13 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		default:
 			break;
 		}
-		
+
 	}
-	
-	private void onPreview(){
+
+	private void onPreview() {
 		String title = titleView.getText().toString();
 		String imagePath = null;
-		if(imageView.getTag() != null){
+		if (imageView.getTag() != null) {
 			imagePath = imageView.getTag().toString();
 		}
 		String A = question1View.getText().toString();
@@ -289,22 +369,23 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String jishu = jishuView.getText().toString();
 		String beishu = radioGroupLayout2.getValue();
 		String hour = hourText.getText().toString();
-//		String miniute = minuteText.getText().toString();
+		// String miniute = minuteText.getText().toString();
 		String miniute = "0";
-		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
-			String fileuri="";
-			if(imagePath != null){
+		if (validate(title, imagePath, A, B, cat, jishu, beishu, hour, miniute)) {
+			String fileuri = "";
+			if (imagePath != null) {
 				fileuri = Uri.fromFile(new File(imagePath)).toString();
 			}
-			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView.getTag().toString(), title,fileuri , A, B, C, jishu));
+			KanZhuangPreviewActivity.open(this, new PreviewModel(avatarView
+					.getTag().toString(), title, fileuri, A, B, C, jishu));
 		}
-		
+
 	}
-	
-	private void onPublish(){
+
+	private void onPublish() {
 		String title = titleView.getText().toString();
 		String imagePath = null;
-		if(imageView.getTag() != null){
+		if (imageView.getTag() != null) {
 			imagePath = imageView.getTag().toString();
 		}
 		String A = question1View.getText().toString();
@@ -314,62 +395,68 @@ public class PublishActivity extends BaseActivity implements OnClickListener{
 		String jishu = jishuView.getText().toString();
 		String beishu = radioGroupLayout2.getValue();
 		String hour = hourText.getText().toString();
-//		String miniute = minuteText.getText().toString();
+		// String miniute = minuteText.getText().toString();
 		String miniute = "0";
 		String reason = reasonText.getText().toString();
 		String answer = radioGroupLayout3.getValue();
-		if(validate(title, imagePath, A, B, cat, jishu, beishu,hour,miniute)){
-			if(!btnRead.isChecked()){
+		if (validate(title, imagePath, A, B, cat, jishu, beishu, hour, miniute)) {
+			if (!btnRead.isChecked()) {
 				Utils.tip(this, "您还没有同意游戏规则");
 				return;
 			}
 			List<Opt> opts = new ArrayList<GameCreateRequest.Param.Opt>();
-			String[] contents = new String[]{A,B,C};
-			for(int i = 0;i<contents.length;i++){
+			String[] contents = new String[] { A, B, C };
+			for (int i = 0; i < contents.length; i++) {
 				String content = contents[i];
-				if(content == null || content.equals("")){
+				if (content == null || content.equals("")) {
 					break;
 				}
 				int isanwser = 0;
-				if(answer != null){
-					int index = ArrayUtils.indexOf(new String[]{"A","B","C"}, answer);
-					if(index == i){
+				if (answer != null) {
+					int index = ArrayUtils.indexOf(
+							new String[] { "A", "B", "C" }, answer);
+					if (index == i) {
 						isanwser = 1;
 					}
 				}
 				opts.add(new Opt(content, isanwser));
 			}
-			
+
 			Preferences.User user = new Preferences.User(this);
-			final GameCreateRequest createRequest = new GameCreateRequest(this, new GameCreateRequest.
-					Param(user.getUid(), user.getToken(), title, Integer.parseInt(cat), 10, Integer.parseInt(jishu), Integer.parseInt(beishu), Integer.parseInt(hour), Integer.parseInt(miniute), opts, reason), imagePath);
+			final GameCreateRequest createRequest = new GameCreateRequest(this,
+					new GameCreateRequest.Param(user.getUid(), user.getToken(),
+							title, Integer.parseInt(cat), 10,
+							Integer.parseInt(jishu), Integer.parseInt(beishu),
+							Integer.parseInt(hour), Integer.parseInt(miniute),
+							opts, reason), imagePath);
 			LoadingPopup.show(this);
 			RequestAsync.request(createRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
-					if(request.getStatus() == Status.SUCCESS){
+					if (request.getStatus() == Status.SUCCESS) {
 						Utils.tip(PublishActivity.this, "创建成功");
 						LoadingPopup.hide(PublishActivity.this);
-						if(createRequest.getGame() != null){
-							Intent intent = new Intent(PublishActivity.this, MainActivity.class);
+						if (createRequest.getGame() != null) {
+							Intent intent = new Intent(PublishActivity.this,
+									MainActivity.class);
 							intent.setAction(MainActivity.ACTION_REFRESH_ZHUANG);
-							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+							intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+									| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 							startActivity(intent);
 						}
-						
+
 					}
-					
+
 				}
 			});
 		}
-		
+
 	}
 
 	private void onAddPic() {
 		openGallery();
-		
-	}
 
+	}
 
 }

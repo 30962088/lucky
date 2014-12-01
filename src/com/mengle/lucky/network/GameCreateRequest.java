@@ -16,6 +16,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.mengle.lucky.App;
 import com.mengle.lucky.network.model.Game;
+import com.mengle.lucky.utils.ScalingUtilities;
 import com.svenkapudija.imageresizer.operations.ImageResize;
 import com.svenkapudija.imageresizer.operations.ResizeMode;
 
@@ -81,9 +82,10 @@ public class GameCreateRequest extends Request{
 	public GameCreateRequest(Context context, Param param, String image) {
 		super(context);
 		this.param = param;
+//		this.image = new File(image);
 		if(image != null){
 			File originImage = new File(image);
-			File compressImage = cropImage(originImage, 640, 400);
+			File compressImage = cropImage(originImage, 450, 300);
 			if(compressImage != null){
 				this.image = compressImage;
 			}else{
@@ -244,7 +246,7 @@ public class GameCreateRequest extends Request{
 		Bitmap bitmap = null;
 		try {
 			outputFile = File.createTempFile("prefix", "extension", outputDir);
-	        bitmap = resizeBitmap(image.toString(),width,height);
+	        bitmap =ScalingUtilities.scaleCenterCrop(BitmapFactory.decodeFile(image.toString()) ,width,height);
 	        out = new FileOutputStream(outputFile);
 	        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
 		} catch (IOException e) {
