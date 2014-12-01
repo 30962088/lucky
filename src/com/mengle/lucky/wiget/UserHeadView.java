@@ -328,7 +328,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), uri);
 			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), uri);
 		}else{
-			File file = new File(Utils.getRealPathFromURI(getContext(), Uri.parse(uri)));
+			File file = new File(Uri.parse(uri).getPath());
 			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), file);
 			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), file);
 		}

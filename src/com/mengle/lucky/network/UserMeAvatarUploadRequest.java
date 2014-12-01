@@ -86,10 +86,10 @@ public class UserMeAvatarUploadRequest extends Request{
 		if(param.file == null){
 			return null;
 		}
-		File compressFile = GameCreateRequest.cropImage(param.file, 100, 100);
+		/*File compressFile = GameCreateRequest.cropImage(param.file, 100, 100);
 		if(compressFile != null){
 			param.file = compressFile;
-		}
+		}*/
 		ArrayList<BinaryBody> bodies = new ArrayList<Request.BinaryBody>();
 		bodies.add(new BinaryBody("avatar.jpg", param.file, "image/jpeg", "avatar"));
 		return bodies;

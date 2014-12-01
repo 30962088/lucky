@@ -246,33 +246,22 @@ public class ZoneActivity extends BaseActivity implements
 		
 	}
 	
-	public static final int SELECT_PHOTO = 1;
+
 	
 	public static interface OnPickListener{
 		public void onPick(Uri uri);
 	}
 	
-	private OnPickListener onPickListener;
-	
-	public void pick(OnPickListener onPickListener){
-		this.onPickListener = onPickListener;
-		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-		photoPickerIntent.setType("image/*");
-		startActivityForResult(photoPickerIntent, SELECT_PHOTO);    
+	public void pick(int width,int height,final OnPickListener onPickListener){
+		getImage(width, height, new OnPhotoSelectionListener() {
+			
+			@Override
+			public void onPhotoSelection(Uri uri) {
+				 onPickListener.onPick(uri);
+			}
+		});
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) { 
-	    super.onActivityResult(requestCode, resultCode, imageReturnedIntent); 
-
-	    switch(requestCode) { 
-	    case SELECT_PHOTO:
-	        if(resultCode == RESULT_OK){  
-	            Uri selectedImage = imageReturnedIntent.getData();
-	            onPickListener.onPick(selectedImage);
-	        }
-	    }
-	}
 	
 	
 

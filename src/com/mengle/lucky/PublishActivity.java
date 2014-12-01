@@ -90,91 +90,18 @@ public class PublishActivity extends BaseActivity implements OnClickListener {
 	private ImageView headView;
 
 	private void openGallery() {
-		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-		photoPickerIntent.setType("image/*");
-		startActivityForResult(photoPickerIntent, SELECT_PHOTO);
-	}
-
-	final int PIC_CROP = 1;
-
-	private void performCrop(Uri picUri) {
-		try {
-
-			Intent cropIntent = new Intent("com.android.camera.action.CROP");
-			// indicate image type and Uri
-			cropIntent.setDataAndType(picUri, "image/*");
-			// set crop properties
-			cropIntent.putExtra("crop", "true");
-			// indicate aspect of desired crop
-			cropIntent.putExtra("aspectX", 4);
-			cropIntent.putExtra("aspectY", 3);
-			// indicate output X and Y
-			cropIntent.putExtra("outputX", 450);
-			cropIntent.putExtra("outputY", 300);
-			// retrieve data on return
-			cropIntent.putExtra("scale", true);
-			cropIntent.putExtra("return-data", true);
-			// start the activity - we handle returning in onActivityResult
-			startActivityForResult(cropIntent, PIC_CROP);
-		}
-		// respond to users whose devices do not support the crop action
-		catch (ActivityNotFoundException anfe) {
-			onSelectImage(picUri);
-		}
-	}
-
-	private void onSelectImage(Uri selectedImage) {
-		String filepath;
-		if(selectedImage.toString().startsWith("file:")){
-			filepath = selectedImage.getPath();
-		}else{
-			filepath = Utils.getRealPathFromURI(this, selectedImage);
-		}
-		imageView.setTag(filepath);
-		BitmapLoader.displayImage(this, selectedImage.toString(), imageView);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case SELECT_PHOTO:
-			if (resultCode == RESULT_OK) {
-				Uri selectedImage = data.getData();
-				performCrop(selectedImage);
+		getImage(400, 300, new OnPhotoSelectionListener() {
+			
+			@Override
+			public void onPhotoSelection(Uri uri) {
+				imageView.setTag(uri.getPath());
+				BitmapLoader.displayImage(PublishActivity.this, uri.toString(), imageView);
 			}
-			break;
-		case PIC_CROP:
-			if (data != null) {
-	            // get the returned data
-	            Bundle extras = data.getExtras();
-	            // get the cropped bitmap
-	            Bitmap selectedBitmap = extras.getParcelable("data");
-	            
-	            FileOutputStream out = null;
-	            try {
-	            	File outputFile = File.createTempFile("prefix", ".png", App.getInstance().getCacheDir());
-	                out = new FileOutputStream(outputFile);
-	                selectedBitmap.compress(Bitmap.CompressFormat.PNG, 100, out); // bmp is your Bitmap instance
-	                onSelectImage(Uri.fromFile(outputFile));
-	                // PNG is a lossless format, the compression factor (100) is ignored
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	            } finally {
-	                try {
-	                    if (out != null) {
-	                        out.close();
-	                    }
-	                } catch (IOException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	            
-	        }
-			break;
-		}
+		});
+		
 	}
+
+	
 
 	public static void open(Context context) {
 		context.startActivity(new Intent(context, PublishActivity.class));

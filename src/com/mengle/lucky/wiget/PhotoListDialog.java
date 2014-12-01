@@ -117,7 +117,7 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		}
 		List<Photo> list = new ArrayList<PhotoListAdapter.Photo>();
 //		list.add(new Photo(defaultImg, type));
-		list.addAll(Photo.findPhotosByType(context, type));
+		list.addAll(Photo.findPhotosByType(context, type,currentUrl));
 		list.add(new Photo( "drawable://" + resId,type));
 		photoList =  new PhotoList(list,type);
 		Integer index = 0;
@@ -177,7 +177,15 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		if(position == photoList.getList().size()-1){
 			if(context instanceof ZoneActivity){
 				ZoneActivity activity = (ZoneActivity)context;
-				activity.pick(this);
+				int width,height;
+				if(this.type == Type.HEAD){
+					width = 381;
+					height = 204;
+				}else{
+					width = 100;
+					height = 100;
+				}
+				activity.pick(width,height,this);
 			}
 		}else{
 			photoList.setIndex(position);

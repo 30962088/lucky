@@ -80,10 +80,14 @@ public class PhotoListAdapter extends BaseAdapter {
 			return photos;
 		}
 		
-		public static List<Photo> findPhotosByType(Context context,int type) throws SQLException{
+		public static List<Photo> findPhotosByType(Context context,int type,String current) throws SQLException{
 			List<Photo> list = new ArrayList<Photo>();
 			DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
 			list.addAll(getDefaultPhotos(type));
+			if(!current.matches("^http://res\\.joypaw\\.com/(avatar|head)/default/.*") && dataBaseHelper.getPhotoDao().queryBuilder().where().eq("Photo", current).countOf()  == 0){
+				Photo photo = new Photo(current, type);
+				dataBaseHelper.getPhotoDao().create(photo);
+			}
 			list.addAll(dataBaseHelper.getPhotoDao().queryBuilder().where().eq("type", type).query());
 			
 			return list;
