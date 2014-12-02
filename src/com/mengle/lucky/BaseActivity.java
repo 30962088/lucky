@@ -30,11 +30,8 @@ public abstract class BaseActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 	}
-
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
+	
+	public void ping(){
 		User user = new User(this);
 		if (user.isLogin()) {
 			PingRequest request = new PingRequest(this, new Params(
@@ -55,6 +52,13 @@ public abstract class BaseActivity extends FragmentActivity {
 				}
 			});
 		}
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
 
 	}
 

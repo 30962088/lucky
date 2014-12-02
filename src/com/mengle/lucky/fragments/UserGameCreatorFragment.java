@@ -129,7 +129,7 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 	public void onLoadSuccess() {
 		if(offset == 0){
 			list.clear();
-			if(user.getUid() == uid){
+			if(user.getUid() != null && user.getUid().intValue() == uid){
 				list.add(new Row2(-1, "结束时间/状态", "竞猜名称"));
 			}else{
 				list.add(new Row2(-1, "结束时间", "竞猜名称"));
@@ -137,7 +137,7 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 			
 		}
 		for(GameLite gameLite : results){
-			if(user.getUid() == uid){
+			if(user.getUid() != null && user.getUid().intValue() == uid){
 				
 				this.list.add(gameLite.toRow222());
 			}else{
@@ -147,7 +147,7 @@ public class UserGameCreatorFragment extends Fragment implements OnLoadListener,
 		}
 		if(offset == 0&&list.size() == 1){
 			baseListView.setVisibility(View.GONE);
-			if(user.getUid() == uid){
+			if(user.getUid() != null && user.getUid().intValue() == uid){
 				ClickableSpan  textClickable = new MyClickSpan(Color.parseColor("#5dc9e6"),new OnClickListener() {
 					
 					@Override

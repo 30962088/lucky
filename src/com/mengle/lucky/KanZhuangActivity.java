@@ -133,11 +133,11 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 				
 				@Override
 				public void onClick(View v) {
-					if(!user.isLogin()){
+					/*if(!user.isLogin()){
 						Utils.tip(KanZhuangActivity.this, "由于您没有登录所以无法查看他人信息");
-					}else{
+					}else{*/
 						ZoneActivity.open(KanZhuangActivity.this, creator.getUid());
-					}
+//					}
 					
 					
 				}

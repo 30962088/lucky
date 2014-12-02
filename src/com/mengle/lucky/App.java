@@ -150,31 +150,38 @@ public class App extends FrontiaApplication implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		mlocManager.removeUpdates(this);
-		try {
-			synchronized (this) {
-				if (!islogin) {
-					islogin = true;
-					ApplicationInfo appInfo = this.getPackageManager()
-							.getApplicationInfo(getPackageName(),
-									PackageManager.GET_META_DATA);
-					String channel = appInfo.metaData.getString("UMENG_CHANNEL");
-					User user = new User(this);
-					PackageInfo pinfo = getPackageManager().getPackageInfo(
-							getPackageName(), 0);
-					AppLoginRequest request = new AppLoginRequest(this,
-							new AppLoginRequest.Params(user.getUid(), channel, ""
-									+ location.getLongitude(), ""
-									+ location.getLatitude(), pinfo.versionName,
-									isNew));
-					RequestAsync.request(request, null);
-				}
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		if (location.getLatitude() != 0 && location.getLongitude() != 0) {
 
+			mlocManager.removeUpdates(this);
+			try {
+				synchronized (this) {
+					if (!islogin) {
+						islogin = true;
+						User user = new User(this);
+						int newUser = user.getNewuser();
+						user.setNewuser(0);
+						ApplicationInfo appInfo = this.getPackageManager()
+								.getApplicationInfo(getPackageName(),
+										PackageManager.GET_META_DATA);
+						String channel = appInfo.metaData
+								.getString("UMENG_CHANNEL");
+
+						PackageInfo pinfo = getPackageManager().getPackageInfo(
+								getPackageName(), 0);
+						AppLoginRequest request = new AppLoginRequest(this,
+								new AppLoginRequest.Params(user.getUid(),
+										channel, "" + location.getLongitude(),
+										"" + location.getLatitude(),
+										pinfo.versionName, newUser));
+
+						RequestAsync.request(request, null);
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

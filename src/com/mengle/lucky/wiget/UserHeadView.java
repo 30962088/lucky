@@ -26,6 +26,7 @@ import com.mengle.lucky.utils.BitmapLoader;
 import com.mengle.lucky.utils.DisplayUtils;
 import com.mengle.lucky.utils.Preferences;
 import com.mengle.lucky.utils.Utils;
+import com.mengle.lucky.utils.Preferences.Image;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.wiget.PhotoListDialog.OnResultClick;
 import com.mengle.lucky.wiget.PhotoListDialog.Type;
@@ -51,7 +52,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		OnResultClick {
 
 	public enum Sex {
-		MALE, FEMALE,UNKONWN
+		MALE, FEMALE, UNKONWN
 	}
 
 	public static class UserHeadData {
@@ -145,11 +146,11 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 	private ImageView iconHead;
 
 	private UserHeadData userHeadData;
-	
+
 	private TextView fansText;
-	
+
 	private TextView focusText;
-	
+
 	private View newGameTip;
 
 	private void init() {
@@ -162,15 +163,16 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		btnFocusView.setOnClickListener(this);
 		newIconView = findViewById(R.id.icon_new);
 		photoView = (ImageView) findViewById(R.id.photo);
-		if(getContext() instanceof ZoneActivity){
+		if (getContext() instanceof ZoneActivity) {
 			int padding = DisplayUtils.Dp2Px(getContext(), 5);
 			int size = DisplayUtils.Dp2Px(getContext(), 65);
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(size, size);
+			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+					size, size);
 			params.addRule(RelativeLayout.CENTER_HORIZONTAL);
 			params.topMargin = DisplayUtils.Dp2Px(getContext(), 21);
 			photoView.setLayoutParams(params);
 			photoView.setPadding(padding, padding, padding, padding);
-			
+
 		}
 		fansText = (TextView) findViewById(R.id.fans_text);
 		focusText = (TextView) findViewById(R.id.focus_text);
@@ -195,53 +197,59 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		this.userHeadData = data;
 		Preferences.User user = new Preferences.User(getContext());
 		final ImageLoader imageLoader = Utils.getImageLoader(getContext());
-		imageLoader.displayImage(data.head, iconHead, new SimpleImageLoadingListener(){
-			@Override
-			public void onLoadingFailed(String imageUri, View view,
-					FailReason failReason) {
-				imageLoader.displayImage("http://res.joypaw.com/head/default/1.jpg",iconHead);
-			}
-		});
-		String s= "";
-		if (user.getUid() == data.uid) {
+		imageLoader.displayImage(data.head, iconHead,
+				new SimpleImageLoadingListener() {
+					@Override
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
+						imageLoader.displayImage(
+								"http://res.joypaw.com/head/default/1.jpg",
+								iconHead);
+					}
+				});
+		String s = "";
+		Integer uid = user.getUid();
+		if (uid != null && uid.intValue() == data.uid) {
 			photoView.setEnabled(true);
 			btnMsgView.setVisibility(View.VISIBLE);
 			btnFocusView.setVisibility(View.GONE);
 			s = "我";
-			
+
 		} else {
-			
-			if(data.sex == Sex.FEMALE){
+
+			if (data.sex == Sex.FEMALE) {
 				s = "她";
-			}else{
+			} else {
 				s = "他";
 			}
-			
-		
+
 			photoView.setEnabled(false);
 			btnMsgView.setVisibility(View.GONE);
 			btnFocusView.setChecked(data.isFallow());
 			btnFocusView.setVisibility(View.VISIBLE);
 		}
-		
-		fansText.setText("关注"+s+"的用户");
-		focusText.setText(s+"关注的用户");
+
+		fansText.setText("关注" + s + "的用户");
+		focusText.setText(s + "关注的用户");
 		newIconView.setVisibility(data.hasNewMsg ? View.VISIBLE : View.GONE);
-		imageLoader.displayImage( data.photo, photoView, new SimpleImageLoadingListener(){
-			@Override
-			public void onLoadingFailed(String imageUri, View view,
-					FailReason failReason) {
-				imageLoader.displayImage("http://res.joypaw.com/avatar/default/1.jpg",photoView);
-			}
-		});
+		imageLoader.displayImage(data.photo, photoView,
+				new SimpleImageLoadingListener() {
+					@Override
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
+						imageLoader.displayImage(
+								"http://res.joypaw.com/avatar/default/1.jpg",
+								photoView);
+					}
+				});
 		nickView.setText(data.nick);
 		if (data.sex == Sex.FEMALE) {
 			femaleView.setVisibility(View.VISIBLE);
 			maleView.setVisibility(View.GONE);
-		} else if(data.sex == Sex.MALE){
+		} else if (data.sex == Sex.MALE) {
 			femaleView.setVisibility(View.GONE);
 			maleView.setVisibility(View.VISIBLE);
-		}else{
+		} else {
 			femaleView.setVisibility(View.GONE);
 			maleView.setVisibility(View.GONE);
 		}
@@ -258,14 +266,19 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		Preferences.User user = new Preferences.User(getContext());
 		switch (v.getId()) {
 		case R.id.btn_toFollower:
-			UserListActivity.open(getContext(), userHeadData.uid,fansText.getText().toString(),
-					UserListActivity.Type.FOLLERS);
+			UserListActivity.open(getContext(), userHeadData.uid, fansText
+					.getText().toString(), UserListActivity.Type.FOLLERS);
 			break;
 		case R.id.btn_toFollowing:
-			UserListActivity.open(getContext(), userHeadData.uid,focusText.getText().toString(),
-					UserListActivity.Type.FOLLOWS);
+			UserListActivity.open(getContext(), userHeadData.uid, focusText
+					.getText().toString(), UserListActivity.Type.FOLLOWS);
 			break;
 		case R.id.btn_focus:
+			if(!user.isLogin()){
+				Utils.tip(getContext(), "请先登录");
+				btnFocusView.setChecked(false);
+				return;
+			}
 			onFocus();
 			break;
 		case R.id.icon_msg:
@@ -275,16 +288,16 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 			if (getContext() instanceof MainActivity) {
 				ZoneActivity.open(getContext(), userHeadData.uid);
 			} else if (user.getUid() == userHeadData.uid) {
-				new PhotoListDialog(userHeadData.photo, getContext(), Type.AVATAR, this,
-						userHeadData.photo);
+				new PhotoListDialog(userHeadData.photo, getContext(),
+						Type.AVATAR, this, userHeadData.photo);
 			}
 
 			break;
 		case R.id.icon_head:
 			if (!(getContext() instanceof MainActivity)
-					&& user.getUid() == userHeadData.uid) {
-				new PhotoListDialog(userHeadData.head,getContext(), Type.HEAD, this,
-						userHeadData.head);
+					&& user.getUid() != null && user.getUid().intValue() == userHeadData.uid) {
+				new PhotoListDialog(userHeadData.head, getContext(), Type.HEAD,
+						this, userHeadData.head);
 			}
 
 			break;
@@ -298,18 +311,19 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 		Preferences.User user = new Preferences.User(getContext());
 		Request request = null;
 		if (!btnFocusView.isChecked()) {
-			request = new UserMeUnFollow(getContext(), new UserMeUnFollow.Params(
-					user.getUid(), user.getToken(), userHeadData.uid));
+			request = new UserMeUnFollow(getContext(),
+					new UserMeUnFollow.Params(user.getUid(), user.getToken(),
+							userHeadData.uid));
 		} else {
-			request = new UserMeFollow(getContext(), new UserMeFollow.Params(user.getUid(),
-					user.getToken(), userHeadData.uid));
+			request = new UserMeFollow(getContext(), new UserMeFollow.Params(
+					user.getUid(), user.getToken(), userHeadData.uid));
 		}
 		RequestAsync.request(request, new Async() {
 
 			@Override
 			public void onPostExecute(Request request) {
-				if(getContext() instanceof ZoneActivity){
-					((ZoneActivity)getContext()).onResume();
+				if (getContext() instanceof ZoneActivity) {
+					((ZoneActivity) getContext()).onResume();
 				}
 
 			}
@@ -317,127 +331,121 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 
 	}
 
-	
 	@Override
 	public void onResult(Type type, final Photo photo) {
 		final String uri = photo.getPhoto();
 		Preferences.User user = new Preferences.User(getContext());
 		UserMeAvatarUploadRequest.Param param1;
 		UserMeHeadUploadRequest.Param param2;
-		if(uri.startsWith("http")){
-			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), uri);
-			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), uri);
-		}else{
+		if (uri.startsWith("http")) {
+			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(),
+					user.getToken(), uri);
+			param2 = new UserMeHeadUploadRequest.Param(user.getUid(),
+					user.getToken(), uri);
+		} else {
 			File file = new File(Uri.parse(uri).getPath());
-			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(), user.getToken(), file);
-			param2 = new UserMeHeadUploadRequest.Param(user.getUid(), user.getToken(), file);
+			param1 = new UserMeAvatarUploadRequest.Param(user.getUid(),
+					user.getToken(), file);
+			param2 = new UserMeHeadUploadRequest.Param(user.getUid(),
+					user.getToken(), file);
 		}
-		
+
 		if (type == Type.AVATAR) {
-			final UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(getContext(), param1);
+			final UserMeAvatarUploadRequest uploadRequest = new UserMeAvatarUploadRequest(
+					getContext(), param1);
 			RequestAsync.request(uploadRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
-					
-					if(request.getStatus() == Status.SUCCESS){
-						
-						userHeadData.photo = uploadRequest.getUser().getAvatar();
+
+					if (request.getStatus() == Status.SUCCESS) {
+
+						userHeadData.photo = uploadRequest.getUser()
+								.getAvatar();
 						photo.setPhoto(userHeadData.photo);
-						BitmapLoader.displayImage(getContext(), userHeadData.photo, photoView);
-						DataBaseHelper helper = new DataBaseHelper(getContext());
-						try {
-							helper.getPhotoDao().update(photo);
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						BitmapLoader.displayImage(getContext(),
+								userHeadData.photo, photoView);
 						
 					}
-					
-					
+
 				}
 			});
-			
-			
-			
+
 		} else {
-			
-			final UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(getContext(), param2);
+
+			final UserMeHeadUploadRequest uploadRequest = new UserMeHeadUploadRequest(
+					getContext(), param2);
 			RequestAsync.request(uploadRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
-					if(request.getStatus() == Status.SUCCESS){
+					if (request.getStatus() == Status.SUCCESS) {
 						userHeadData.head = uploadRequest.getUser().getHead();
 						photo.setPhoto(userHeadData.head);
-						BitmapLoader.displayImage(getContext(), userHeadData.head, iconHead);
+						BitmapLoader.displayImage(getContext(),
+								userHeadData.head, iconHead);
+
 						
-						DataBaseHelper helper = new DataBaseHelper(getContext());
-						try {
-							helper.getPhotoDao().update(photo);
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
 					}
-					
-					
+
 				}
 			});
-			
-			
+
 		}
 
 	}
-	
-	
+
 	private int requestCount = 0;
-	
-	public void displayNewGame(boolean val){
-		newGameTip.setVisibility(val?View.VISIBLE:View.GONE);
+
+	public void displayNewGame(boolean val) {
+		newGameTip.setVisibility(val ? View.VISIBLE : View.GONE);
 	}
-	
-	private void showNewMsg(){
-		long count = Msg.getNewCount(getContext())+Notice.getNewCount(getContext());
-		if(count > 0){
+
+	private void showNewMsg() {
+		long count = Msg.getNewCount(getContext())
+				+ Notice.getNewCount(getContext());
+		if (count > 0) {
 			newIconView.setVisibility(View.VISIBLE);
-		}else{
+		} else {
 			newIconView.setVisibility(View.GONE);
 		}
 	}
-	
-	public void checkNewMsg(){
+
+	public void checkNewMsg() {
 		requestCount = 0;
 		Preferences.User user = new Preferences.User(getContext());
-		if(userHeadData != null && user.getUid() == userHeadData.uid){
-			NoticeGetRequest noticeGetRequest = new NoticeGetRequest(getContext(), new NoticeGetRequest.Params(user.getUid(), user.getToken()));
-			MsgGetRequest msgGetRequest = new MsgGetRequest(getContext(),new MsgGetRequest.Params(user.getUid(), user.getToken()));
-			
+		if (userHeadData != null && user.getUid() == userHeadData.uid) {
+			NoticeGetRequest noticeGetRequest = new NoticeGetRequest(
+					getContext(), new NoticeGetRequest.Params(user.getUid(),
+							user.getToken()));
+			MsgGetRequest msgGetRequest = new MsgGetRequest(getContext(),
+					new MsgGetRequest.Params(user.getUid(), user.getToken()));
+
 			RequestAsync.request(noticeGetRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
-					requestCount ++;
-					if(requestCount == 2){
+					requestCount++;
+					if (requestCount == 2) {
 						showNewMsg();
 					}
-					
+
 				}
 			});
-			
+
 			RequestAsync.request(msgGetRequest, new Async() {
-				
+
 				@Override
 				public void onPostExecute(Request request) {
-					requestCount ++;
-					if(requestCount == 2){
+					requestCount++;
+					if (requestCount == 2) {
 						showNewMsg();
 					}
-					
+
 				}
 			});
-			
+
 		}
 	}
 

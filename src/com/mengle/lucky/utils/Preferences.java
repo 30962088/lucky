@@ -1,6 +1,7 @@
 package com.mengle.lucky.utils;
 
 import com.mengle.lucky.R;
+import com.tencent.a.b.p;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -12,112 +13,148 @@ import android.content.res.Resources;
 
 public class Preferences {
 
-	
-	public static class User{
-		
+	public static class User {
+
 		private static final String NAME = "User";
-		
+
 		private SharedPreferences preferences;
 
 		private Context context;
 		
+
 		public User(Context context) {
 			preferences = context.getSharedPreferences(NAME, 0);
 			this.context = context;
 		}
-	
-		public void setToken(String val){
+		
+		public void setNewuser(int isnewuser){
+			preferences.edit().putInt("isnewuser", isnewuser).commit();
+		}
+		
+		public int getNewuser(){
+			return preferences.getInt("isnewuser", 1);
+		}
+
+		public void setToken(String val) {
 			preferences.edit().putString("token", val).commit();
 		}
-		
-		public String getToken(){
-			return preferences.getString("token",null);
+
+		public String getToken() {
+			return preferences.getString("token", null);
 		}
-		
-		public boolean isLogin(){
+
+		public boolean isLogin() {
 			return getToken() != null && getUid() != null;
 		}
-		
-		public void setUid(int val){
-			preferences.edit().putString("uid", ""+val).commit();
+
+		public void setUid(int val) {
+			preferences.edit().putString("uid", "" + val).commit();
 		}
-		
-		public Integer getUid(){
-			String val = preferences.getString("uid",null);
+
+		public Integer getUid() {
+			String val = preferences.getString("uid", null);
 			Integer uid = null;
-			if(val != null){
+			if (val != null) {
 				uid = Integer.parseInt(val);
 			}
 			return uid;
 		}
-		
-		public int getLastShitiId(){
+
+		public int getLastShitiId() {
 			return preferences.getInt("LastShitiId", 0);
 		}
-		
-		public void setLastShitiId(int LastShitiId){
+
+		public void setLastShitiId(int LastShitiId) {
 			preferences.edit().putInt("LastShitiId", LastShitiId).commit();
 		}
-		
+
 		public boolean isFirstLogin() {
-			
+
 			return preferences.getBoolean("isFirstLogin", true);
-			
+
 		}
-		
-		public void setFirstLogin(boolean val){
-			
+
+		public void setFirstLogin(boolean val) {
+
 			preferences.edit().putBoolean("isFirstLogin", val).commit();
-			
+
 		}
-		
-		public boolean isBuildProvince(){
+
+		public boolean isBuildProvince() {
 			return preferences.getBoolean("isBuildProvince", false);
 		}
-		
-		public void setBuildProvince(boolean val){
+
+		public void setBuildProvince(boolean val) {
 			preferences.edit().putBoolean("isBuildProvince", val).commit();
 		}
-		
 
-		public void logout(){
+		public void logout() {
 			preferences.edit().remove("uid").remove("token").commit();
-			UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login", RequestType.SOCIAL);
-			
-			for(SHARE_MEDIA media:new SHARE_MEDIA[]{SHARE_MEDIA.QQ,SHARE_MEDIA.SINA,SHARE_MEDIA.RENREN,SHARE_MEDIA.TENCENT}){
+			UMSocialService mController = UMServiceFactory.getUMSocialService(
+					"com.umeng.login", RequestType.SOCIAL);
+
+			for (SHARE_MEDIA media : new SHARE_MEDIA[] { SHARE_MEDIA.QQ,
+					SHARE_MEDIA.SINA, SHARE_MEDIA.RENREN, SHARE_MEDIA.TENCENT }) {
 				mController.deleteOauth(context, media, null);
 			}
+		}
+
+	}
+
+	public static class Image {
+		private static final String NAME = "Image";
+
+		private SharedPreferences preferences;
+
+		public Image(Context context) {
+			preferences = context.getSharedPreferences(NAME, 0);
+		}
+		
+		public void setAvatar(String avatar){
+			preferences.edit().putString("avatar", avatar).commit();
+		}
+		
+		public String getAvatar(){
+			return preferences.getString("avatar", null);
+		}
+		
+		public void setHead(String head){
+			preferences.edit().putString("head", head).commit();
+		}
+		
+		public String getHead(){
+			return preferences.getString("head", null);
 		}
 		
 		
 	}
-	
+
 	public static class Push {
 		private static final String NAME = "Push";
-		
+
 		private SharedPreferences preferences;
 
 		public Push(Context context) {
 			preferences = context.getSharedPreferences(NAME, 0);
 		}
-		
+
 		public boolean isLogout() {
-			
+
 			return preferences.getBoolean("logout", false);
 		}
 
 		public void setLogout(boolean logout) {
-			
+
 			preferences.edit().putBoolean("logout", logout).commit();
 		}
 
 		public boolean isResult() {
-			
+
 			return preferences.getBoolean("result", true);
 		}
 
 		public void setResult(boolean result) {
-			
+
 			preferences.edit().putBoolean("result", result).commit();
 		}
 
@@ -126,8 +163,9 @@ public class Preferences {
 		}
 
 		public void setAnnouncement(boolean announcement) {
-			
-			preferences.edit().putBoolean("announcement", announcement).commit();
+
+			preferences.edit().putBoolean("announcement", announcement)
+					.commit();
 		}
 
 		public boolean isMsg() {
@@ -135,41 +173,40 @@ public class Preferences {
 		}
 
 		public void setMsg(boolean msg) {
-			
+
 			preferences.edit().putBoolean("msg", msg).commit();
 		}
-		
-		public void setUserId(String userId){
+
+		public void setUserId(String userId) {
 			preferences.edit().putString("userId", userId).commit();
 		}
-		
-		public String getUserId(){
+
+		public String getUserId() {
 			return preferences.getString("userId", null);
 		}
-		
-		public void setChannelId(String channelId){
+
+		public void setChannelId(String channelId) {
 			preferences.edit().putString("channelId", channelId).commit();
 		}
-		
-		public String getChanelId(){
+
+		public String getChanelId() {
 			return preferences.getString("channelId", null);
 		}
 
 	}
-	
+
 	public static class Network {
-		
+
 		private static final String NAME = "network";
-		
+
 		public static final int TYPE_MOST = 1;
-		
+
 		public static final int TYPE_LEAST = 2;
-		
+
 		public static final int TYPE_NONE = 0;
-		
-		
+
 		private SharedPreferences preferences;
-		
+
 		private Context context;
 
 		public Network(Context context) {
@@ -179,14 +216,14 @@ public class Preferences {
 
 		public void setType(int type) {
 			preferences.edit().putInt("type", type).commit();
-			
+
 		}
-		
-		public int getType(){
+
+		public int getType() {
 			return preferences.getInt("type", TYPE_MOST);
 		}
-		
-		public String getName(){
+
+		public String getName() {
 			String name = "";
 			int type = getType();
 			Resources resources = context.getResources();
@@ -200,7 +237,7 @@ public class Preferences {
 			case TYPE_NONE:
 				name = resources.getString(R.string.network_none);
 				break;
-			
+
 			}
 			return name;
 		}

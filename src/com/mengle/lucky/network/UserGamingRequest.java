@@ -15,12 +15,12 @@ import com.mengle.lucky.network.model.GameLite;
 public class UserGamingRequest extends Request{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int start;
 		protected int limit;
 		protected int vuid;
-		public Params(int uid, String token,int vuid, int start, int limit) {
+		public Params(Integer uid, String token,int vuid, int start, int limit) {
 			super();
 			this.uid = uid;
 			this.token = token;

@@ -11,6 +11,7 @@ import com.mengle.lucky.adapter.PhotoListAdapter;
 import com.mengle.lucky.adapter.PhotoListAdapter.Photo;
 import com.mengle.lucky.adapter.PhotoListAdapter.PhotoList;
 import com.mengle.lucky.database.DataBaseHelper;
+import com.mengle.lucky.utils.Preferences.Image;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -117,9 +118,10 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		}
 		List<Photo> list = new ArrayList<PhotoListAdapter.Photo>();
 //		list.add(new Photo(defaultImg, type));
-		list.addAll(Photo.findPhotosByType(context, type,currentUrl));
-		list.add(new Photo( "drawable://" + resId,type));
+		list.addAll(Photo.findPhotosByType(context, type,currentUrl,resId));
+		
 		photoList =  new PhotoList(list,type);
+		
 		Integer index = 0;
 		
 		for(int i = 0;i<list.size();i++){
@@ -163,7 +165,9 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 		Photo photo = new Photo(uri.toString(),type);
 		try {
 			new DataBaseHelper(context).getPhotoDao().create(photo);
-			photoList.getList().add(photoList.getList().size()-1, photo);
+			photoList.getList().remove(photoList.getList().size()-1);
+			photoList.getList().add(photo);
+			photoList.setIndex(photoList.getList().size()-1);
 			adapter.notifyDataSetChanged();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -79,6 +79,13 @@ public class NotifyCenterActivity extends BaseActivity implements
 		lastTab = position;
 	}
 
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		ping();
+	}
+	
 	public void onPageScrolled(int position, float positionOffset,
 			int positionOffsetPixels) {
 		// TODO Auto-generated method stub

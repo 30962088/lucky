@@ -147,10 +147,10 @@ public class AicaiFragment extends Fragment implements OnLoadListener,OnItemClic
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		if(!user.isLogin()){
+		/*if(!user.isLogin()){
 			AlertDialog.open(getActivity(), "您目前不能查看其他用户\n请登录后重试", null);
 			return;
-		}
+		}*/
 		position -= 2;
 		if(position >=0){
 			Aicai aicai = list.get(position);

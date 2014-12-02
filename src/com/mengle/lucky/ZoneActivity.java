@@ -1,6 +1,5 @@
 package com.mengle.lucky;
 
-import java.io.InputStream;
 
 import com.mengle.lucky.fragments.UserGameCreatorFragment;
 import com.mengle.lucky.fragments.UserGameEndFragment;
@@ -13,6 +12,7 @@ import com.mengle.lucky.network.UserGet;
 import com.mengle.lucky.network.UserMe;
 import com.mengle.lucky.network.RequestAsync.Async;
 import com.mengle.lucky.utils.Preferences;
+import com.mengle.lucky.utils.Utils;
 import com.mengle.lucky.utils.Preferences.User;
 import com.mengle.lucky.utils.WigetUtils;
 import com.mengle.lucky.utils.WigetUtils.OnItemClickListener;
@@ -20,11 +20,9 @@ import com.mengle.lucky.wiget.UserHeadView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -75,7 +73,8 @@ public class ZoneActivity extends BaseActivity implements
 
 		View rightNav = findViewById(R.id.rightNav);
 		rightNav.setOnClickListener(this);
-		if(new Preferences.User(this).getUid() == uid){
+		Integer uid = new Preferences.User(this).getUid();
+		if(uid != null && this.uid == uid.intValue()){
 			rightNav.setVisibility(View.VISIBLE);
 		}else{
 			rightNav.setVisibility(View.GONE);
@@ -94,7 +93,7 @@ public class ZoneActivity extends BaseActivity implements
 		viewPager.setAdapter(new ZonePageAdater(getSupportFragmentManager()));
 		viewPager.setOffscreenPageLimit(3);
 		
-		if(uid==new Preferences.User(this).getUid()){
+		if(uid != null && this.uid == uid.intValue()){
 			WigetUtils.switchVisible((ViewGroup)findViewById(R.id.right_container),R.id.rightNav );
 		}else{
 			WigetUtils.switchVisible((ViewGroup)findViewById(R.id.right_container),R.id.right_comment );
@@ -110,17 +109,20 @@ public class ZoneActivity extends BaseActivity implements
 
 	private void readGame() {
 		User user = new User(this);
-		TipGameRead read = new TipGameRead(this,new TipGameRead.Param(user.getUid(), user.getToken(), uid));
-		RequestAsync.request(read, null);
+		if(user.isLogin()){
+			TipGameRead read = new TipGameRead(this,new TipGameRead.Param(user.getUid(), user.getToken(), uid));
+			RequestAsync.request(read, null);
+		}
+		
 		
 	}
 
 	private void login() {
 		Preferences.User user = new Preferences.User(this);
-		final int uid = user.getUid();
+		final Integer uid = user.getUid();
 		String token = user.getToken();
 		IUserGet userGet;
-		if(uid == this.uid){
+		if(uid != null && uid.intValue() == this.uid){
 			userGet = new UserMe(this,new UserMe.Params(uid, token));
 		}else{
 			userGet = new UserGet(this,new UserGet.Params(uid,token,this.uid));
@@ -134,7 +136,7 @@ public class ZoneActivity extends BaseActivity implements
 				if (finalUserGet.getStatus() == Request.Status.SUCCESS) {
 					containerView.setVisibility(View.VISIBLE);
 					userHeadView.setData(finalUserGet.getUserResult().toUserHeadData());
-					if(uid == ZoneActivity.this.uid){
+					if(uid != null && uid.intValue() == ZoneActivity.this.uid){
 						userHeadView.checkNewMsg();
 					}
 					
@@ -143,7 +145,7 @@ public class ZoneActivity extends BaseActivity implements
 					
 					
 					String s="";
-					if(ZoneActivity.this.uid==uid){
+					if(uid != null && ZoneActivity.this.uid==uid.intValue()){
 						s = "我";
 						
 					}else{
@@ -216,12 +218,18 @@ public class ZoneActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.rightNav:
+			
 			UserSettingActivity.open(this);
 			break;
 		case R.id.leftnav:
 			finish();
 			break;
 		case R.id.right_comment:
+			User user = new User(this);
+			if(!user.isLogin()){
+				Utils.tip(this, "请先登录");
+				return;
+			}
 			ChatActivity.open(this, uid);
 			break;
 		default:

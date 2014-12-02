@@ -104,7 +104,7 @@ public class UserListActivity extends BaseActivity implements OnLoadListener,OnC
 		this.offset = offset;
 		Preferences.User user = new Preferences.User(this);
 		IUserListRequest request = null;
-		if(user.getUid() == fuid){
+		if(user.getUid() != null && user.getUid().intValue() == fuid){
 			if(type == Type.FOLLERS){
 				request = new UserMeFollowersRequest(this,new UserMeFollowersRequest.Params(fuid, user.getToken(), offset, limit));
 			}else{

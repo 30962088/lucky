@@ -137,7 +137,7 @@ public class UserGamingFragment extends Fragment implements OnLoadListener,OnCli
 		}
 		if(offset == 0&&list.size() == 1){
 			baseListView.setVisibility(View.GONE);
-			if(user.getUid() == uid){
+			if(user.getUid() != null && user.getUid().intValue() == uid){
 				ClickableSpan  textClickable = new MyClickSpan(Color.parseColor("#5dc9e6"),new OnClickListener() {
 					
 					@Override

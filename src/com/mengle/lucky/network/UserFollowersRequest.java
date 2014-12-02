@@ -14,14 +14,14 @@ import android.text.TextUtils;
 public class UserFollowersRequest extends Request implements IUserListRequest{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int vuid;
 		protected int start;
 		
 		protected int limit;
 
-		public Params(int uid, String token, int vuid, int start, int limit) {
+		public Params(Integer uid, String token, int vuid, int start, int limit) {
 			super();
 			this.uid = uid;
 			this.token = token;

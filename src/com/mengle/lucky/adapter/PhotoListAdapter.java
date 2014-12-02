@@ -11,6 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import com.mengle.lucky.R;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.utils.BitmapLoader;
+import com.mengle.lucky.utils.Preferences.Image;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,9 +27,7 @@ public class PhotoListAdapter extends BaseAdapter {
 
 	@DatabaseTable(tableName = "picture")
 	public static class Photo {
-		
-		
-		
+
 		public static final int TYPE_HEAD = 1;
 
 		public static final int TYPE_AVATAR = 2;
@@ -36,15 +35,14 @@ public class PhotoListAdapter extends BaseAdapter {
 		public Photo() {
 			// TODO Auto-generated constructor stub
 		}
-		
+
 		@DatabaseField(id = true)
 		private String id = "" + new Date().getTime();
 		@DatabaseField
 		private String photo;
 
-		@DatabaseField(columnName="type")
+		@DatabaseField(columnName = "type")
 		private int type;
-
 
 		public Photo(String photo, int type) {
 			super();
@@ -59,37 +57,59 @@ public class PhotoListAdapter extends BaseAdapter {
 		public String getId() {
 			return id;
 		}
-	
 
 		public String getPhoto() {
 			return photo;
 		}
-		
-		private static List<Photo> getDefaultPhotos(int type){
+		public int getType() {
+			return type;
+		}
+		private static List<Photo> getDefaultPhotos(int type) {
 			String folder = "";
-			if(type==TYPE_AVATAR){
+			if (type == TYPE_AVATAR) {
 				folder = "avatar";
-			}else{
-				folder="head";
+			} else {
+				folder = "head";
 			}
 			List<Photo> photos = new ArrayList<PhotoListAdapter.Photo>();
-			for(int i = 1;i<=4;i++){
-				String url = "http://res.joypaw.com/"+folder+"/default/"+i+".jpg";
+			for (int i = 1; i <= 4; i++) {
+				String url = "http://res.joypaw.com/" + folder + "/default/"
+						+ i + ".jpg";
 				photos.add(new Photo(url, type));
 			}
 			return photos;
 		}
-		
-		public static List<Photo> findPhotosByType(Context context,int type,String current) throws SQLException{
-			List<Photo> list = new ArrayList<Photo>();
-			DataBaseHelper dataBaseHelper = new DataBaseHelper(context);
-			list.addAll(getDefaultPhotos(type));
-			if(!current.matches("^http://res\\.joypaw\\.com/(avatar|head)/default/.*") && dataBaseHelper.getPhotoDao().queryBuilder().where().eq("Photo", current).countOf()  == 0){
-				Photo photo = new Photo(current, type);
-				dataBaseHelper.getPhotoDao().create(photo);
+
+		public static List<Photo> findPhotosByType(Context context, int type,
+				String current, int resId) throws SQLException {
+			Image image = new Image(context);
+			Photo photo = null;
+			String url = null;
+			if (!current
+					.matches(
+							"^http://res\\.joypaw\\.com/(avatar|head)/default/.*")) {
+
+				if (type == Photo.TYPE_HEAD) {
+					image.setHead(current);
+				} else {
+					image.setAvatar(current);
+				}
 			}
-			list.addAll(dataBaseHelper.getPhotoDao().queryBuilder().where().eq("type", type).query());
+			if (type == TYPE_AVATAR) {
+				url = image.getAvatar();
+			} else {
+				url = image.getHead();
+			}
 			
+
+			if (url == null) {
+				url = "drawable://" + resId;
+			}
+			photo = new Photo(url, type);
+			List<Photo> list = new ArrayList<Photo>();
+			list.addAll(getDefaultPhotos(type));
+			list.add(photo);
+
 			return list;
 		}
 
@@ -100,7 +120,7 @@ public class PhotoListAdapter extends BaseAdapter {
 		private Integer index;
 		private int type;
 
-		public PhotoList(List<Photo> list,int type) {
+		public PhotoList(List<Photo> list, int type) {
 			super();
 			this.list = list;
 			this.type = type;
@@ -148,20 +168,21 @@ public class PhotoListAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		Photo photo = list.list.get(position);
 		if (convertView == null) {
-			if(list.type==Photo.TYPE_AVATAR){
+			if (list.type == Photo.TYPE_AVATAR) {
 				convertView = LayoutInflater.from(context).inflate(
 						R.layout.photo_item, null);
-			}else{
+			} else {
 				convertView = LayoutInflater.from(context).inflate(
 						R.layout.photo_item1, null);
 			}
 			final View v = convertView;
 			convertView.post(new Runnable() {
-				
+
 				@Override
 				public void run() {
-					v.setLayoutParams(new AbsListView.LayoutParams(v.getWidth(), v.getWidth()*9/16));
-					
+					v.setLayoutParams(new AbsListView.LayoutParams(
+							v.getWidth(), v.getWidth() * 9 / 16));
+
 				}
 			});
 			holder = new ViewHolder(convertView);
@@ -169,10 +190,7 @@ public class PhotoListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		
-		
-		
+
 		BitmapLoader.displayImage(context, photo.photo, holder.imageView);
 
 		if (list.index == position) {

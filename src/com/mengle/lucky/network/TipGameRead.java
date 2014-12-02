@@ -9,10 +9,10 @@ import android.content.Context;
 public class TipGameRead extends Request{
 
 	public static class Param{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int vuid;
-		public Param(int uid, String token, int vuid) {
+		public Param(Integer uid, String token, int vuid) {
 			super();
 			this.uid = uid;
 			this.token = token;

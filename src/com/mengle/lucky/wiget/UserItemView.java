@@ -170,11 +170,22 @@ public class UserItemView extends FrameLayout implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		User user = new User(getContext());
 		switch (v.getId()) {
 		case R.id.icon_star:
+			
+			if(!user.isLogin()){
+				Utils.tip(getContext(), "请先登录");
+				btnStar.setChecked(false);
+				return;
+			}
 			onStar();
 			break;
 		case R.id.icon_comment:
+			if(!user.isLogin()){
+				Utils.tip(getContext(), "请先登录");
+				return;
+			}
 			ChatActivity.open(getContext(), model.uid);
 			break;
 		case R.id.container:

@@ -15,10 +15,10 @@ import com.mengle.lucky.network.model.User;
 public class UserGet extends Request implements IUserGet{
 
 	public static class Params{
-		protected int uid;
+		protected Integer uid;
 		protected String token;
 		protected int vuid;
-		public Params(int uid, String token, int vuid) {
+		public Params(Integer uid, String token, int vuid) {
 			super();
 			this.uid = uid;
 			this.token = token;
