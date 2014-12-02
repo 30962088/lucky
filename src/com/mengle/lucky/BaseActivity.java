@@ -20,6 +20,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 
 public abstract class BaseActivity extends FragmentActivity {
@@ -99,9 +101,14 @@ public abstract class BaseActivity extends FragmentActivity {
 	private int scaleWidth;
 	
 	private int scaleHeight;
+	
+	private Uri cropImage;
 
 	private void performCrop(Uri picUri) {
 		try {
+			File file = new File(Environment.getExternalStorageDirectory()+"/luck7");
+			file.mkdirs();
+			cropImage = Uri.fromFile(File.createTempFile("prefix", ".jpg", file));
 			Intent cropIntent = new Intent("com.android.camera.action.CROP");
 			// indicate image type and Uri
 			cropIntent.setDataAndType(picUri, "image/*");
@@ -111,17 +118,22 @@ public abstract class BaseActivity extends FragmentActivity {
 			cropIntent.putExtra("aspectX", scaleWidth);
 			cropIntent.putExtra("aspectY", scaleHeight);
 			// indicate output X and Y
+			cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, cropImage);
+			cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 			cropIntent.putExtra("outputX", scaleWidth);
 			cropIntent.putExtra("outputY", scaleHeight);
 			// retrieve data on return
 			cropIntent.putExtra("scale", true);
-			cropIntent.putExtra("return-data", true);
+			cropIntent.putExtra("return-data", false);
 			// start the activity - we handle returning in onActivityResult
 			startActivityForResult(cropIntent, PIC_CROP);
 		}
 		// respond to users whose devices do not support the crop action
 		catch (ActivityNotFoundException anfe) {
 			onSelectImage(picUri);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -148,8 +160,10 @@ public abstract class BaseActivity extends FragmentActivity {
 		case PIC_CROP:
 			if (data != null) {
 				// get the returned data
-				Bundle extras = data.getExtras();
-				// get the cropped bitmap
+				/*Bundle extras = data.getExtras();
+				System.out.println(extras)*/;
+				onSelectImage(cropImage);
+				/*// get the cropped bitmap
 				Bitmap selectedBitmap = extras.getParcelable("data");
 
 				FileOutputStream out = null;
@@ -170,7 +184,7 @@ public abstract class BaseActivity extends FragmentActivity {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
+				}*/
 
 			}
 			break;

@@ -186,8 +186,8 @@ public class PhotoListDialog implements OnClickListener,OnItemClickListener,OnPi
 					width = 381;
 					height = 204;
 				}else{
-					width = 100;
-					height = 100;
+					width = 180;
+					height = 180;
 				}
 				activity.pick(width,height,this);
 			}

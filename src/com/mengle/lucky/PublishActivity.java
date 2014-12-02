@@ -90,7 +90,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener {
 	private ImageView headView;
 
 	private void openGallery() {
-		getImage(400, 300, new OnPhotoSelectionListener() {
+		getImage(640, 400, new OnPhotoSelectionListener() {
 			
 			@Override
 			public void onPhotoSelection(Uri uri) {

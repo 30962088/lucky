@@ -83,14 +83,14 @@ public class GameCreateRequest extends Request{
 		this.image = new File(image);
 		/*if(image != null){
 			File originImage = new File(image);
-			File compressImage = cropImage(originImage, 450, 300);
+			File compressImage = cropImage(originImage, 640, 400);
 			if(compressImage != null){
 				this.image = compressImage;
 			}else{
 				this.image =originImage ;
 			}
-		}*/
-		
+		}
+		*/
 	}
 
 	@Override
@@ -246,7 +246,7 @@ public class GameCreateRequest extends Request{
 			outputFile = File.createTempFile("prefix", "extension", outputDir);
 	        bitmap =ScalingUtilities.scaleCenterCrop(BitmapFactory.decodeFile(image.toString()) ,width,height);
 	        out = new FileOutputStream(outputFile);
-	        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+	        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
