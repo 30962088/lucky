@@ -5,10 +5,13 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.mengle.lucky.R;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.DisplayImageOptions.Builder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 public class BitmapLoader {
 	
@@ -17,13 +20,18 @@ public class BitmapLoader {
 	
 	public synchronized static ImageLoader getImageLoader(Context context) {
 		if (imageLoader == null) {
-			DisplayImageOptions options = new DisplayImageOptions.Builder()
-					.cacheInMemory(true).cacheOnDisc(true).build();
 			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-					context).defaultDisplayImageOptions(options)
-					.memoryCacheSizePercentage(33).build();
+					context).denyCacheImageMultipleSizesInMemory()
+					.memoryCacheExtraOptions(768, 1280)
+					.memoryCache(new UsingFreqLimitedMemoryCache(5 * 1024 * 1024))
+					.memoryCacheSize(5 * 1024 * 1024)
+					.discCacheSize(50 * 1024 * 1024)
+					.discCacheFileNameGenerator(new Md5FileNameGenerator())
+					.threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 1)
+					.tasksProcessingOrder(QueueProcessingType.LIFO).build();
 			imageLoader = ImageLoader.getInstance();
-			imageLoader.init(config);
+			// 初始化ImageLoader的与配置。
+			imageLoader.init(config);;
 		}
 
 		return imageLoader;

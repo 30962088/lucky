@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.baidu.frontia.FrontiaApplication;
 import com.mengle.lucky.database.DataBaseHelper;
 import com.mengle.lucky.network.AppLoginRequest;
@@ -38,7 +40,7 @@ import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-public class App extends FrontiaApplication implements LocationListener {
+public class App extends FrontiaApplication  {
 
 	private static App instance;
 
@@ -46,17 +48,14 @@ public class App extends FrontiaApplication implements LocationListener {
 		return instance;
 	}
 
-	private LocationManager mlocManager;
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-		// TelephonyManager tm = (TelephonyManager)
-		// getSystemService(Context.TELEPHONY_SERVICE);
 		Dirctionary.init(this);
-		request();
-
+		PushManager.startWork(getApplicationContext(),
+            PushConstants.LOGIN_TYPE_API_KEY,
+            com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
 		// Thread.setDefaultUncaughtExceptionHandler(handler);
 
 	}
@@ -131,75 +130,8 @@ public class App extends FrontiaApplication implements LocationListener {
 		}
 	};
 
-	private int isNew;
-
-	private void request() {
-		User user = new User(this);
-		isNew = user.isFirstLogin() ? 1 : 0;
-
-		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				this);
-
-	}
-
 	public static Activity currentActivity;
 
-	private boolean islogin = false;
 
-	@Override
-	public void onLocationChanged(Location location) {
-		if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-
-			mlocManager.removeUpdates(this);
-			try {
-				synchronized (this) {
-					if (!islogin) {
-						islogin = true;
-						User user = new User(this);
-						int newUser = user.getNewuser();
-						user.setNewuser(0);
-						ApplicationInfo appInfo = this.getPackageManager()
-								.getApplicationInfo(getPackageName(),
-										PackageManager.GET_META_DATA);
-						String channel = appInfo.metaData
-								.getString("UMENG_CHANNEL");
-
-						PackageInfo pinfo = getPackageManager().getPackageInfo(
-								getPackageName(), 0);
-						AppLoginRequest request = new AppLoginRequest(this,
-								new AppLoginRequest.Params(user.getUid(),
-										channel, "" + location.getLongitude(),
-										"" + location.getLatitude(),
-										pinfo.versionName, newUser));
-
-						RequestAsync.request(request, null);
-					}
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

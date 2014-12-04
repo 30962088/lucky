@@ -322,7 +322,7 @@ public class UserHeadView extends FrameLayout implements OnClickListener,
 
 			@Override
 			public void onPostExecute(Request request) {
-				if (getContext() instanceof ZoneActivity) {
+				if (getContext() != null && getContext() instanceof ZoneActivity) {
 					((ZoneActivity) getContext()).onResume();
 				}
 

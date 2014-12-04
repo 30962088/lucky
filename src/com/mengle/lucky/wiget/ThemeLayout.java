@@ -204,6 +204,10 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
+				if(!new Preferences.User(getContext()).isLogin()){
+					Utils.tip(getContext(), "由于您没有登录，所以暂时不能更改下注倍数");
+					return;
+				}
 				int coin = (Integer) coinView.getTag();
 				if (currentOdd == theme.odd){
 					currentOdd = 0;
@@ -211,6 +215,8 @@ public class ThemeLayout extends FrameLayout implements OnClickListener {
 				currentOdd ++;
 				
 				coin = theme.coin * currentOdd;
+				
+				
 				
 				if (coin > totalCoin) {
 					Utils.tip(getContext(), "您拥有的金币已不足下注");

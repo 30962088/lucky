@@ -219,7 +219,12 @@ public class KanZhuangActivity extends SlidingFragmentActivity implements
 			}else{
 				stat = ResultDialog.Status.FAIL;
 			}
-			new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(stat,themeLayout.getCoin()));
+			
+			if(!user.getGameEndId(""+game_id)){
+				user.setGameEndId(""+game_id);
+				new ResultDialog(KanZhuangActivity.this, new ResultDialog.Result(stat,themeLayout.getCoin()));
+			}
+			
 		}
 	}
 

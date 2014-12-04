@@ -1,12 +1,13 @@
 package com.mengle.lucky.utils;
 
+import java.util.HashSet;
+
 import com.mengle.lucky.R;
 import com.tencent.a.b.p;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -25,6 +26,14 @@ public class Preferences {
 		public User(Context context) {
 			preferences = context.getSharedPreferences(NAME, 0);
 			this.context = context;
+		}
+		
+		public void setGameEndId(String id){
+			preferences.edit().putBoolean("game_end"+id, true).commit();
+		}
+		
+		public boolean getGameEndId(String id){
+			return preferences.getBoolean("game_end"+id, false);
 		}
 		
 		public void setNewuser(int isnewuser){

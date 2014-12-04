@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.mengle.lucky.network.AppLoginRequest;
 import com.mengle.lucky.network.PingRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.Request.Status;
@@ -16,20 +19,30 @@ import com.mengle.lucky.utils.Preferences.User;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends FragmentActivity implements LocationListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
 
 	}
 	
@@ -61,6 +74,15 @@ public abstract class BaseActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		
+
+	}
+	
+	public void loginRequest() {
+
+		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				this);
 
 	}
 
@@ -189,6 +211,64 @@ public abstract class BaseActivity extends FragmentActivity {
 			}
 			break;
 		}
+	}
+	
+	private boolean islogin = false;
+	
+	private LocationManager mlocManager;
+	
+	@Override
+	public void onLocationChanged(Location location) {
+		if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+
+			mlocManager.removeUpdates(this);
+			try {
+				synchronized (this) {
+					if (!islogin) {
+						islogin = true;
+						User user = new User(this);
+						int newUser = user.getNewuser();
+						user.setNewuser(0);
+						ApplicationInfo appInfo = this.getPackageManager()
+								.getApplicationInfo(getPackageName(),
+										PackageManager.GET_META_DATA);
+						String channel = appInfo.metaData
+								.getString("UMENG_CHANNEL");
+
+						PackageInfo pinfo = getPackageManager().getPackageInfo(
+								getPackageName(), 0);
+						AppLoginRequest request = new AppLoginRequest(this,
+								new AppLoginRequest.Params(user.getUid(),
+										channel, "" + location.getLongitude(),
+										"" + location.getLatitude(),
+										pinfo.versionName, newUser));
+
+						RequestAsync.request(request, null);
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

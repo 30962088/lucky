@@ -1,5 +1,7 @@
 package com.mengle.lucky;
 
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
@@ -10,6 +12,7 @@ import com.mengle.lucky.fragments.CommentFragment;
 import com.mengle.lucky.fragments.NoLoginFragment;
 import com.mengle.lucky.fragments.SidingMenuFragment;
 import com.mengle.lucky.fragments.ZhuangFragment;
+import com.mengle.lucky.network.AppLoginRequest;
 import com.mengle.lucky.network.Request;
 import com.mengle.lucky.network.RequestAsync;
 import com.mengle.lucky.network.RequestAsync.Async;
@@ -24,12 +27,18 @@ import com.mengle.lucky.wiget.PushDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -42,29 +51,25 @@ import android.view.Window;
 import android.widget.Toast;
 
 public class MainActivity extends SlidingFragmentActivity implements
-		OnClickListener {
-	
-	
+		OnClickListener, LocationListener {
 
-	public static void open(Context context,String action) {
+	public static void open(Context context, String action) {
 		Intent intent = new Intent(context, MainActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
-		if(!TextUtils.isEmpty(action)){
+		if (!TextUtils.isEmpty(action)) {
 			intent.setAction(action);
 		}
-		
+
 		context.startActivity(intent);
 	}
-	
-	public static void open(Context context){
-		open(context,null);
+
+	public static void open(Context context) {
+		open(context, null);
 	}
-	
-	
 
 	public static MainActivity instance;
-	
+
 	private Fragment switchFragment;
 
 	private View rightComment;
@@ -74,7 +79,7 @@ public class MainActivity extends SlidingFragmentActivity implements
 	private View rightEmpty;
 
 	private ViewGroup rightContainer;
-	
+
 	private View newGameTip;
 
 	public static MainActivity getInstance() {
@@ -86,19 +91,19 @@ public class MainActivity extends SlidingFragmentActivity implements
 	public MainActivity() {
 		instance = this;
 	}
-	
-private void startPush() {
-		
-        PushManager.startWork(getApplicationContext(),
-                PushConstants.LOGIN_TYPE_API_KEY,
-                com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
-		
-	}
 
+	private void startPush() {
+
+		PushManager.startWork(getApplicationContext(),
+				PushConstants.LOGIN_TYPE_API_KEY,
+				com.mengle.lucky.push.Utils.getMetaValue(this, "api_key"));
+
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		loginRequest();
 		App.currentActivity = this;
 		startPush();
 		UmengUpdateAgent.update(this);
@@ -112,63 +117,74 @@ private void startPush() {
 		rightEmpty = findViewById(R.id.right_empty);
 		rightSearch.setOnClickListener(this);
 		initSlidingMenu();
-		
+
 	}
-	
-	private void checkNewGame(){
-		User user = new User(this);
-		if(user.isLogin()){
-			final TipGameGet gameGet = new TipGameGet(this, new TipGameGet.Param(user.getUid(), user.getToken()));
-			RequestAsync.request(gameGet, new Async() {
+
+	private void loginRequest() {
+		mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				this);
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				loginrequest(null);
 				
+			}
+		}, 2000);
+	}
+
+	private void checkNewGame() {
+		User user = new User(this);
+		if (user.isLogin()) {
+			final TipGameGet gameGet = new TipGameGet(this,
+					new TipGameGet.Param(user.getUid(), user.getToken()));
+			RequestAsync.request(gameGet, new Async() {
+
 				@Override
 				public void onPostExecute(Request request) {
-					displayNewTipDone(gameGet.getCount()>0?true:false);
-					
+					displayNewTipDone(gameGet.getCount() > 0 ? true : false);
+
 				}
 			});
 		}
-		
+
 	}
-	
-	private void displayNewTipDone(boolean val){
-		newGameTip.setVisibility(val?View.VISIBLE:View.GONE);
+
+	private void displayNewTipDone(boolean val) {
+		newGameTip.setVisibility(val ? View.VISIBLE : View.GONE);
 	}
-	
-	
-	
-	
 
 	private void doPushLogout() {
 		Preferences.Push push = new Push(this);
-		if(push.isLogout()){
+		if (push.isLogout()) {
 			Utils.tip(this, "您已被踢出");
 			push.setLogout(false);
 		}
-		
+
 	}
-	
+
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		MobclickAgent.onResume(this);
 		doPushLogout();
-		if(switchFragment != null){
+		if (switchFragment != null) {
 			switchContent(switchFragment);
 			switchFragment = null;
 		}
 		checkNewGame();
-		
+
 	}
-	
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
-
 
 	public View getRightComment() {
 		return rightComment;
@@ -234,10 +250,10 @@ private void startPush() {
 
 	public void login() {
 		menuFragment.onResume();
-		if(rightFragment!=null ){
+		if (rightFragment != null) {
 			rightFragment.onResume();
 		}
-		
+
 	}
 
 	public void switchContent(Fragment fragment) {
@@ -281,51 +297,110 @@ private void startPush() {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void setSwitchFragment(Fragment switchFragment) {
 		this.switchFragment = switchFragment;
 	}
-	
+
 	public static final String ACTION_REFRESH_ZHUANG = "refresh_zhuang";
-	
+
 	public static final String ACTION_LOGOUT = "logout";
-	
+
 	private boolean flag9 = false;
-	
+
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		super.onNewIntent(intent);
-		if(TextUtils.equals(intent.getAction(), ACTION_REFRESH_ZHUANG)){
-			if(mContent != null && mContent instanceof ZhuangFragment){
-				((ZhuangFragment)mContent).refresh();
+		if (TextUtils.equals(intent.getAction(), ACTION_REFRESH_ZHUANG)) {
+			if (mContent != null && mContent instanceof ZhuangFragment) {
+				((ZhuangFragment) mContent).refresh();
 			}
-			
-		}else if(TextUtils.equals(intent.getAction(), ACTION_LOGOUT)){
+
+		} else if (TextUtils.equals(intent.getAction(), ACTION_LOGOUT)) {
 			Preferences.User user = new Preferences.User(App.getInstance());
 			user.logout();
 			PushDialog.sletter = null;
 			PushDialog.smsg = null;
-			if(!flag9){
+			if (!flag9) {
 				flag9 = true;
 				System.out.println("zzmzzm");
 				AlertDialog.open(this, "该账号已在其他设备上登录", null);
 				new Handler(getMainLooper()).postDelayed(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						flag9 = false;
-						
+
 					}
-				}, 30*1000);
+				}, 30 * 1000);
 			}
-			
+
+		}
+
+	}
+
+	private boolean islogin = false;
+
+	private LocationManager mlocManager;
+
+	private void loginrequest(Location location) {
+		String lng = null;
+		String lat = null;
+		if(location != null){
+			lng = ""+location.getLongitude();
+			lat = ""+location.getLatitude();
+		}
+		try {
+			if (!islogin) {
+				islogin = true;
+				User user = new User(this);
+				int newUser = user.getNewuser();
+				user.setNewuser(0);
+				ApplicationInfo appInfo = this.getPackageManager()
+						.getApplicationInfo(getPackageName(),
+								PackageManager.GET_META_DATA);
+				String channel = appInfo.metaData.getString("UMENG_CHANNEL");
+
+				PackageInfo pinfo = getPackageManager().getPackageInfo(
+						getPackageName(), 0);
+				AppLoginRequest request = new AppLoginRequest(this,
+						new AppLoginRequest.Params(user.getUid(), channel, lng, lat, pinfo.versionName,
+								newUser));
+
+				RequestAsync.request(request, null);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+			loginrequest(location);
+			mlocManager.removeUpdates(this);
 			
 		}
-		
-		
-		
-		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		System.out.println("zzm:enable");
+
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		loginrequest(null);
+
 	}
 
 }
